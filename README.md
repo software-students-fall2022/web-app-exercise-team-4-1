@@ -5,11 +5,11 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-A way for students to register for their college courses on-the-go
+A way for students to register for their college courses on-the-go.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+[Link to User Stories](https://github.com/software-students-fall2022/web-app-exercise-team-4-1/issues)
 
 ## Task boards
 
