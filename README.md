@@ -5,7 +5,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+A way for students to register for their college courses on-the-go
 
 ## User stories
 
