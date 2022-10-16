@@ -9,9 +9,10 @@ A way for students to register for their college courses on-the-go.
 
 ## User stories
 
-[User Stories](https://github.com/software-students-fall2022/web-app-exercise-team-4-1/issues)
+[Issues](https://github.com/software-students-fall2022/web-app-exercise-team-4-1/issues)
 
 ## Task boards
 
+- [Projects](https://github.com/software-students-fall2022/web-app-exercise-team-4-1/projects)
 - [Sprint 1](https://github.com/orgs/software-students-fall2022/projects/6)
 - [Sprint 2](https://github.com/orgs/software-students-fall2022/projects/23)
