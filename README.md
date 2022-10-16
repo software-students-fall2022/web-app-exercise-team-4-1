@@ -13,5 +13,5 @@ A way for students to register for their college courses on-the-go.
 
 ## Task boards
 
-[Sprint 1](https://github.com/orgs/software-students-fall2022/projects/6)
-[Sprint 2](https://github.com/orgs/software-students-fall2022/projects/23)
+- [Sprint 1](https://github.com/orgs/software-students-fall2022/projects/6)
+- [Sprint 2](https://github.com/orgs/software-students-fall2022/projects/23)
