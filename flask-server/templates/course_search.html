@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block container %}
+<div>
+    <h1>Course Search</h1>
+    <div>
+        <form>
+            <div class="input-box">
+                <input type="text" placeholder="Search courses..." id="searchterm" name="searchterm">
+                <input type="submit" value="Search" class="search-btn"/>
+            </div>
+        </form>
+    </div>
+    <div class="course-list">
+        {% for course in docs %}
+            {% include '_course.html' %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,10 @@
 {% extends 'base.html' %} {% block container %}
-<h2>
-    {{doc.name}}
-</h2>
-<p>{{doc.course_description}}</p>
+<div>
+    <h2>
+        {{doc.name}}
+    </h2>
+    <p>
+        {{doc.description}}
+    </p>
+</div>
 {% endblock %}
