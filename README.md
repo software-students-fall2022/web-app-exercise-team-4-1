@@ -16,3 +16,7 @@ A way for students to register for their college courses on-the-go.
 - [Projects](https://github.com/software-students-fall2022/web-app-exercise-team-4-1/projects)
 - [Sprint 1](https://github.com/orgs/software-students-fall2022/projects/6)
 - [Sprint 2](https://github.com/orgs/software-students-fall2022/projects/23)
+
+## Mockups
+
+[Figma](https://www.figma.com/proto/EYCm2eYimcrQcjmdHHnYD2/SWE-Project-2?page-id=0%3A1&node-id=1%3A361&viewport=394%2C284%2C0.18&scaling=scale-down&starting-point-node-id=1%3A361&show-proto-sidebar=1)
