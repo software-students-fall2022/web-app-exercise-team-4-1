@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block container %}
+<div>
+    <h1>Shopping Cart</h1>
+    <div class="course-list">
+        {% for course in docs %}
+            {% include '_course.html' %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

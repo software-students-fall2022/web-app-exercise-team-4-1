@@ -113,6 +113,21 @@ h1 {
     font-size: 24px;
 }
 
+.dark-purple-btn {
+    background: #491680;
+    border-radius: 10px;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    border: none;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 200;
+    font-size: 24px;
+}
+
 .waitlist-btn {
     background: #9F85BA;
     border-radius: 10px;
