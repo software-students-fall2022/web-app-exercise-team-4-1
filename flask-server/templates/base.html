@@ -9,7 +9,7 @@
   </head>
   <body>
     <div>
-      <main>TEST</main>
+      <main>{% block container %} {% endblock %}</main>
       <footer>
         <a href="https://www.google.com/" class="footer-container">
           <img src="{{ url_for('static', filename='images/home.svg') }}" alt="home" class="footer-icon">
