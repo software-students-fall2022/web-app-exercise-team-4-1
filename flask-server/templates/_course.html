@@ -8,10 +8,25 @@
     </h3>
     <div>
         <span>
-            Section {{course.section}} | {{course.date.days}}, {{course.date.start_time}} - {{course.date.end_time}}
+            Section {{course.section}} | {% for day in course.date.days%}{{day}}.{%endfor%}, {{course.date.start_time}} - {{course.date.end_time}}
         </span>
     </div>
     <p class="course-description">
         {{course.description}}
     </p>
+    <div class="course-btn-container">
+    {% if course.status == "open" %}
+        <a href="{{url_for('app_blueprint.course_view', mongoid=course._id)}}" class="open-btn">
+            View Open Sections
+        </a>
+    {% elif course.status == "waitlist" %}
+        <form>
+            <input type="button" value="Join Waitlist ({{course.waitlist_count}})" class="waitlist-btn"/>
+        </form>
+    {% elif course.status == "closed" %}
+        <div class="closed-btn">
+            Closed
+        </div>
+    {% endif %}
+    </div>
 </course>

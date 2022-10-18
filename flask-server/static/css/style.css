@@ -89,6 +89,65 @@ h1 {
     font-size: 36px;
 }
 
+.course-btn-container {
+    margin-top: 10px;
+}
+
+.open-btn {
+    background: #491680;
+    border-radius: 10px;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 200;
+    font-size: 24px;
+}
+
+.waitlist-btn {
+    background: #9F85BA;
+    border-radius: 10px;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    border: none;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 200;
+    font-size: 24px;
+}
+
+.closed-btn {
+    background: white;
+    border-radius: 10px;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: black;
+    border: 3px solid #491680;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 200;
+    font-size: 24px;
+}
+
 .input-box {
     display: flex;
     flex-direction: row;
@@ -125,3 +184,11 @@ p {
     font-size: 24px;
     margin-bottom: 0px;
 }
+
+a:link { text-decoration: none; }
+
+a:visited { text-decoration: none; }
+
+a:hover { text-decoration: none; }
+
+a:active { text-decoration: none; }
