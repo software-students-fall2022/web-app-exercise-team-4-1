@@ -9,6 +9,14 @@
         {% for course in docs %}
         <course>
             {% include '_section.html' %}
+            <div class="buttons-container">
+                <a href="{{url_for('app_blueprint.course_view', mongoid=course._id)}}" class="open-btn">
+                    Edit
+                </a>
+                <a href="{{url_for('app_blueprint.course_view', mongoid=course._id)}}" class="open-btn">
+                    View Roster
+                </a>
+            </div>
         </course>
         {% endfor %}
     </div>

@@ -1,48 +1,50 @@
-<course>
-    <span>{{course.code}}</span>
-    <h2 class="course-name">
-        {{course.name}}
-    </h2>
-    <h3 class="course-professor">
-        Professor {{course.professor}}
-    </h3>
-    <div>
-        <span>
-            Section {{course.section}} | 
-            {% for i in range(course.date.days|length)%}{% if i != 0 %}/{%endif%}{{course.date.days[i]}}{%endfor%}
-            , {{course.date.start_time}} - {{course.date.end_time}}
-        </span>
-    </div>
-    <p class="course-description">
-        {{course.description}}
-    </p>
-    <div class="course-btn-container">
-    {% if course.status == "open" %}
-        <a href="{{url_for('app_blueprint.course_view', mongoid=course._id)}}" class="open-btn">
-            View Open Sections
-        </a>
-    {% elif course.status == "waitlist" %}
-        <form>
-            <input type="button" value="Join Waitlist ({{course.waitlist_count}})" class="waitlist-btn"/>
-        </form>
-    {% elif course.status == "closed" %}
-        <div class="closed-btn">
-            Closed
-        </div>
-    {% elif course.status == "cart" %}
-        {#<!-- <form method="POST" action="{{ url_for('student.add_course', mongoid=course._id) }}"> -->#}
-        <form method="POST" action="https://www.google.com/">
-            <input type="submit" value="Enroll in Course" class="dark-purple-btn"/>
-        </form>
-    {% elif course.status == "enrolled" %}
-    {#<!-- <form method="POST" action="{{ url_for('student.drop_course', mongoid=course._id) }}"> -->#}
-    <form method="POST" action="https://www.google.com/">
-        <input type="submit" value="Drop Course" class="dark-purple-btn"/>
-    </form>
-    {% elif course.status == "on-waitlist" %}
+<span>{{course.code}}</span>
+<h2 class="course-name">
+    {{course.name}}
+</h2>
+<h3 class="course-professor">
+    Professor {{course.professor}}
+</h3>
+<div>
+    <span>
+        Section {{course.section}} | 
+        {% for i in range(course.date.days|length)%}{% if i != 0 %}/{%endif%}{{course.date.days[i]}}{%endfor%}
+        , {{course.date.start_time}} - {{course.date.end_time}}
+    </span>
+</div>
+<p class="course-description">
+    {{course.description}}
+</p>
+<div class="course-btn-container">
+{% if course.status == "open" %}
+<div class="buttons-container">
+    <a href="{{url_for('app_blueprint.course_view', mongoid=course._id)}}" class="open-btn">
+        View Open Sections
+    </a>
+</div>
+{% elif course.status == "waitlist" %}
     <form>
-        <input type="button" value="Leave Waitlist ({{course.waitlist_count}})" class="waitlist-btn"/>
+        <input type="button" value="Join Waitlist ({{course.waitlist_count}})" class="waitlist-btn"/>
     </form>
-    {% endif %}
+{% elif course.status == "closed" %}
+<div class="buttons-container">
+    <div class="closed-btn">
+        Closed
     </div>
-</course>
+</div>
+{% elif course.status == "cart" %}
+    {#<!-- <form method="POST" action="{{ url_for('student.add_course', mongoid=course._id) }}"> -->#}
+    <form method="POST" action="https://www.google.com/">
+        <input type="submit" value="Enroll in Course" class="dark-purple-btn"/>
+    </form>
+{% elif course.status == "enrolled" %}
+{#<!-- <form method="POST" action="{{ url_for('student.drop_course', mongoid=course._id) }}"> -->#}
+<form method="POST" action="https://www.google.com/">
+    <input type="submit" value="Drop Course" class="dark-purple-btn"/>
+</form>
+{% elif course.status == "on-waitlist" %}
+<form>
+    <input type="button" value="Leave Waitlist ({{course.waitlist_count}})" class="waitlist-btn"/>
+</form>
+{% endif %}
+</div>

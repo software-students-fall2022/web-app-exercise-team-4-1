@@ -23,6 +23,13 @@ footer {
     background-color: #491680;
 }
 
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
 .footer-container {
     width: 200px;
     height: 70px;
@@ -136,16 +143,15 @@ pagetitle {
 .open-btn {
     background: #491680;
     border-radius: 10px;
-    height: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
+    height: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
     color: white;
     border: none;
 
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 200px;
 
     font-family: 'Inter';
     font-style: normal;
@@ -156,9 +162,9 @@ pagetitle {
 .dark-purple-btn {
     background: #491680;
     border-radius: 10px;
-    height: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
+    height: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
     color: white;
     border: none;
 
@@ -171,9 +177,9 @@ pagetitle {
 .waitlist-btn {
     background: #9F85BA;
     border-radius: 10px;
-    height: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
+    height: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
     color: white;
     border: none;
 
@@ -186,16 +192,15 @@ pagetitle {
 .closed-btn {
     background: white;
     border-radius: 10px;
-    height: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
+    height: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
     color: black;
     border: 3px solid #491680;
 
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 64px;
 
     font-family: 'Inter';
     font-style: normal;
@@ -208,6 +213,7 @@ pagetitle {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-top: 20px;
 }
 
 input[type=text] {
