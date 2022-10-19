@@ -16,9 +16,11 @@
     </p>
     <div class="course-btn-container">
     {% if course.status == "closed" %}
+    <div class="buttons-container">
         <div class="closed-btn">
             Closed
         </div>
+    </div>
     {% elif course.status == "open-section" %}
         {#<!-- <form method="POST" action="{{ url_for('student.add_to_cart', mongoid=course._id) }}"> -->#}
         <form method="POST" action="https://www.google.com/">

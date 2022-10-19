@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block container %}
 <div>
-    <pagetitle>Course Search</pagetitle>
+    <pagetitle>My Courses</pagetitle>
     <div>
         <form>
             <div class="input-box">
@@ -11,9 +11,14 @@
     </div>
     <div class="course-list">
         {% for course in docs %}
-            <course>
-                {% include '_course.html' %}
-            </course>
+        <course>
+            {% include '_course.html' %}
+            <div class="buttons-container">
+                <a href="{{url_for('app_blueprint.course_view', mongoid=course._id)}}" class="open-btn">
+                    Edit Details
+                </a>
+            </div>
+        </course>
         {% endfor %}
     </div>
 </div>
