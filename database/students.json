@@ -1,10 +1,14 @@
 {
-	"_id":{"$oid":"634b5687d9c0c04ef87d461a"},
-	"Name":"Leo Xu",
-	"Year":"senior",
-	"Major":"Math&CS",
-	"Age":21,
-	"Courses":["CSCI-UA 474"],
-	"password":"gx324",
-	"username":"gx324"
+	"_id": {
+		"$oid": "634b5687d9c0c04ef87d461a"
+	},
+	"firstName": "Leo",
+	"lastName": "Xu",
+	"courses": [
+		"CSCI-UA.474.004",
+		"CORE-UA.402.007",
+		"CSCI-UA.101.002"
+	],
+	"password": "gx324",
+	"username": "gx324"
 }

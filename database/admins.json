@@ -1,6 +1,10 @@
 {
-	username:"ab001",
-	password:"SDEfall2022",
-	name:"Amos Bloomberg",
-	course_list:[]
+	"username": "ab001",
+	"password": "SDEfall2022",
+	"firstName": "Amos",
+	"lastName": "Bloomberg",
+	"courseList": [
+		"CSCI-UA.474.004",
+		"CSCI-UA.474.001"
+	]
 }

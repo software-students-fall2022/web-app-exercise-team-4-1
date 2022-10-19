@@ -1,11 +1,23 @@
 {
-	name: "Software Engineering",
-	CourseID: ""CSCI-UA 474""
-	professor: "Amos Bloomberg",
-	description: "SDE",
-	max_students: 50,
-	student_list: ["Leo","Pedro","Grace"],
-	wait_list: [["Eric",{"$timestamp":{"t":0,"i":0}}]]
+	"name": "Software Engineering",
+	"courseID": "CSCI-UA.474.004",
+	"professor": "Amos Bloomberg",
+	"description": "SDE",
+	"capacity": 50,
+	"students": [
+		"Leo",
+		"Pedro",
+		"Grace"
+	],
+	"waitlist": [
+		[
+			"Eric",
+			{
+				"$timestamp": {
+					"t": 0,
+					"i": 0
+				}
+			}
+		]
+	]
 }
-
-
