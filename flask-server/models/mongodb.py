@@ -2,7 +2,8 @@ from pymongo import MongoClient
 from bson.json_util import dumps, loads
 
 class Database(object):
-    url = "MONGO URL"
+
+    url = "mongodb+srv://leo:<leo>@cluster0.pmplyl1.mongodb.net/?retryWrites=true&w=majority"
     database=None
     
     @staticmethod
