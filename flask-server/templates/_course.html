@@ -8,7 +8,9 @@
     </h3>
     <div>
         <span>
-            Section {{course.section}} | {% for day in course.date.days%}{{day}}.{%endfor%}, {{course.date.start_time}} - {{course.date.end_time}}
+            Section {{course.section}} | 
+            {% for i in range(course.date.days|length)%}{% if i != 0 %}/{%endif%}{{course.date.days[i]}}{%endfor%}
+            , {{course.date.start_time}} - {{course.date.end_time}}
         </span>
     </div>
     <p class="course-description">

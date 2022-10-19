@@ -1,10 +1,14 @@
 {% extends 'base.html' %} {% block container %}
-<div>
-    <h2>
-        {{doc.name}}
-    </h2>
-    <p>
-        {{doc.description}}
-    </p>
+<div class="section-page">
+    <a href="{{ url_for('app_blueprint.course_search_view') }}" class="back-icon-container">
+        <img src="{{ url_for('static', filename='images/arrow-left-circle.svg') }}" alt="left arrow" class="back-icon">
+    </a>
+    <span class="section-course-code">{{course_code}}</span>
+    <pagetitle>{{course_name}}</pagetitle>
+    <div class="course-list">
+        {% for course in docs %}
+            {% include '_section.html' %}
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
