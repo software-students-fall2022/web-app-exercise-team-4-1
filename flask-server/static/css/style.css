@@ -28,16 +28,45 @@ footer {
     margin-top: auto;
 }
 
+.back-icon-container {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    padding-bottom: 48px;
+}
+
+
+.back-icon {
+    transform: scale(2.5);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
 body {
     padding: 5rem;
 }
 
-h1 {
+pagetitle {
     font-family: 'Inter';
     font-style: bold;
     font-weight: 700;
     font-size: 80px;
-    line-height: 30px;
+
+    color: #491680;
+}
+
+.section-page {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-course-code {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 100;
 
     color: #491680;
 }
