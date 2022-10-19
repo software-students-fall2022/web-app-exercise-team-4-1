@@ -11,7 +11,7 @@
     <div>
       <main>{% block container %} {% endblock %}</main>
       <footer>
-        <a href="https://www.google.com/" class="footer-container">
+        <a href="{{ url_for('app_blueprint.home_view') }} " class="footer-container">
           <img src="{{ url_for('static', filename='images/home.svg') }}" alt="home" class="footer-icon">
         </a>
         <a href="{{ url_for('app_blueprint.course_search_view') }}" class="footer-container">

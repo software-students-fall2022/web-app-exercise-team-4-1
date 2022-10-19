@@ -32,6 +32,15 @@
         <form method="POST" action="https://www.google.com/">
             <input type="submit" value="Enroll in Course" class="dark-purple-btn"/>
         </form>
+    {% elif course.status == "enrolled" %}
+    {#<!-- <form method="POST" action="{{ url_for('student.drop_course', mongoid=course._id) }}"> -->#}
+    <form method="POST" action="https://www.google.com/">
+        <input type="submit" value="Drop Course" class="dark-purple-btn"/>
+    </form>
+    {% elif course.status == "on-waitlist" %}
+    <form>
+        <input type="button" value="Leave Waitlist ({{course.waitlist_count}})" class="waitlist-btn"/>
+    </form>
     {% endif %}
     </div>
 </course>
