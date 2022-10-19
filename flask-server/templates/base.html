@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Flask-MongoDB Example App</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
-  </head>
-  <body>
-    <div>
-      <main>{% block container %} {% endblock %}</main>
-      <footer>
-        <a href="{{ url_for('app_blueprint.home_view') }} " class="footer-container">
-          <img src="{{ url_for('static', filename='images/home.svg') }}" alt="home" class="footer-icon">
-        </a>
-        <a href="{{ url_for('app_blueprint.course_search_view') }}" class="footer-container">
-          <img src="{{ url_for('static', filename='images/search.svg') }}" alt="search" class="footer-icon">
-        </a>
-        <a href="{{ url_for('app_blueprint.shopping_cart_view') }}" class="footer-container">
-          <img src="{{ url_for('static', filename='images/shopping-cart.svg') }}" alt="shopping cart" class="footer-icon">
-        </a>
-      </footer>
-    </div>
-  </body>
+
+<head>
+  <title>Flask-MongoDB Example App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+</head>
+
+<body>
+  <div>
+    <main>{% block container %} {% endblock %}</main>
+    <footer>
+      <a href="{{ url_for('app_blueprint.home_view') }} " class="footer-container">
+        <img src="{{ url_for('static', filename='images/home.svg') }}" alt="home" class="footer-icon">
+      </a>
+      <a href="{{ url_for('app_blueprint.course_search_view') }}" class="footer-container">
+        <img src="{{ url_for('static', filename='images/search.svg') }}" alt="search" class="footer-icon">
+      </a>
+      <a href="{{ url_for('app_blueprint.shopping_cart_view') }}" class="footer-container">
+        <img src="{{ url_for('static', filename='images/shopping-cart.svg') }}" alt="shopping cart" class="footer-icon">
+      </a>
+    </footer>
+  </div>
+</body>
+
 </html>

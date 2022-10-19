@@ -1,3 +1,13 @@
+:root {
+    font-family: 'Inter', sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+    :root {
+        font-family: 'Inter var', sans-serif;
+    }
+}
+
 footer {
     position: fixed;
     left: 0;
@@ -9,7 +19,7 @@ footer {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    
+
     background-color: #491680;
 }
 
@@ -181,7 +191,7 @@ pagetitle {
     padding-right: 20px;
     color: black;
     border: 3px solid #491680;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -230,10 +240,18 @@ p {
     margin-bottom: 0px;
 }
 
-a:link { text-decoration: none; }
+a:link {
+    text-decoration: none;
+}
 
-a:visited { text-decoration: none; }
+a:visited {
+    text-decoration: none;
+}
 
-a:hover { text-decoration: none; }
+a:hover {
+    text-decoration: none;
+}
 
-a:active { text-decoration: none; }
+a:active {
+    text-decoration: none;
+}
