@@ -19,13 +19,11 @@ def get_course(course_id):
 
 @course_blueprint.route('/add',methods=['POST'])
 def add_course():
-    request_data= request.json
+    request_data= request.form
+    # You may need to convert the request_data into a JSON
 
-    if(Database.find("Course",{"id":request_data['id']}).count()==0):
-        result=Database.insert_one("Course",request_data)
-        return result.acknowledged
-    else:
-        return False
+    result=Database.insert_one("Course",request_data)
+    return result.acknowledged
 
 @course_blueprint.route('/remove',methods=['POST'])
 def remove_course():

@@ -33,13 +33,11 @@
     </div>
 </div>
 {% elif course.status == "cart" %}
-    {#<!-- <form method="POST" action="{{ url_for('student.add_course', mongoid=course._id) }}"> -->#}
-    <form method="POST" action="https://www.google.com/">
-        <input type="submit" value="Enroll in Course" class="dark-purple-btn"/>
-    </form>
+<form method="POST" action="{{ url_for('student.add_course', student_username=student_username, course_id=course._id) }}">
+    <input type="submit" value="Enroll in Course" class="dark-purple-btn"/>
+</form>
 {% elif course.status == "enrolled" %}
-{#<!-- <form method="POST" action="{{ url_for('student.drop_course', mongoid=course._id) }}"> -->#}
-<form method="POST" action="https://www.google.com/">
+<form method="POST" action="{{ url_for('student.remove_course', student_username=student_username, course_id=course._id) }}">
     <input type="submit" value="Drop Course" class="dark-purple-btn"/>
 </form>
 {% elif course.status == "on-waitlist" %}

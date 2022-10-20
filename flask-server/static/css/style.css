@@ -23,10 +23,28 @@ footer {
     background-color: #491680;
 }
 
+.course-edit {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
 .buttons-container {
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+}
+
+.top-buttons-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     gap: 30px;
 }
 
@@ -83,7 +101,7 @@ pagetitle {
 .section-course-code {
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 100;
+    font-weight: 300;
 
     color: #491680;
 }
@@ -192,7 +210,7 @@ pagetitle {
 .closed-btn {
     background: white;
     border-radius: 10px;
-    height: 60px;
+    height: 54px;
     padding-left: 30px;
     padding-right: 30px;
     color: black;
@@ -220,7 +238,7 @@ input[type=text] {
     border: 2px solid #A48ABF;
     border-radius: 30px;
     height: 60px;
-    width: 70%;
+    width: auto;
 
     font-family: 'Inter';
     font-style: normal;
@@ -230,6 +248,22 @@ input[type=text] {
     color: #A48ABF;
 
     padding-left: 20px;
+}
+
+textarea {
+    border: 2px solid #A48ABF;
+    border-radius: 30px;
+    height: 600px;
+    width: auto;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+
+    color: #A48ABF;
+
+    padding: 20px;
 }
 
 course {
