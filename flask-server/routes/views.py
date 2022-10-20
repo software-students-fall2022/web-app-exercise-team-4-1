@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template
-
+from flask import Blueprint, render_template, request
+from .course import get_all_courses, search_course
+from .users.student import get_cart
 app_blueprint= Blueprint("app_blueprint", __name__)
 
 admin = True
@@ -27,8 +28,8 @@ def home_view():
         ]
         return render_template('student_courses.html', docs=docs, admin=admin, student_username=student_username)
     
-@app_blueprint.route('/courses/<mongoid>')
-def course_view(mongoid):
+@app_blueprint.route('/courses/')
+def course_view():
     global admin
     global student_username
     if admin:
@@ -44,8 +45,9 @@ def course_view(mongoid):
             ]
         return render_template('course.html', docs=docs, course_name='Introduction to Computer Science', course_code="CSCI-UA.0001", admin=admin, student_username=student_username)
     
-@app_blueprint.route('/courses')
-def course_search_view():
+@app_blueprint.route('/courses/<search>')
+def course_search_view(search):
+    #docs = search_course(search)
     global admin
     global student_username
     docs = [
@@ -61,6 +63,7 @@ def course_search_view():
     
 @app_blueprint.route('/cart')
 def shopping_cart_view():
+    #docs= get_cart()
     global admin
     global student_username
     docs = [
