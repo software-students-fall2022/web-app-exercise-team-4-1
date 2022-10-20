@@ -4,10 +4,15 @@
     <div>
         <form>
             <div class="input-box">
-                <input type="text" placeholder="Search courses..." id="searchterm" name="searchterm">
+                <input type="text" placeholder="Search courses..." id="searchterm" name="searchterm"/>
                 <input type="submit" value="Search" class="search-btn"/>
             </div>
         </form>
+    </div>
+    <div class="top-buttons-container">
+        <a href="{{url_for('app_blueprint.create_course_view')}}" class="open-btn">
+            + Add Course
+        </a>
     </div>
     <div class="course-list">
         {% for course in docs %}

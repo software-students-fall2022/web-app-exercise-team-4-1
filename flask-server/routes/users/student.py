@@ -15,12 +15,12 @@ def validate_student_login():
         Database.close()
         return False
 
-@student_blueprint.route('/addcourse/<student_username>/<course_id>')
+@student_blueprint.route('/addcourse/<student_username>/<course_id>',methods=['POST'])
 def add_course(student_username, course_id):
     result = Database.update("Student", {"username": student_username}, {'$push': {'course_list': course_id}} )
     return result.acknowledged
 
-@student_blueprint.route('/removecourse/<student_username>/<course_id>')
+@student_blueprint.route('/removecourse/<student_username>/<course_id>',methods=['POST'])
 def remove_course(student_username, course_id):
     result= Database.update("Student", {"username": student_username}, {'$pull': {'course_list': course_id}})
     return result.acknowledged

@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {% block container %}
+<div>
+    <pagetitle>Create Course</pagetitle>
+    <div>
+        <form method="POST" action="{{ url_for('course.add_course') }}" class="course-edit">
+            <input type="text" placeholder="Course Code" id="code" name="code"/>
+            <input type="text" placeholder="Course Name" id="name" name="name"/>
+            <textarea type="text" id="description" name="description" placeholder="Course Description"></textarea>
+            <input type="submit" value="Create Course" class="dark-purple-btn"/>
+        </form>
+    </div>
+</div>
+{% endblock %}
