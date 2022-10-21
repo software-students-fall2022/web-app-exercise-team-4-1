@@ -71,6 +71,24 @@ def student_list_view(course_id):
         {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"}
     ]
     return render_template('student_list.html', docs=docs, course_id=course_id, admin=admin, username=username, course_name=course_name, course_code=course_code, section_name=section_name)
+    
+@app_blueprint.route('/courses/<course_id>/students/add')
+def add_student_view(course_id):
+    global admin
+    global username
+    course_name = "Introduction to Computer Science"
+    course_code = "CSCI-UA.0001"
+    section_name = "X"
+    return render_template('add_student.html', course_id=course_id, admin=admin, username=username, course_name=course_name, course_code=course_code, section_name=section_name)
+
+@app_blueprint.route('/courses/<course_id>/students/remove')
+def remove_student_view(course_id):
+    global admin
+    global username
+    course_name = "Introduction to Computer Science"
+    course_code = "CSCI-UA.0001"
+    section_name = "X"
+    return render_template('remove_student.html', course_id=course_id, admin=admin, username=username, course_name=course_name, course_code=course_code, section_name=section_name)
 
 @app_blueprint.route('/courses')
 def course_search_view():

@@ -19,10 +19,10 @@
         {% endfor %}
     </div>
     <div class="buttons-container-student-list">
-        <a href="{{url_for('app_blueprint.course_view', course_id=course_id)}}" class="open-btn-large">
+        <a href="{{url_for('app_blueprint.add_student_view', course_id=course_id)}}" class="open-btn-large">
             Add Student
         </a>
-        <a href="{{url_for('app_blueprint.student_list_view', course_id=course_id)}}" class="open-btn-large">
+        <a href="{{url_for('app_blueprint.remove_student_view', course_id=course_id)}}" class="open-btn-large">
             Remove Student
         </a>
     </div>

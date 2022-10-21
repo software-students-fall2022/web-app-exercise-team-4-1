@@ -23,6 +23,15 @@ footer {
     background-color: #491680;
 }
 
+.edit-title {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 56px;
+
+    color: #491680;
+}
+
 .student-list-container {
     height: 50%;
     margin-top: 30px;
@@ -76,6 +85,15 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+}
+
+.buttons-container-edit {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
     gap: 30px;
 }
@@ -235,6 +253,25 @@ pagetitle {
     padding-right: 30px;
     color: white;
     border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 36px;
+}
+
+.closed-btn-large {
+    background: white;
+    border-radius: 10px;
+    height: 68px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: black;
+    border: 6px solid #491680;
 
     display: flex;
     align-items: center;
