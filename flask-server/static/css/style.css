@@ -23,6 +23,47 @@ footer {
     background-color: #491680;
 }
 
+.student-list-container {
+    height: 50%;
+    margin-top: 30px;
+    overflow-y: scroll;
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.bold-text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+}
+
+.regular-text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+}
+
+.student-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.section-name-light {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 56px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+
+    color: #491680;
+}
+
 .course-edit {
     margin-top: 100px;
     display: flex;
@@ -37,6 +78,15 @@ footer {
     justify-content: flex-start;
     align-items: center;
     gap: 30px;
+}
+
+.buttons-container-student-list {
+    margin-top: 10px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .top-buttons-container {
@@ -175,6 +225,25 @@ pagetitle {
     font-style: normal;
     font-weight: 200;
     font-size: 24px;
+}
+
+.open-btn-large {
+    background: #491680;
+    border-radius: 10px;
+    height: 80px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: white;
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 36px;
 }
 
 .dark-purple-btn {

@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block container %}
+<div class="section-page">
+    <a href="{{ url_for('app_blueprint.course_view', course_id=course_id) }}" class="back-icon-container">
+        <img src="{{ url_for('static', filename='images/arrow-left-circle.svg') }}" alt="left arrow" class="back-icon">
+    </a>
+    <span class="section-course-code">{{course_code}}</span>
+    <pagetitle>{{course_name}}</pagetitle>
+    <span class="section-name-light">Section {{section_name}}</span>
+    <div class="student-list-container">
+        <div class="student-list">
+            <span class="bold-text">Student</span>
+            <span class="bold-text">Net Id</span>
+        </div>
+        {% for student in docs %}
+        <div class="student-list">
+            <span class="regular-text">{{student.lastName}}, {{student.firstName}}</span>
+            <span class="regular-text">{{student.netID}}</span>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="buttons-container-student-list">
+        <a href="{{url_for('app_blueprint.course_view', course_id=course_id)}}" class="open-btn-large">
+            Add Student
+        </a>
+        <a href="{{url_for('app_blueprint.student_list_view', course_id=course_id)}}" class="open-btn-large">
+            Remove Student
+        </a>
+    </div>
+</div>
+{% endblock %}
