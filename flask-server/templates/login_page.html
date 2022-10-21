@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Flask-MongoDB Example App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+</head>
+
+<body>
+  <div>
+    <pagetitle>Log In</pagetitle>
+    <div class="login-page">
+        <form method="POST" action="{{ url_for('app_blueprint.login_view') }}" class="course-edit">
+            <input type="text" placeholder="Net ID" id="username" name="username"/>
+            <input type="text" placeholder="Password" id="password" name="password"/>
+            <div class="buttons-container-edit">
+              <input type="submit" value="Log In" class="open-btn-large"/>
+              <a href="{{ url_for('app_blueprint.home_view', course_id=course_id)}}" class="closed-btn-large">
+                Sign up
+            </a>
+          </div>
+        </form>
+    </div>
+  </div>
+</body>
+
+</html>
