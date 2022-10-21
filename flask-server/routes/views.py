@@ -7,6 +7,10 @@ admin = True
 username = "testUser"
 
 @app_blueprint.route('/')
+def login_view():
+    return render_template('login_page.html')
+
+@app_blueprint.route('/home')
 def home_view():
     global admin
     global username
