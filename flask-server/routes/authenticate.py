@@ -1,7 +1,8 @@
 from flask import Blueprint, request, redirect, url_for
 from models.mongodb import Database
 from bson.json_util import dumps, loads,ObjectId
-from routes.views import *
+from routes import views
+
 authenticate_blueprint= Blueprint('authenticate',__name__)
 
 @authenticate_blueprint.route('/login', methods=['POST'])
@@ -10,13 +11,13 @@ def validate_login():
     password= request.form["password"]
     Database.initialize()
     student_status= validate_student_login(username,password)
-    admin_status= validate_student_login(username,password)
+    admin_status= validate_admin_login(username,password)
 
     if (student_status or admin_status):
         if(student_status):
-            admin=False
+            views.admin=False
         else:
-            admin=True
+            views.admin=True
         return redirect(url_for('app_blueprint.home_view'))
     else:
         Database.close()
@@ -42,5 +43,5 @@ def validate_admin_login(username, password):
         return False
     else:
         admin = Database.find_single("Admin", {"username" : username})
-        if(admin.password == password):
+        if(admin['password'] == password):
             return dumps(admin)
