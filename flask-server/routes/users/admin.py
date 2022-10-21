@@ -20,7 +20,7 @@ def validate_admin_login():
         if(admin.password == password):
             return dumps(admin)
 
-@admin_blueprint.route('/addcourse/<username>', methods = ['GET','POST'])
+@admin_blueprint.route('/addcourse/<admin_username>', methods = ['GET','POST'])
 def add_admin_course(admin_username):
     new_values=request.form
     valid_id= add_course(dumps(new_values))

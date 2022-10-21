@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block container %}
 <div class="section-page">
-    <a href="{{ url_for('app_blueprint.course_search_view') }}" class="back-icon-container">
+    <a href="{{ url_for('app_blueprint.home_view') }}" class="back-icon-container">
         <img src="{{ url_for('static', filename='images/arrow-left-circle.svg') }}" alt="left arrow" class="back-icon">
     </a>
     <span class="section-course-code">{{course_code}}</span>
@@ -10,10 +10,10 @@
         <course>
             {% include '_section.html' %}
             <div class="buttons-container">
-                <a href="{{url_for('app_blueprint.course_view', mongoid=course._id)}}" class="open-btn">
+                <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="open-btn">
                     Edit
                 </a>
-                <a href="{{url_for('app_blueprint.course_view', mongoid=course._id)}}" class="open-btn">
+                <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="open-btn">
                     View Roster
                 </a>
             </div>

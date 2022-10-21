@@ -18,7 +18,7 @@
 <div class="course-btn-container">
 {% if course.status == "open" %}
 <div class="buttons-container">
-    <a href="{{url_for('app_blueprint.course_view', mongoid=course._id)}}" class="open-btn">
+    <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="open-btn">
         View Open Sections
     </a>
 </div>

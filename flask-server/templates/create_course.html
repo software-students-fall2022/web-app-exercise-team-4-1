@@ -1,8 +1,11 @@
 {% extends 'base.html' %} {% block container %}
 <div>
+    <a href="{{ url_for('app_blueprint.home_view') }}" class="back-icon-container">
+        <img src="{{ url_for('static', filename='images/arrow-left-circle.svg') }}" alt="left arrow" class="back-icon">
+    </a>
     <pagetitle>Create Course</pagetitle>
     <div>
-        <form method="POST" action="{{ url_for('course.add_course') }}" class="course-edit">
+        <form method="POST" action="{{ url_for('admin.add_admin_course', admin_username=username) }}" class="course-edit">
             <input type="text" placeholder="Course Code" id="code" name="code"/>
             <input type="text" placeholder="Course Name" id="name" name="name"/>
             <textarea type="text" id="description" name="description" placeholder="Course Description"></textarea>
