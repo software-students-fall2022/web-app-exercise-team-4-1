@@ -3,8 +3,8 @@ from .course import get_all_courses, search_course
 from .users.student import get_cart
 app_blueprint= Blueprint("app_blueprint", __name__)
 
-admin = True
-username = "testUser"
+admin = None
+username = None
 
 @app_blueprint.route('/')
 def login_view():
@@ -12,8 +12,6 @@ def login_view():
 
 @app_blueprint.route('/home')
 def home_view():
-    global admin
-    global username
     if admin:
         docs = [
             {"max_students": 1, "_id": 1, "code": "CSCI-UA.0001", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Intro to Computer Science', 'professor': 'X', 'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in finibus dolor. Ut ut sollicitudin ante. Praesent fringilla augue ante, vitae feugiat nisl consequat ut.'},

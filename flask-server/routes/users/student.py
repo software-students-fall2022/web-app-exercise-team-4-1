@@ -7,20 +7,6 @@ student_blueprint= Blueprint('student',__name__,url_prefix='/student')
 def get_student_oid(username):
     return Database.find_single("Student", {"username": username})['_id']
 
-@student_blueprint.route('/login',methods=['POST'])
-def validate_student_login():
-    username= request.form["username"]
-    password= request.form["password"]
-    Database.initialize()
-    student_count = Database.count("Student", {"username" : username})
-    if(student_count ==0):
-        Database.close()
-        return "Incorrect Username or Password"
-    else:
-        student = Database.find("Student", {"username" : username})
-        if(student.password == password):
-            return dumps(student)
-
 @student_blueprint.route('/addcourse/<student_username>', methods=['GET','POST'])
 def add_course(student_username):
     Database.initialize()

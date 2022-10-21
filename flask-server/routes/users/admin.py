@@ -5,21 +5,6 @@ from bson.json_util import dumps, loads, ObjectId
 from ..course import add_course, delete_course
 admin_blueprint= Blueprint('admin',__name__,url_prefix='/admin')
 
-
-@admin_blueprint.route('/login', methods=['POST'])
-def validate_admin_login():
-    username= request.form["username"]
-    password= request.form["password"]
-    Database.initialize()
-    admin_count = Database.count("Admin", {"username" : username})
-    if(admin_count==0):
-        Database.close()
-        return "Incorrect Username or Password"
-    else:
-        admin = Database.find("Admin", {"username" : username})
-        if(admin.password == password):
-            return dumps(admin)
-
 @admin_blueprint.route('/addcourse/<admin_username>', methods = ['GET','POST'])
 def add_admin_course(admin_username):
     new_values=request.form
