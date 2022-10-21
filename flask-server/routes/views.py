@@ -44,7 +44,34 @@ def course_view(course_id):
                 {"max_students": 1, "_id": 2, "waitlist_count": 12, "status": "closed","code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering', 'professor': 'X', 'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'}
             ]
         return render_template('course.html', docs=docs, course_name='Introduction to Computer Science', course_code="CSCI-UA.0001", admin=admin, username=username)
-    
+
+@app_blueprint.route('/courses/<course_id>/students')
+def student_list_view(course_id):
+    global admin
+    global username
+    course_name = "Introduction to Computer Science"
+    course_code = "CSCI-UA.0001"
+    section_name = "X"
+    docs = [
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "Bar", "firstName": "Foo", "netID": "fb9876"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"},
+        {"lastName": "LastName", "firstName": "FirstName", "netID": "abc123"}
+    ]
+    return render_template('student_list.html', docs=docs, course_id=course_id, admin=admin, username=username, course_name=course_name, course_code=course_code, section_name=section_name)
+
 @app_blueprint.route('/courses')
 def course_search_view():
     #docs = search_course(search)
