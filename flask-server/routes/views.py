@@ -8,7 +8,7 @@ import json
 
 app_blueprint = Blueprint("app_blueprint", __name__)
 
-admin = True
+admin = False
 username = None
 
 
@@ -37,14 +37,16 @@ def home_view():
         return render_template('admin_courses.html', courses=courses, admin=admin, username=username)
     else:
         # query all course codes in the students.json file under enrolled and cross-match with course data
-        docs = [
-            {"max_students": 1, "_id": 1, "code": "CSCI-UA.0001", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Intro to Computer Science', 'professor': 'X',
-                'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in finibus dolor. Ut ut sollicitudin ante. Praesent fringilla augue ante, vitae feugiat nisl consequat ut.'},
-            {"max_students": 1, "_id": 2, "waitlist_count": 12, "code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering',
-                'professor': 'X', 'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'},
-        ]
+        enrolled = [
+                {"_id": 32, "name":"001", "professor": "Professor X", "capacity": 1, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "students": [1,2], "courseID": "CSCI-UA.0001", "courseName": 'Intro to Computer Science'},
+                {"_id": 32, "name":"002", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "courseID": "CSCI-UA.0002", "courseName": 'Intro to Birds'}
+            ]
+        waitlist = [
+                {"_id": 32, "waitlistPosition": 1, "name":"001", "professor": "Professor X", "capacity": 1, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "students": [1,2], "courseID": "CSCI-UA.0001", "courseName": 'Intro to Computer Science'},
+                {"_id": 32, "waitlistPosition": 2, "name":"002", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "courseID": "CSCI-UA.0002", "courseName": 'Intro to Birds'}
+            ]
         #docs= get_student_courses(username)
-        return render_template('student_courses.html', docs=docs, admin=admin, username=username)
+        return render_template('student_courses.html', waitlist=waitlist, enrolled=enrolled, admin=admin, username=username)
 
 
 @app_blueprint.route('/courses/<course_id>')
@@ -62,7 +64,7 @@ def course_view(course_id):
     else:
         # query all courses that match the specified course code
         sections = [
-                {"_id": 32, "name":"001", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"},
+                {"_id": 32, "name":"001", "professor": "Professor X", "capacity": 1, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "students": [1,2]},
                 {"_id": 32, "name":"002", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}
             ]
         course = {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001", "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin",
@@ -150,39 +152,43 @@ def remove_student_view(course_id, section_id):
 
 @app_blueprint.route('/courses', methods=['GET'])
 def course_search_view():
-    with open('../../database/courses.json', 'r') as f:
-        docs = json.load(f)
-        f.close()
+    # with open('../../database/courses.json', 'r') as f:
+    #     docs = json.load(f)
+    #     f.close()
     #docs= search_course(request.args.get('searchterm', ""))
-    docs = [
-        {"max_students": 1, "_id": '63530541ec3a435021103e8d', "status": "open", "code": "CSCI-UA.0001", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Intro to Computer Science',
-            'professor': 'X', 'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in finibus dolor. Ut ut sollicitudin ante. Praesent fringilla augue ante, vitae feugiat nisl consequat ut.'},
-        {"max_students": 1, "_id": 2, "waitlist_count": 12, "status": "waitlist", "code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering',
-            'professor': 'X', 'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'},
-        {"max_students": 1, "_id": 3, "status": "closed", "code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering',
-            'professor': 'X', 'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'},
-        {"max_students": 1, "_id": 4, "status": "open", "code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering', 'professor': 'X',
+    courses = [
+        {"_id": 32, "courseID": "CSCI-UA.0001", "name": 'Intro to Computer Science', 'professor': 'Professor X',
+            'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in finibus dolor. Ut ut sollicitudin ante. Praesent fringilla augue ante, vitae feugiat nisl consequat ut.'},
+        {"_id": 32, "courseID": "CSCI-UA.0002", "name": 'Software Engineering', 'professor': 'Professor X',
             'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'},
-        {"max_students": 1, "_id": 5, "status": "open", "code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering', 'professor': 'X',
-            'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'},
-        {"max_students": 1, "_id": 6, "status": "open", "code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering', 'professor': 'X',
-            'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'},
-        {"max_students": 1, "_id": 7, "status": "open", "code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering',
-            'professor': 'X', 'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'}
+        {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
+            "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"},
+        {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
+            "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"},
+        {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
+            "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"},
+        {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
+            "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"},
+        {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
+            "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"},
+        {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
+            "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"},
+        {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
+            "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"},
+        {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
+            "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"},
     ]
-    return render_template('course_search.html', docs=docs, admin=admin, username=username)
+    return render_template('course_search.html', courses=courses, admin=admin, username=username)
 
 
 @app_blueprint.route('/cart')
 def shopping_cart_view():
     #docs= get_cart(username)
-    docs = [
-        {"max_students": 1, "_id": 1, "status": "cart", "code": "CSCI-UA.0001", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Intro to Computer Science',
-            'professor': 'X', 'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in finibus dolor. Ut ut sollicitudin ante. Praesent fringilla augue ante, vitae feugiat nisl consequat ut.'},
-        {"max_students": 1, "_id": 2, "waitlist_count": 12, "status": "cart", "code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering',
-            'professor': 'X', 'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'},
-    ]
-    return render_template('shopping_cart.html', docs=docs, admin=admin, username=username)
+    sections = [
+            {"_id": 32, "name":"001", "professor": "Professor X", "capacity": 1, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "students": [1,2], "courseID": "CSCI-UA.0001", "courseName": 'Intro to Computer Science'},
+            {"_id": 32, "name":"002", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "courseID": "CSCI-UA.0002", "courseName": 'Intro to Birds'}
+        ]
+    return render_template('shopping_cart.html', sections=sections, admin=admin, username=username)
 
 
 @app_blueprint.route('/create-course')
