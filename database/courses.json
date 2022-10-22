@@ -1,6 +1,5 @@
 [
 	{
-		"_id": 0,
 		"status": "waitlist",
 		"name": "Software Engineering",
 		"code": "CSCI-UA.474",
@@ -40,7 +39,6 @@
 		]
 	},
 	{
-		"_id": 0,
 		"status": "open",
 		"name": "Software Engineering",
 		"code": "CSCI-UA.474",
@@ -80,7 +78,6 @@
 		]
 	},
 	{
-		"_id": 1,
 		"status": "open",
 		"name": "Intro to Computer Science",
 		"code": "CSCI-UA.101",
@@ -105,7 +102,6 @@
 		]
 	},
 	{
-		"_id": 2,
 		"status": "closed",
 		"name": "Data Structures",
 		"code": "CSCI-UA.102",
