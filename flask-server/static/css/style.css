@@ -23,6 +23,12 @@ footer {
     background-color: #491680;
 }
 
+.login-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .edit-times {
     width: 400px;
     display: flex;

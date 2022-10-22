@@ -12,6 +12,10 @@ username = None
 def login_view():
     return render_template('login_page.html')
 
+@app_blueprint.route('/sign-up')
+def sign_up_view():
+    return render_template('sign_up.html')
+
 @app_blueprint.route('/home')
 def home_view():
     if admin:
