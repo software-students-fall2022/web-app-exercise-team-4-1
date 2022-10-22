@@ -406,7 +406,7 @@ input[type=checkbox] {
 textarea {
     border: 2px solid #A48ABF;
     border-radius: 30px;
-    height: 600px;
+    height: 500px;
     width: auto;
 
     font-family: 'Inter';

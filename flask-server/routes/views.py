@@ -56,6 +56,13 @@ def create_section_view(course_id):
     #docs = get_course_section(course_id)
     return render_template('create_section.html', course_name='Introduction to Computer Science', course_code="CSCI-UA.0001", admin=admin, course_id=course_id)
 
+@app_blueprint.route('/courses/<course_id>/edit-section/<section_id>')
+def edit_section_view(course_id, section_id):
+    global admin
+    section = {"professor": "Professor X", "capacity": 30, "notes": "This is a section", "date": {"days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}}
+    #docs = get_course_section(course_id)
+    return render_template('edit_section.html', course_name='Introduction to Computer Science', course_code="CSCI-UA.0001", admin=admin, course_id=course_id, section=section)
+
 @app_blueprint.route('/courses/<course_id>/students')
 def student_list_view(course_id):
     # course= get_course(course_id)
