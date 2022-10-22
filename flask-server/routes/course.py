@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from models.mongodb import Database
 from bson.json_util import dumps, loads,ObjectId
+from routes import views
 import re
 course_blueprint= Blueprint('course',__name__,url_prefix='/course')
 
@@ -53,9 +54,9 @@ def update_remove_waitlist(courseId):
         student= Database.find_single("Course",{"_id":ObjectId(courseId)})["waitlist.list"][0]
         add_waitlisted_course(student,courseId)
 
-def add_waitlisted_course(student_username, course_id):
+def add_waitlisted_course(course_id):
     Database.initialize()
-    Database.update("Student", {"username": student_username}, {'$push': {'courses': ObjectId(course_id)}} )
+    Database.update("Student", {"username": views.username}, {'$push': {'courses': ObjectId(course_id)}} )
     return "Course has been added"
 
 def update_add_waitlist(courseId, studentId):

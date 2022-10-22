@@ -90,9 +90,9 @@ def remove_student_view(course_id):
     section_name = "X"
     return render_template('remove_student.html', course_id=course_id, admin=admin, username=username, course_name=course_name, course_code=course_code, section_name=section_name)
 
-@app_blueprint.route('/courses')
+@app_blueprint.route('/courses',methods=['GET'])
 def course_search_view():
-    #docs = get_all_courses()
+    #docs= search_course(request.args.get('searchterm', ""))
     docs = [
             {"max_students": 1, "_id": '63530541ec3a435021103e8d', "status": "open", "code": "CSCI-UA.0001", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Intro to Computer Science', 'professor': 'X', 'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in finibus dolor. Ut ut sollicitudin ante. Praesent fringilla augue ante, vitae feugiat nisl consequat ut.'},
             {"max_students": 1, "_id": 2, "waitlist_count": 12, "status": "waitlist","code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering', 'professor': 'X', 'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'},
