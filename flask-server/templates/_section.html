@@ -14,7 +14,7 @@
     <p class="course-description">
         {{course.description}}
     </p>
-    <div class="course-btn-container">
+    <div class="buttons-container">
     {% if course.status == "closed" %}
         <div class="closed-btn">
             Closed
@@ -24,6 +24,11 @@
         <form method="POST" action="https://www.google.com/">
             <input type="submit" value="Add to Cart" class="dark-purple-btn"/>
         </form>
+        {% if course.students|length >= course.max_students %}
+            <div class="closed-btn">
+                Waitlist ({{course.waitlist|length}})
+            </div>
+        {% endif %}
     {% endif %}
     </div>
 </course>

@@ -7,7 +7,9 @@
     <pagetitle>{{course_name}}</pagetitle>
     <div class="course-list">
         {% for course in docs %}
+        <course>
             {% include '_section.html' %}
+        </course>
         {% endfor %}
     </div>
 </div>
