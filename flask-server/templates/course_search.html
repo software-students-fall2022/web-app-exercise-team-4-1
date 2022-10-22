@@ -10,9 +10,20 @@
         </form>
     </div>
     <div class="course-list">
-        {% for course in docs %}
+        {% for course in courses %}
             <course>
-                {% include '_course.html' %}
+                <span>{{course.courseID}}</span>
+                <h2 class="course-name">
+                    {{course.name}}
+                </h2>
+                <p class="course-description">
+                    {{course.description}}
+                </p>
+                <div class="buttons-container">
+                    <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="open-btn">
+                        View Open Sections
+                    </a>
+                </div>
             </course>
         {% endfor %}
     </div>

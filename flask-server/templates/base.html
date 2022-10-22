@@ -10,6 +10,11 @@
 
 <body>
   <div>
+    <header class="">
+      <a href="{{ url_for('app_blueprint.login_view')}}" class="open-btn">
+        Log Out
+      </a>
+    </header>
     <main>{% block container %} {% endblock %}</main>
     <footer>
       <a href="{{ url_for('app_blueprint.home_view') }} " class="footer-container">

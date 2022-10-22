@@ -2,9 +2,20 @@
 <div>
     <pagetitle>My Courses</pagetitle>
     <div class="course-list">
-        {% for course in docs %}
+        {% for section in enrolled %}
         <course>
             {% include '_course.html' %}
+            <form method="POST" action="{{ url_for('student.remove_course') }}">
+                <input type="submit" value="Drop Course" class="dark-purple-btn"/>
+            </form>
+        </course>
+        {% endfor %}
+        {% for section in waitlist %}
+        <course>
+            {% include '_course.html' %}
+            <form>
+                <input type="button" value="Leave Waitlist ({{section.waitlistPosition}})" class="waitlist-btn"/>
+            </form>
         </course>
         {% endfor %}
     </div>

@@ -2,9 +2,18 @@
 <div>
     <pagetitle>Shopping Cart</pagetitle>
     <div class="course-list">
-        {% for course in docs %}
+        {% for section in sections %}
         <course>
             {% include '_course.html' %}
+            {% if section.students|length >= section.capacity %}
+            <form method="POST" action="{{ url_for('student.add_course') }}">
+                <input type="submit" value="Enroll in Waitlist ({{section.waitlist|length}})" class="dark-purple-btn"/>
+            </form>
+            {% else %}
+            <form method="POST" action="{{ url_for('student.add_course') }}">
+                <input type="submit" value="Enroll in Section" class="dark-purple-btn"/>
+            </form>
+            {% endif%}
         </course>
         {% endfor %}
     </div>
