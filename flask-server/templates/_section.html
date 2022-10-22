@@ -1,34 +1,17 @@
 <course>
     <h2 class="course-name">
-        Section {{course.section}}
+        Section {{section.name}}
     </h2>
     <h3 class="course-professor">
-        Professor {{course.professor}}
+        {{section.professor}}
     </h3>
     <div>
         <span>
-            {% for i in range(course.date.days|length)%}{% if i != 0 %}/{%endif%}{{course.date.days[i]}}{%endfor%}
-            , {{course.date.start_time}} - {{course.date.end_time}}
+            {% for i in range(section.days|length)%}{% if i != 0 %}/{%endif%}{{section.days[i]}}{%endfor%}
+            , {{section.startTime}} - {{section.endTime}}
         </span>
     </div>
     <p class="course-description">
-        {{course.description}}
+        {{section.notes}}
     </p>
-    <div class="buttons-container">
-    {% if course.status == "closed" %}
-        <div class="closed-btn">
-            Closed
-        </div>
-    {% elif course.status == "open-section" %}
-        {#<!-- <form method="POST" action="{{ url_for('student.add_to_cart', mongoid=course._id) }}"> -->#}
-        <form method="POST" action="https://www.google.com/">
-            <input type="submit" value="Add to Cart" class="dark-purple-btn"/>
-        </form>
-        {% if course.students|length >= course.max_students %}
-            <div class="closed-btn">
-                Waitlist ({{course.waitlist|length}})
-            </div>
-        {% endif %}
-    {% endif %}
-    </div>
 </course>

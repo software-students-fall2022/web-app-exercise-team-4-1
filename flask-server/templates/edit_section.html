@@ -1,10 +1,10 @@
 {% extends 'base.html' %} {% block container %}
 <div class="section-page">
-    <a href="{{url_for('app_blueprint.course_view', course_id=course_id)}}" class="back-icon-container">
+    <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="back-icon-container">
         <img src="{{ url_for('static', filename='images/arrow-left-circle.svg') }}" alt="left arrow" class="back-icon">
     </a>
-    <span class="section-course-code">{{course_code}}</span>
-    <pagetitle>{{course_name}}</pagetitle>
+    <span class="section-course-code">{{course.courseID}}</span>
+    <pagetitle>{{course.name}}</pagetitle>
     <div>
         <form method="POST" action="{{ url_for('section.update_section') }}" class="course-edit">
             <span class="edit-title">Create Section</span>
@@ -20,35 +20,35 @@
                 <div class="edit-days">
                     <span class="day-title">Section Days</span>
                     <div class="day">
-                        <input type="checkbox" id="days" name="days" value="Mo" {%if "Mo" in section.date.days%} checked {%endif%}>
+                        <input type="checkbox" id="days" name="days" value="Mo" {%if "Mo" in section.days%} checked {%endif%}>
                         <span class="day-text">Mo</span>
                     </div>
                     <div class="day">
-                        <input type="checkbox" id="days" name="days" value="Tu" {%if "Tu" in section.date.days%} checked {%endif%}>
+                        <input type="checkbox" id="days" name="days" value="Tu" {%if "Tu" in section.days%} checked {%endif%}>
                         <span class="day-text">Tu</span>
                     </div>
                     <div class="day">
-                        <input type="checkbox" id="days" name="days" value="We" {%if "We" in section.date.days%} checked {%endif%}>
+                        <input type="checkbox" id="days" name="days" value="We" {%if "We" in section.days%} checked {%endif%}>
                         <span class="day-text">We</span>
                     </div>
                     <div class="day">
-                        <input type="checkbox" id="days" name="days" value="Th" {%if "Th" in section.date.days%} checked {%endif%}>
+                        <input type="checkbox" id="days" name="days" value="Th" {%if "Th" in section.days%} checked {%endif%}>
                         <span class="day-text">Th</span>
                     </div>
                     <div class="day">
-                        <input type="checkbox" id="days" name="days" value="Fr" {%if "Fr" in section.date.days%} checked {%endif%}>
+                        <input type="checkbox" id="days" name="days" value="Fr" {%if "Fr" in section.days%} checked {%endif%}>
                         <span class="day-text">Fr</span>
                     </div>
                 </div>
                 <div class="edit-times">
                     <span class="day-title">Section Hours</span>
-                    <input type="text" placeholder="Start Time" id="startTime" name="startTime" value="{{section.date.startTime}}"/>
-                    <input type="text" placeholder="End Time" id="endTime" name="endTime" value="{{section.date.endTime}}"/>
+                    <input type="text" placeholder="Start Time" id="startTime" name="startTime" value="{{section.startTime}}"/>
+                    <input type="text" placeholder="End Time" id="endTime" name="endTime" value="{{section.endTime}}"/>
                 </div>
             </div>
             <textarea type="text" id="notes" name="notes" placeholder="Section Notes">{{section.notes}}</textarea>
             <div class="buttons-container-edit">
-                <a href="{{url_for('app_blueprint.course_view', course_id=course_id)}}" class="closed-btn-large">
+                <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="closed-btn-large">
                     Cancel
                 </a>
                 <input type="submit" value="Edit Section" class="open-btn-large"/>

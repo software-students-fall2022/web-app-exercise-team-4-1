@@ -6,7 +6,7 @@
     <pagetitle>Edit Course</pagetitle>
     <div>
         <form method="POST" action="{{ url_for('course.update_course', course_id=course._id) }}" class="course-edit">
-            <input type="text" placeholder="Course Code" id="code" name="code" value="{{course.code}}"/>
+            <input type="text" placeholder="Course Code" id="code" name="code" value="{{course.courseID}}"/>
             <input type="text" placeholder="Course Name" id="name" name="name" value="{{course.name}}"/>
             <textarea type="text" id="description" name="description" placeholder="Course Description">{{course.description}}</textarea>
             <input type="submit" value="Update Course" class="dark-purple-btn"/>

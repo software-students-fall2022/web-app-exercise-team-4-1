@@ -6,9 +6,26 @@
     <span class="section-course-code">{{course_code}}</span>
     <pagetitle>{{course_name}}</pagetitle>
     <div class="course-list">
-        {% for course in docs %}
+        {% for section in docs %}
         <course>
             {% include '_section.html' %}
+            <div class="buttons-container">
+                {% if section.status == "closed" %}
+                    <div class="closed-btn">
+                        Closed
+                    </div>
+                {% elif section.status == "open-section" %}
+                    {#<!-- <form method="POST" action="{{ url_for('student.add_to_cart', mongoid=course._id) }}"> -->#}
+                    <form method="POST" action="https://www.google.com/">
+                        <input type="submit" value="Add to Cart" class="dark-purple-btn"/>
+                    </form>
+                    {% if section.students|length >= section.max_students %}
+                        <div class="closed-btn">
+                            Waitlist ({{section.waitlist|length}})
+                        </div>
+                    {% endif %}
+                {% endif %}
+                </div>
         </course>
         {% endfor %}
     </div>

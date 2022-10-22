@@ -10,7 +10,7 @@
             <input type="text" placeholder="Course Name" id="name" name="name"/>
             <textarea type="text" id="description" name="description" placeholder="Course Description"></textarea>
             <div class="buttons-container-edit">
-                <a href="{{url_for('app_blueprint.home_view', course_id=course_id)}}" class="closed-btn-large">
+                <a href="{{url_for('app_blueprint.home_view')}}" class="closed-btn-large">
                     Cancel
                 </a>
                 <input type="submit" value="Create Course" class="open-btn-large"/>
