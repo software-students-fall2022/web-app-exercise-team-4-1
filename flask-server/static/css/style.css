@@ -26,6 +26,34 @@ footer {
     background-color: #491680;
 }
 
+.error-msg {
+    width: 100%;
+    background-color: red;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+
+    color: white;
+}
+
+.success-msg {
+    width: 100%;
+    background-color: green;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+
+    color: white;
+}
+
 .login-page {
     display: flex;
     flex-direction: column;

@@ -1,3 +1,4 @@
+from distutils.log import error
 from flask import Blueprint, render_template, request, redirect, url_for
 from .users.admin import get_admin_course
 from .users.student import get_cart, get_student_courses, get_students
@@ -10,16 +11,18 @@ app_blueprint = Blueprint("app_blueprint", __name__)
 
 admin = False
 username = None
+errorMsg = None
+successMsg = None
 
 
 @app_blueprint.route('/')
 def login_view():
-    return render_template('login_page.html')
+    return render_template('login_page.html', errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/sign-up')
 def sign_up_view():
-    return render_template('sign_up.html')
+    return render_template('sign_up.html', errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/home')
@@ -34,7 +37,7 @@ def home_view():
                 "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"},
         ]
         #docs= search_course(request.args.get('searchterm', ""))
-        return render_template('admin_courses.html', courses=courses, admin=admin, username=username)
+        return render_template('admin_courses.html', courses=courses, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
     else:
         # query all course codes in the students.json file under enrolled and cross-match with course data
         enrolled = [
@@ -46,7 +49,7 @@ def home_view():
                 {"_id": 32, "waitlistPosition": 2, "name":"002", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "courseID": "CSCI-UA.0002", "courseName": 'Intro to Birds'}
             ]
         #docs= get_student_courses(username)
-        return render_template('student_courses.html', waitlist=waitlist, enrolled=enrolled, admin=admin, username=username)
+        return render_template('student_courses.html', waitlist=waitlist, enrolled=enrolled, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/courses/<course_id>')
@@ -60,7 +63,7 @@ def course_view(course_id):
             ]
         course = {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001", "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin",
             "sections": sections}
-        return render_template('admin_course.html', sections=sections, course=course, admin=admin, username=username)
+        return render_template('admin_course.html', sections=sections, course=course, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
     else:
         # query all courses that match the specified course code
         sections = [
@@ -69,7 +72,7 @@ def course_view(course_id):
             ]
         course = {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001", "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin",
             "sections": sections}
-        return render_template('course.html', sections=sections, course=course, admin=admin, username=username)
+        return render_template('course.html', sections=sections, course=course, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/courses/<course_id>/add-section')
@@ -78,7 +81,7 @@ def create_section_view(course_id):
     #docs = get_course_section(course_id)
     course = {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
         "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
-    return render_template('create_section.html', course=course, admin=admin)
+    return render_template('create_section.html', course=course, admin=admin, errorMsg=errorMsg, successMsg=successMsg)
 
 @app_blueprint.route('/courses/<course_id>/<section_id>/edit-section')
 def edit_section_view(course_id, section_id):
@@ -87,7 +90,7 @@ def edit_section_view(course_id, section_id):
     #docs = get_course_section(course_id)
     course = {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
         "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
-    return render_template('edit_section.html', course=course, admin=admin, section=section)
+    return render_template('edit_section.html', course=course, admin=admin, section=section, errorMsg=errorMsg, successMsg=successMsg)
 
 @app_blueprint.route('/courses/<course_id>/<section_id>/students')
 def student_list_view(course_id, section_id):
@@ -116,7 +119,7 @@ def student_list_view(course_id, section_id):
     ]
     course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001", "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
     section = {"_id": 1, "name":"001", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}
-    return render_template('student_list.html', docs=docs, course=course, admin=admin, username=username, section=section)
+    return render_template('student_list.html', docs=docs, course=course, admin=admin, username=username, section=section, errorMsg=errorMsg, successMsg=successMsg)
     
 @app_blueprint.route('/courses/<course_id>/<section_id>/students/add', methods=['GET','POST'])
 def add_student_view(course_id, section_id):
@@ -132,7 +135,7 @@ def add_student_view(course_id, section_id):
     course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
         "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
     section = {"_id": 1, "name":"001", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}
-    return render_template('add_student.html', course=course, admin=admin, username=username, section=section)
+    return render_template('add_student.html', course=course, admin=admin, username=username, section=section, errorMsg=errorMsg, successMsg=successMsg)
 
 @app_blueprint.route('/courses/<course_id>/<section_id>/students/remove', methods=['GET', 'POST'])
 def remove_student_view(course_id, section_id):
@@ -147,7 +150,7 @@ def remove_student_view(course_id, section_id):
 
     course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001", "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
     section = {"_id": 1, "name":"001", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}
-    return render_template('remove_student.html', course=course, admin=admin, username=username, section=section)
+    return render_template('remove_student.html', course=course, admin=admin, username=username, section=section, errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/courses', methods=['GET'])
@@ -178,7 +181,7 @@ def course_search_view():
         {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
             "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"},
     ]
-    return render_template('course_search.html', courses=courses, admin=admin, username=username)
+    return render_template('course_search.html', courses=courses, admin=admin, username=username, successMsg=successMsg)
 
 
 @app_blueprint.route('/cart')
@@ -188,12 +191,12 @@ def shopping_cart_view():
             {"_id": 32, "name":"001", "professor": "Professor X", "capacity": 1, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "students": [1,2], "courseID": "CSCI-UA.0001", "courseName": 'Intro to Computer Science'},
             {"_id": 32, "name":"002", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "courseID": "CSCI-UA.0002", "courseName": 'Intro to Birds'}
         ]
-    return render_template('shopping_cart.html', sections=sections, admin=admin, username=username)
+    return render_template('shopping_cart.html', sections=sections, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/create-course')
 def create_course_view():
-    return render_template('create_course.html', admin=admin, username=username)
+    return render_template('create_course.html', admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/edit-course/<course_id>')
@@ -206,4 +209,4 @@ def edit_course_view(course_id):
     course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001", "description":
         "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin",
         "sections": sections}
-    return render_template('edit_course.html', admin=admin, course=course)
+    return render_template('edit_course.html', admin=admin, course=course, errorMsg=errorMsg, successMsg=successMsg)
