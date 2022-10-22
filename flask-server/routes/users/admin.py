@@ -2,16 +2,16 @@ from dataclasses import dataclass
 from flask import Blueprint, request
 from models.mongodb import Database
 from bson.json_util import dumps, loads, ObjectId
-from ..course import add_course, delete_course
+from ..course import add_course, delete_course, get_courses
 from routes import views
 admin_blueprint= Blueprint('admin',__name__,url_prefix='/admin')
 
-def get_admin_oid():
-    return Database.find_single("Admin", {"username": views.username})['_id']
+def get_admin():
+    return Database.find_single("Admin", {"username": views.username})
 
 def get_admin_course():
-    oid= get_admin_oid(views.username)
-    return Database.find("Course", {"adminID": ObjectId(oid)})
+    admin_courses= get_admin(views.username)['courseList']
+    return get_courses(admin_courses)
 
 @admin_blueprint.route('/addcourse', methods = ['GET','POST'])
 def add_admin_course():
