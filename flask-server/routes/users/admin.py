@@ -23,6 +23,19 @@ def add_admin_course():
     else:
         return "Course ID already exists!"
 
+@admin_blueprint.route('/addsection', methods = ['GET','POST'])
+def add_course_section():
+    course_id=request.form['course_id']
+    professor= request.form['professor']
+    capacity= request.form['capacity']
+    notes=request.form['notes']
+    days=request.form['days']
+    startTime=request.form['startTime']
+    endTime=request.form['endTime']
+
+    Database.insert("Course", {"_id": course_id}, {'$push': {'sections': {'professor': professor, 'notes':notes, 'capacity':capacity, 'student':[],'waitlist':[],'date':{'startTime':startTime,'endTime':endTime,'days':days}}}})
+    return "Section Added!"
+
 @admin_blueprint.route('/removecourse/<course_id>')
 def remove_admin_course(course_id):
     result= Database.update("Admin", {"username": views.username}, {'$pull': {'course_list': ObjectId(course_id)}})

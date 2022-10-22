@@ -8,6 +8,11 @@ student_blueprint= Blueprint('student',__name__,url_prefix='/student')
 def get_student_oid():
     return Database.find_single("Student", {"username": views.username})['_id']
 
+def get_students(student_ids):
+    Database.initialize()
+    courses = Database.find("Student", {"_id":{ "$in": [ObjectId(id) for id in student_ids] }})
+    return loads(dumps(courses))
+
 def get_student_courses():
     courses= Database.find_single("Student", {"username": views.username})['course_list']
     return get_courses(courses)

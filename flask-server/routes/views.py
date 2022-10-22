@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request,redirect, url_for
 from bson.json_util import dumps, loads, ObjectId
-from .course import get_all_courses, get_course_section, search_course
-from .users.student import get_cart, get_student_courses
+from .course import add_student, get_all_courses, get_course, get_course_section, search_course, remove_student
+from .users.student import get_cart, get_student_courses, get_students
 from .users.admin import get_admin_course
 app_blueprint= Blueprint("app_blueprint", __name__)
 
@@ -19,7 +19,7 @@ def home_view():
             {"max_students": 1, "_id": 1, "code": "CSCI-UA.0001", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Intro to Computer Science', 'professor': 'X', 'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in finibus dolor. Ut ut sollicitudin ante. Praesent fringilla augue ante, vitae feugiat nisl consequat ut.'},
             {"max_students": 1, "_id": 2, "waitlist_count": 12, "code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering', 'professor': 'X', 'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'},
         ]
-        #docs= get_admin_course(username)
+        #docs= search_course(request.args.get('searchterm', ""))
         return render_template('admin_courses.html', docs=docs, admin=admin, username=username)
     else:
         docs = [
@@ -54,8 +54,11 @@ def create_section_view(course_id):
 
 @app_blueprint.route('/courses/<course_id>/students')
 def student_list_view(course_id):
-    global admin
-    global username
+    # course= get_course(course_id)
+    # course_name= course['name']
+    # course_code= course['courseID']
+    # section_name = course['sections']['notes']
+    # docs= get_students(course['sections']['student'])
     course_name = "Introduction to Computer Science"
     course_code = "CSCI-UA.0001"
     section_name = "X"
@@ -79,19 +82,33 @@ def student_list_view(course_id):
     ]
     return render_template('student_list.html', docs=docs, course_id=course_id, admin=admin, username=username, course_name=course_name, course_code=course_code, section_name=section_name)
     
-@app_blueprint.route('/courses/<course_id>/students/add')
+@app_blueprint.route('/courses/<course_id>/students/add', methods=['GET','POST'])
 def add_student_view(course_id):
-    global admin
-    global username
+    # course= get_course(course_id)
+    # course_name=course['software engineering']
+    # course_code=course['CS-474']
+    # section_name=course['sections']['notes']
+
+    if(request.method == 'POST'):
+        studentId= request.form['studentId']
+        add_student(studentId,course_id)
+        return redirect(url_for('app_blueprint.student_list_view'))
     course_name = "Introduction to Computer Science"
     course_code = "CSCI-UA.0001"
     section_name = "X"
     return render_template('add_student.html', course_id=course_id, admin=admin, username=username, course_name=course_name, course_code=course_code, section_name=section_name)
 
-@app_blueprint.route('/courses/<course_id>/students/remove')
+@app_blueprint.route('/courses/<course_id>/students/remove', methods=['GET', 'POST'])
 def remove_student_view(course_id):
-    global admin
-    global username
+    # course= get_course(course_id)
+    # course_name=course['software engineering']
+    # course_code=course['CS-474']
+    # section_name=course['sections']['notes']
+    if(request.method == 'POST'):
+        studentId= request.form['studentId']
+        remove_student(studentId,course_id)
+        return redirect(url_for('app_blueprint.student_list_view'))
+
     course_name = "Introduction to Computer Science"
     course_code = "CSCI-UA.0001"
     section_name = "X"
@@ -122,13 +139,10 @@ def shopping_cart_view():
 
 @app_blueprint.route('/create-course')
 def create_course_view():
-    global admin
-    global username
     return render_template('create_course.html', admin=admin, username=username)
 
 @app_blueprint.route('/edit-course/<course_id>')
 def edit_course_view(course_id):
-    global admin
-    global username
+    course=get_course(course_id)
     course = {"_id": 1, "name": "Introduction to Computer Science", "code": "CSCI-UA.0001", "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible."}
     return render_template('edit_course.html', admin=admin, course=course)
