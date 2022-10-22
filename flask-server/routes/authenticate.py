@@ -18,7 +18,7 @@ def validate_login():
             views.admin=False
         else:
             views.admin=True
-            
+
         views.username = username
         return redirect(url_for('app_blueprint.home_view'))
     else:
@@ -47,3 +47,9 @@ def validate_admin_login(username, password):
         admin = Database.find_single("Admin", {"username" : username})
         if(admin['password'] == password):
             return dumps(admin)
+
+@authenticate_blueprint.route('/logout')
+def logout():
+    views.username=None
+    views.admin=None
+    return redirect(url_for('app_blueprint.login_view'))
