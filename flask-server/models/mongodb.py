@@ -29,7 +29,7 @@ class Database(object):
 
     @staticmethod
     def find_single(collection, query):
-        return dumps(Database.database[collection].find_one(query))
+        return (Database.database[collection].find_one(query))
 
     @staticmethod
     def delete(collection, query):

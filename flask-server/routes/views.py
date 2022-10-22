@@ -9,7 +9,7 @@ import json
 
 app_blueprint = Blueprint("app_blueprint", __name__)
 
-admin = False
+admin = None
 username = None
 errorMsg = None
 successMsg = None
