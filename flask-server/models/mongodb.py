@@ -12,7 +12,7 @@ class Database(object):
         Database.database = connection["db"]
 
     @staticmethod
-    def insert(collection,data):
+    def insert(collection, data):
         Database.database[collection].insert(data)
 
     @staticmethod
@@ -20,11 +20,11 @@ class Database(object):
         return dumps(Database.database[collection].find(query))
 
     @staticmethod
-    def find_single(collection,query):
+    def find_single(collection, query):
         return dumps(Database.database[collection].find_one(query))
 
     @staticmethod
-    def delete(collection,query):
+    def delete(collection, query):
         return Database.database[collection].delete_one(query)
 
     @staticmethod
