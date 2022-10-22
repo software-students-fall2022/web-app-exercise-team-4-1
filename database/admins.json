@@ -1,10 +1,42 @@
-{
-	"username": "ab001",
-	"password": "SDEfall2022",
-	"firstName": "Amos",
-	"lastName": "Bloomberg",
-	"courseList": [
-		"CSCI-UA.474.004",
-		"CSCI-UA.474.001"
-	]
-}
+[
+	{
+		"username": "ab0601",
+		"password": "ab0601",
+		"firstName": "Amos",
+		"lastName": "Bloomberg",
+		"courses": [
+			{
+				"code": "CSCI-UA.474",
+				"section": "004"
+			},
+			{
+				"code": "CSCI-UA.474",
+				"section": "001"
+			}
+		]
+	},
+	{
+		"username": "crk412",
+		"password": "crk412",
+		"firstName": "Craig",
+		"lastName": "Kapp",
+		"courses": [
+			{
+				"code": "CSCI-UA.101",
+				"section": "007"
+			}
+		]
+	},
+	{
+		"username": "etk121",
+		"password": "etk121",
+		"firstName": "Evan",
+		"lastName": "Korth",
+		"courses": [
+			{
+				"code": "CSCI-UA.102",
+				"section": "004"
+			}
+		]
+	}
+]

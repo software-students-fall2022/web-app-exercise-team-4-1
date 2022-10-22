@@ -1,23 +1,133 @@
-{
-	"name": "Software Engineering",
-	"courseID": "CSCI-UA.474.004",
-	"professor": "Amos Bloomberg",
-	"description": "SDE",
-	"capacity": 50,
-	"students": [
-		"Leo",
-		"Pedro",
-		"Grace"
-	],
-	"waitlist": [
-		[
-			"Eric",
+[
+	{
+		"status": "waitlist",
+		"name": "Software Engineering",
+		"code": "CSCI-UA.474",
+		"section": "004",
+		"professor": "Amos Bloomberg",
+		"description": "An intense hands-on study of practical techniques and methods of software engineering. Topics include advanced object-oriented design, design patterns, refactoring, code optimization, universal modeling language, threading, user interface design, enterprise application development, and development tools. All topics are integrated and applied during the semester-long group project. The aim of the project is to prepare students for dynamics in a real workplace. Members of the group meet on a regular basis to discuss the project and to assign individual tasks. Students are judged primarily on the final project presentations.",
+		"date": {
+			"days": [
+				"T",
+				"Th"
+			],
+			"start_time": "9:30AM",
+			"end_time": "10:45AM"
+		},
+		"capacity": 2,
+		"students": [
 			{
-				"$timestamp": {
-					"t": 0,
-					"i": 0
+				"username": "gx324",
+				"firstName": "Leo",
+				"lastName": "Xu"
+			}
+		],
+		"waitlist": [
+			[
+				{
+					"username": "haj812",
+					"firstName": "Harold",
+					"lastName": "Jordan"
+				},
+				{
+					"$timestamp": {
+						"t": 0,
+						"i": 0
+					}
 				}
+			]
+		]
+	},
+	{
+		"status": "open",
+		"name": "Software Engineering",
+		"code": "CSCI-UA.474",
+		"section": "001",
+		"professor": "Amos Bloomberg",
+		"description": "An intense hands-on study of practical techniques and methods of software engineering. Topics include advanced object-oriented design, design patterns, refactoring, code optimization, universal modeling language, threading, user interface design, enterprise application development, and development tools. All topics are integrated and applied during the semester-long group project. The aim of the project is to prepare students for dynamics in a real workplace. Members of the group meet on a regular basis to discuss the project and to assign individual tasks. Students are judged primarily on the final project presentations.",
+		"date": {
+			"days": [
+				"T",
+				"Th"
+			],
+			"start_time": "9:30AM",
+			"end_time": "10:45AM"
+		},
+		"capacity": 10,
+		"students": [
+			{
+				"username": "gsz218",
+				"firstName": "Grace",
+				"lastName": "Zhang"
+			}
+		],
+		"waitlist": [
+			[
+				{
+					"username": "abc123",
+					"firstName": "Amy",
+					"lastName": "Cassin"
+				},
+				{
+					"$timestamp": {
+						"t": 0,
+						"i": 0
+					}
+				}
+			]
+		]
+	},
+	{
+		"status": "open",
+		"name": "Intro to Computer Science",
+		"code": "CSCI-UA.101",
+		"section": "007",
+		"professor": "Craig Kapp",
+		"description": "Students learn how to design algorithms to solve problems and how to translate these algorithms into working computer programs. Experience is acquired through programming projects in a high level programming language. CSCI-UA 101 is intended as a first course for computer science majors, and for students of other scientific disciplines. Programming assignments.",
+		"date": {
+			"days": [
+				"M",
+				"W"
+			],
+			"start_time": "11:00AM",
+			"end_time": "12:15PM"
+		},
+		"capacity": 20,
+		"students": [
+			{
+				"username": "gsz218",
+				"firstName": "Grace",
+				"lastName": "Zhang"
 			}
 		]
-	]
-}
+	},
+	{
+		"status": "closed",
+		"name": "Data Structures",
+		"code": "CSCI-UA.102",
+		"section": "004",
+		"professor": "Evan Korth",
+		"description": "The use and design of data structures, which organize information in computer memory. Stacks, queues, linked lists, binary trees: how to implement them in a high level language, how to analyze their effect on algorithm efficiency, and how to modify them. Programming assignments.",
+		"date": {
+			"days": [
+				"T",
+				"Th"
+			],
+			"start_time": "2:00PM",
+			"end_time": "3:15PM"
+		},
+		"capacity": 2,
+		"students": [
+			{
+				"username": "gx324",
+				"firstName": "Leo",
+				"lastName": "Xu"
+			},
+			{
+				"username": "gsz218",
+				"firstName": "Grace",
+				"lastName": "Zhang"
+			}
+		]
+	}
+]
