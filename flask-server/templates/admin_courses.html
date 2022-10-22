@@ -31,6 +31,9 @@
                 <a href="{{url_for('app_blueprint.edit_course_view', course_id=course._id)}}" class="open-btn">
                     Edit Details
                 </a>
+                <form method="POST" action="{{ url_for('admin.remove_admin_course', course_id=course._id) }}">
+                    <input type="submit" value="Delete Course" class="delete-btn"/>
+                </form>
             </div>
         </course>
         {% endfor %}

@@ -266,6 +266,25 @@ pagetitle {
     margin-top: 10px;
 }
 
+.delete-btn {
+    background: red;
+    border-radius: 10px;
+    height: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: white;
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 200;
+    font-size: 24px;
+}
+
 .open-btn {
     background: #491680;
     border-radius: 10px;

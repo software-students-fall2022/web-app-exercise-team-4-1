@@ -15,13 +15,13 @@ def add_section():
     return result.acknowledged
 
 @section_blueprint.route('/remove', methods=['POST'])
-def remove_section():
+def remove_section(section_id):
     request_data= request.json
     result=Database.delete("Section",{"id":request_data.id})
     return result.acknowledged
 
 @section_blueprint.route('/update',methods=['POST'])
-def update_section(): 
+def update_section(section_id): 
     request_data= request.json
     result= Database.update("Section",{"id":request_data["id"]}, {"$set": request_data})
     return result.acknowledged

@@ -21,6 +21,9 @@
                 <a href="{{url_for('app_blueprint.student_list_view', course_id=course._id, section_id=section._id)}}" class="open-btn">
                     View Roster
                 </a>
+                <form method="POST" action="{{ url_for('section.remove_section', section_id=section._id) }}">
+                    <input type="submit" value="Delete Section" class="delete-btn"/>
+                </form>
             </div>
         </course>
         {% endfor %}
