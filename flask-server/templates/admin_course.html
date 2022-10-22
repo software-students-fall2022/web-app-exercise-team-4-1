@@ -5,6 +5,11 @@
     </a>
     <span class="section-course-code">{{course_code}}</span>
     <pagetitle>{{course_name}}</pagetitle>
+    <div class="top-buttons-container">
+        <a href="{{url_for('app_blueprint.create_section_view', course_id=course_id)}}" class="open-btn">
+            + Add Section
+        </a>
+    </div>
     <div class="course-list">
         {% for course in docs %}
         <course>
