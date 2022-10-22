@@ -5,6 +5,13 @@ from bson.json_util import dumps, loads, ObjectId
 from ..course import add_course, delete_course
 admin_blueprint= Blueprint('admin',__name__,url_prefix='/admin')
 
+def get_admin_oid(username):
+    return Database.find_single("Admin", {"username": username})['_id']
+
+def get_admin_course(username):
+    oid= get_admin_oid(username)
+    return Database.find("Course", {"adminID": ObjectId(oid)})
+
 @admin_blueprint.route('/addcourse/<admin_username>', methods = ['GET','POST'])
 def add_admin_course(admin_username):
     new_values=request.form

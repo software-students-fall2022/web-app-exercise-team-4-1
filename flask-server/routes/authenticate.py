@@ -18,6 +18,8 @@ def validate_login():
             views.admin=False
         else:
             views.admin=True
+            
+        views.username = username
         return redirect(url_for('app_blueprint.home_view'))
     else:
         Database.close()

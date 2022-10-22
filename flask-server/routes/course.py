@@ -9,15 +9,22 @@ def get_all_courses():
     Database.initialize()
     result = Database.find("Course")
     if(result is not None):
-        return dumps(result)
+        return loads(dumps(result))
     else:
         return[]
 
 @course_blueprint.route('/getid/<course_id>')
 def get_course(course_id):
-    Database.initialize()
     course = Database.find_single("Course", {"_id":ObjectId(course_id)})
-    return dumps(course)
+    return loads(dumps(course))
+
+def get_course_section(course_id):
+    return get_course(course_id)['sections']
+
+def get_courses(courses_id):
+    Database.initialize()
+    courses = Database.find("Course", {"_id":{ "$in": [ObjectId(id) for id in courses_id] }})
+    return loads(dumps(courses))
 
 @course_blueprint.route('/getname/<search>')
 def search_course(search):

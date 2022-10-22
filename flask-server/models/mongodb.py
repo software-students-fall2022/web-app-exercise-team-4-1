@@ -25,11 +25,11 @@ class Database(object):
 
     @staticmethod
     def find(collection, query="", field=""):
-        return Database.database[collection].find(query,field)
+        return (Database.database[collection].find(query,field))
 
     @staticmethod
     def find_single(collection,query,field=""):
-        return Database.database[collection].find_one(query,field)
+        return (Database.database[collection].find_one(query,field))
 
     @staticmethod
     def delete(collection,query):
@@ -46,3 +46,4 @@ class Database(object):
     @staticmethod
     def close():
         Database.client.close()
+

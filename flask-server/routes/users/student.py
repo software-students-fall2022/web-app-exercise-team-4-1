@@ -1,11 +1,15 @@
 from flask import Blueprint, request
 from models.mongodb import Database
 from bson.json_util import dumps, loads, ObjectId
-from ..course import remove_student, add_student
+from ..course import remove_student, add_student, get_courses
 student_blueprint= Blueprint('student',__name__,url_prefix='/student')
 
 def get_student_oid(username):
     return Database.find_single("Student", {"username": username})['_id']
+
+def get_student_courses(username):
+    courses= Database.find_single("Student", {"username": username})['course_list']
+    return get_courses(courses)
 
 @student_blueprint.route('/addcourse/<student_username>', methods=['GET','POST'])
 def add_course(student_username):
@@ -41,7 +45,7 @@ def update_student(username):
 def get_cart(username):
     Database.initialize()
     cart= list(Database.find_single("Student",{"username":username},{'_id':0,'Carts':1})['Carts'])
-    return dumps(Database.find("Course",{'_id':{"$in": cart}}))
+    return get_courses(cart)
 
 @student_blueprint.route('/add_all_cart/<username>')
 def add_all_cart(username):
