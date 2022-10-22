@@ -1,10 +1,10 @@
-<span>{{course.courseID}}</span>
+<span>{{course.code}}</span>
 <h2 class="course-name">
-    {{course.name}}
+    {{section.courseName}}
 </h2>
-<p class="course-description">
-    Professor {{course.description}}
-<p>
+<h3 class="course-professor">
+    Professor {{course.professor}}
+</h3>
 <div>
     <span>
         Section {{course.section}} |
@@ -13,7 +13,7 @@
     </span>
 </div>
 <p class="course-description">
-    {{course.description}}
+    {{section.notes}}
 </p>
 <div class="course-btn-container">
     {% if course.status == "open" %}
