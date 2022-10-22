@@ -5,7 +5,7 @@ from .users.student import get_cart, get_student_courses
 from .users.admin import get_admin_course
 app_blueprint= Blueprint("app_blueprint", __name__)
 
-admin = None
+admin = True
 username = None
 
 @app_blueprint.route('/')
@@ -31,19 +31,26 @@ def home_view():
     
 @app_blueprint.route('/courses/<course_id>')
 def course_view(course_id):
+    global admin
     #docs = get_course_section(course_id)
     if admin:
         docs = [
             {"max_students": 1, "_id": 1, "code": "CSCI-UA.0001", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Intro to Computer Science', 'professor': 'X', 'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in finibus dolor. Ut ut sollicitudin ante. Praesent fringilla augue ante, vitae feugiat nisl consequat ut.'},
             {"max_students": 1, "_id": 2, "waitlist_count": 12, "code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering', 'professor': 'X', 'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'}
         ]
-        return render_template('admin_course.html', docs=docs, course_name='Introduction to Computer Science', course_code="CSCI-UA.0001", admin=admin, username=username)
+        return render_template('admin_course.html', docs=docs, course_name='Introduction to Computer Science', course_code="CSCI-UA.0001", admin=admin, username=username, course_id=2)
     else:
         docs = [
                 {"students": [1,2], "max_students": 1, "_id": 1, "status": "open-section", "code": "CSCI-UA.0001", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Intro to Computer Science', 'professor': 'X', 'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in finibus dolor. Ut ut sollicitudin ante. Praesent fringilla augue ante, vitae feugiat nisl consequat ut.'},
                 {"max_students": 1, "_id": 2, "waitlist_count": 12, "status": "closed","code": "CSCI-UA.0002", "section": "X", "date": {"days": ["T", "Th"], "start_time": "9:30AM", "end_time": "10:45AM"}, "name": 'Software Engineering', 'professor': 'X', 'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'}
             ]
-        return render_template('course.html', docs=docs, course_name='Introduction to Computer Science', course_code="CSCI-UA.0001", admin=admin, username=username)
+        return render_template('course.html', docs=docs, course_name='Introduction to Computer Science', course_code="CSCI-UA.0001", admin=admin, username=username, course_id=course_id)
+
+@app_blueprint.route('/courses/<course_id>/add-section')
+def create_section_view(course_id):
+    global admin
+    #docs = get_course_section(course_id)
+    return render_template('create_section.html', course_name='Introduction to Computer Science', course_code="CSCI-UA.0001", admin=admin, course_id=course_id)
 
 @app_blueprint.route('/courses/<course_id>/students')
 def student_list_view(course_id):

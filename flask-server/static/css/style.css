@@ -23,6 +23,42 @@ footer {
     background-color: #491680;
 }
 
+.edit-times {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.edit-date {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.day-text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 36px;
+
+    color: #491680;
+}
+
+.day-title {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 36px;
+
+    color: #491680;
+}
+
+.edit-days {
+    display: flex;
+    flex-direction: column;
+}
+
 .edit-title {
     font-family: 'Inter';
     font-style: normal;
@@ -354,6 +390,11 @@ input[type=text] {
     color: #A48ABF;
 
     padding-left: 20px;
+}
+
+input[type=checkbox] {
+    height: 30px;
+    width: 30px;
 }
 
 textarea {
