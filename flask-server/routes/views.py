@@ -40,18 +40,10 @@ def home_view():
         return render_template('admin_courses.html', courses=courses, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
     else:
         # query all course codes in the students.json file under enrolled and cross-match with course data
-        enrolled = [
-            {"_id": 32, "name": "Section 1", "professor": "Professor X", "capacity": 1, "date": {"days": [
-                "Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}, "students": [1, 2], "courseID": "CSCI-UA.0001", "courseName": 'Intro to Computer Science'},
-            {"_id": 32, "name": "Section 2", "professor": "Professor X", "capacity": 30,  "date": {"days": [
-                "Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}, "courseID": "CSCI-UA.0002", "courseName": 'Intro to Birds'}
-        ]
-        waitlist = [
-            {"_id": 32, "waitlistPosition": 1, "name": "Section 3", "professor": "Professor X", "capacity": 1,  "date": {"days": [
-                "Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}, "students": [1, 2], "courseID": "CSCI-UA.0001", "courseName": 'Intro to Computer Science'},
-            {"_id": 32, "waitlistPosition": 2, "name": "Section 4", "professor": "Professor X", "capacity": 30, "date": {"days": [
-                "Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}, "courseID": "CSCI-UA.0002", "courseName": 'Intro to Birds'}
-        ]
+        enrolled = [{"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
+            '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}]
+        waitlist = [{"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
+            '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}]
         #docs= get_student_courses(username)
         return render_template('student_courses.html', waitlist=waitlist, enrolled=enrolled, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
 
@@ -61,24 +53,15 @@ def course_view(course_id):
     global admin
     #docs = get_course_section(course_id)
     if admin:
-        sections = [
-            {"_id": 32, "name": "001", "professor": "Professor X", "capacity": 30,
-                "notes": "This is a section", "date": {"days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}},
-            {"_id": 32, "name": "002", "professor": "Professor X", "capacity": 30,
-             "notes": "This is a section", "date": {"days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}}
-        ]
+        sections = [{"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
+            '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}]
         course = {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001", "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin",
                   "sections": sections}
         return render_template('admin_course.html', sections=sections, course=course, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
     else:
         # query all courses that match the specified course code
-        sections = [
-            {"_id": 32, "name": "001", "professor": "Professor X", "capacity": 1, "notes": "This is a section",
-                "date": {"days": [
-                    "Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}, "students": [1, 2]},
-            {"_id": 32, "name": "002", "professor": "Professor X", "capacity": 30,
-             "notes": "This is a section", "date": {"days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}}
-        ]
+        sections = [{"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
+            '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}]
         course = {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001", "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin",
                   "sections": sections}
         return render_template('course.html', sections=sections, course=course, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
@@ -96,8 +79,8 @@ def create_section_view(course_id):
 @app_blueprint.route('/courses/<course_id>/<section_id>/edit-section')
 def edit_section_view(course_id, section_id):
     global admin
-    section = {"_id": 32, "name": "001", "professor": "Professor X", "capacity": 30,
-               "notes": "This is a section", "date": {"days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}}
+    section = {"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
+        '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}
     #docs = get_course_section(course_id)
     course = {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
               "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
@@ -131,8 +114,8 @@ def student_list_view(course_id, section_id):
     ]
     course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
               "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
-    section = {"_id": 1, "name": "001", "professor": "Professor X", "capacity": 30,
-               "notes": "This is a section", "date": {"days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}}
+    section = {"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
+        '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}
     return render_template('student_list.html', docs=docs, course=course, admin=admin, username=username, section=section, errorMsg=errorMsg, successMsg=successMsg)
 
 
@@ -149,8 +132,8 @@ def add_student_view(course_id, section_id):
         return redirect(url_for('app_blueprint.student_list_view'))
     course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
               "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
-    section = {"_id": 1, "name": "001", "professor": "Professor X", "capacity": 30,
-               "notes": "This is a section", "date": {"days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}}
+    section = {"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
+        '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}
     return render_template('add_student.html', course=course, admin=admin, username=username, section=section, errorMsg=errorMsg, successMsg=successMsg)
 
 
@@ -167,8 +150,8 @@ def remove_student_view(course_id, section_id):
 
     course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
               "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
-    section = {"_id": 1, "name": "001", "professor": "Professor X", "capacity": 30,
-               "notes": "This is a section", "date": {"days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}}
+    section = {"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
+        '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}
     return render_template('remove_student.html', course=course, admin=admin, username=username, section=section, errorMsg=errorMsg, successMsg=successMsg)
 
 
@@ -206,12 +189,8 @@ def course_search_view():
 @app_blueprint.route('/cart')
 def shopping_cart_view():
     #docs= get_cart(username)
-    sections = [
-        {"_id": 32, "name": "001", "professor": "Professor X", "capacity": 1, "notes": "This is a section", "days": [
-            "Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "students": [1, 2], "courseID": "CSCI-UA.0001", "courseName": 'Intro to Computer Science'},
-        {"_id": 32, "name": "002", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": [
-            "Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "courseID": "CSCI-UA.0002", "courseName": 'Intro to Birds'}
-    ]
+    sections = [{"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
+        '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}]
     return render_template('shopping_cart.html', sections=sections, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
 
 
@@ -223,12 +202,8 @@ def create_course_view():
 @app_blueprint.route('/edit-course/<course_id>')
 def edit_course_view(course_id):
     # course=get_course(course_id)
-    sections = [
-        {"_id": 1, "name": "001", "professor": "Professor X", "capacity": 30,
-            "notes": "This is a section", "date": {"days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}},
-        {"_id": 1, "name": "001", "professor": "Professor X", "capacity": 30,
-            "notes": "This is a section", "date": {"days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM"}}
-    ]
+    sections = [{"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
+        '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}]
     course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001", "description":
               "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin",
               "sections": sections}
