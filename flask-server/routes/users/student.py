@@ -15,15 +15,18 @@ def sign_up():
     if (username and firstName and lastName and password):
         if(Database.count("Student",{"username":username})==0):
             Database.insert_one("Student", {'username': username,'firstName': firstName, 'lastName': lastName, 'password':password, 'course_list':[], 'carts':[], 'waitlist':[]})
-            views.successMsg="Reigstration Complete!"
+            views.displayMsg="Reigstration Complete!"
+            views.isError= False
             views.render='/'
             return redirect(url_for('app_blueprint.login_view'))
         else:
-            views.errorMsg="Username is taken!"
+            views.displayMsg="Username is taken!"
+            views.isError= True
             views.render='/sign-up'
             return redirect(url_for('app_blueprint.sign_up_view'))
     else:
-        views.errorMsg="Please fill up all fields!"
+        views.displayMsg="Please fill up all fields!"
+        views.isError= True
         views.render='/sign-up'
         return redirect(url_for('app_blueprint.sign_up_view'))
 

@@ -15,7 +15,7 @@ def add_section():
     return result.acknowledged
 
 @section_blueprint.route('/remove', methods=['POST'])
-def remove_section(section_id):
+def remove_section():
     request_data= request.json
     result=Database.delete("Section",{"id":request_data.id})
     return result.acknowledged

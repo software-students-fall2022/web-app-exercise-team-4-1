@@ -46,11 +46,13 @@ def update_course(course_id):
     description= request.form['description']
     if(courseID and name and description):
         result= Database.update("Course", {"_id":ObjectId(course_id)}, {"$set": {'courseID': courseID, 'description':description,'name':name}})
-        views.successMsg= "Course has been updated!"
+        views.displayMsg= "Course has been updated!"
+        views.isError= False
         views.render='/home'
         return redirect(url_for('app_blueprint.home_view'))
     else:
-        views.errorMsg= "All fields must be filled!"
+        views.displayMsg= "All fields must be filled!"
+        views.isError = True
         views.render='/edit-course'
         return redirect(url_for('app_blueprint.edit_course_view', course_id=course_id)) 
     
