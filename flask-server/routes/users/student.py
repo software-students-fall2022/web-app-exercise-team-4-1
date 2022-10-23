@@ -19,15 +19,16 @@ def get_student_courses():
 
 def get_student_sections():
     courses=get_student_courses()
-    sections= [course['sections'] for course in courses]
-    return [section for course in courses for section in course['sections'] if ObjectId(get_student_oid()) in section['student']]   
+    return get_sections(courses)
+
+def get_sections(courses):
+    return([section for course in courses for section in course['sections'] if ObjectId(get_student_oid()) in section['student']])
 
 def get_student_waitlists():
     return loads(dumps(Database.find("Course", {"sections": {'waitlist': get_student_oid()}})))
 
 @student_blueprint.route('/addcourse', methods=['GET','POST'])
 def add_course():
-    Database.initialize()
     course_id = request.form["course_id"]
 
     course_count= Database.count("Student",{"username": views.username, "courses":{"$in":[ObjectId(course_id)]}})
@@ -65,8 +66,9 @@ def add_to_cart():
 @student_blueprint.route('/get_cart')
 def get_cart():
     Database.initialize()
-    cart= list(Database.find_single("Student",{"username":views.username},{'_id':0,'Carts':1})['Carts'])
-    return get_courses(cart)
+    cart= Database.find("Student",{"username":views.username},{'_id':0,'Carts':1})['Carts']
+    courses= get_courses(cart)
+    return get_sections(courses)
 
 @student_blueprint.route('/add_all_cart')
 def add_all_cart():
