@@ -13,20 +13,30 @@ admin = None
 username = None
 errorMsg = None
 successMsg = None
+render = None
 
+def reset_message(render_page):
+    if(render != render_page):
+        global errorMsg
+        errorMsg = None
+        global successMsg
+        successMsg=None
 
 @app_blueprint.route('/')
 def login_view():
+    reset_message('/')
     return render_template('login_page.html', errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/sign-up')
 def sign_up_view():
+    reset_message('/sign-up')
     return render_template('sign_up.html', errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/home')
 def home_view():
+    reset_message('/home')
     if admin:
         courses= search_course(request.args.get('searchterm', ""))
         return render_template('admin_courses.html', courses=courses, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)

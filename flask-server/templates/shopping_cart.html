@@ -5,7 +5,7 @@
         {% for section in sections %}
         <course>
             {% include '_courseSection.html' %}
-            {% if section.students|length >= section.capacity %}
+            {% if section.student|length >= section.capacity %}
             <form method="POST" action="{{ url_for('student.add_course') }}">
                 <input type="submit" value="Enroll in Waitlist ({{section.waitlist|length}})" class="dark-purple-btn" />
             </form>

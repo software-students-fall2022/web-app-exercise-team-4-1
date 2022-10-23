@@ -20,8 +20,8 @@ class Database(object):
             print('Database connection error:', e)
 
     @staticmethod
-    def insert(collection, data):
-        Database.database[collection].insert(data)
+    def insert_one(collection, data):
+        Database.database[collection].insert_one(data)
 
     @staticmethod
     def find(collection, query="", field=""):

@@ -23,6 +23,8 @@ def validate_login():
         return redirect(url_for('app_blueprint.home_view'))
     else:
         Database.close()
+        views.errorMsg="Incorrect ID or Password!"
+        views.render='/'
         return redirect(url_for('app_blueprint.login_view'))
 
 

@@ -5,6 +5,29 @@ from ..course import get_all_courses, remove_student, add_student, get_courses
 from routes import views
 student_blueprint= Blueprint('student',__name__,url_prefix='/student')
 
+@student_blueprint.route('/sign_up', methods=['GET','POST'])
+def sign_up():
+    Database.initialize()
+    username=request.form['username']
+    firstName=request.form['firstName']
+    lastName=request.form['lastName']
+    password=request.form['password']
+    if (username and firstName and lastName and password):
+        if(Database.count("Student",{"username":username})==0):
+            Database.insert_one("Student", {'username': username,'firstName': firstName, 'lastName': lastName, 'password':password, 'course_list':[], 'carts':[], 'waitlist':[]})
+            views.successMsg="Reigstration Complete!"
+            views.render='/'
+            return redirect(url_for('app_blueprint.login_view'))
+        else:
+            views.errorMsg="Username is taken!"
+            views.render='/sign-up'
+            return redirect(url_for('app_blueprint.sign_up_view'))
+    else:
+        views.errorMsg="Please fill up all fields!"
+        views.render='/sign-up'
+        return redirect(url_for('app_blueprint.sign_up_view'))
+
+
 def get_student_oid():
     return Database.find_single("Student", {"username": views.username})['_id']
 
@@ -28,6 +51,7 @@ def get_student_waitlists():
 
 @student_blueprint.route('/addcourse', methods=['GET','POST'])
 def add_course():
+    print(request.json)
     course_id = request.form["course_id"]
 
     course_count= Database.count("Student",{"username": views.username, "courses":{"$in":[ObjectId(course_id)]}})
@@ -58,8 +82,9 @@ def update_student():
 
 @student_blueprint.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
+    print(request.data)
     course_id = request.form["course_id"]
-    Database.update("Student", {"username": views.username}, {'$push': {'Carts': ObjectId(course_id)}} )
+    Database.update("Student", {"username": views.username}, {'$push': {'carts': ObjectId(course_id)}} )
     return redirect(url_for('app_blueprint.course_search_view'))
 
 @student_blueprint.route('/get_cart')
@@ -67,11 +92,3 @@ def get_cart():
     carts= Database.find_single("Student",{"username":views.username},{'_id':0,'carts':1})['carts']
     courses= get_all_courses()
     return([section for course in courses for section in course['sections'] if section['_id'] in carts])
-
-@student_blueprint.route('/add_all_cart')
-def add_all_cart():
-    Database.initialize()
-    json = loads(get_cart(views.username))
-    for course in json:
-        add_student(get_student_oid(views.username), course['_id'])
-
