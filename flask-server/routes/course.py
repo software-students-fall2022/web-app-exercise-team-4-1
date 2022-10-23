@@ -7,7 +7,6 @@ course_blueprint= Blueprint('course',__name__,url_prefix='/course')
 
 @course_blueprint.route('/getall')
 def get_all_courses():
-    Database.initialize()
     result = Database.find("Course")
     if(result is not None):
         return loads(dumps(result))
@@ -23,7 +22,6 @@ def get_course_section(course_id):
     return get_course(course_id)['sections']
 
 def get_courses(courses_id):
-    Database.initialize()
     courses = Database.find("Course", {"_id":{ "$in": [ObjectId(id) for id in courses_id] }})
     return loads(dumps(courses))
 

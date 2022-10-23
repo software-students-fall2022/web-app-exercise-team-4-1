@@ -1,7 +1,7 @@
 from flask import Blueprint, request, redirect, url_for
 from models.mongodb import Database
 from bson.json_util import dumps, loads, ObjectId
-from ..course import remove_student, add_student, get_courses
+from ..course import get_all_courses, remove_student, add_student, get_courses
 from routes import views
 student_blueprint= Blueprint('student',__name__,url_prefix='/student')
 
@@ -9,7 +9,6 @@ def get_student_oid():
     return Database.find_single("Student", {"username": views.username})['_id']
 
 def get_students(student_ids):
-    Database.initialize()
     courses = Database.find("Student", {"_id":{ "$in": [ObjectId(id) for id in student_ids] }})
     return loads(dumps(courses))
 
@@ -19,13 +18,13 @@ def get_student_courses():
 
 def get_student_sections():
     courses=get_student_courses()
-    return get_sections(courses)
+    return get_sections(courses,ObjectId(get_student_oid()),'student')
 
-def get_sections(courses):
-    return([section for course in courses for section in course['sections'] if ObjectId(get_student_oid()) in section['student']])
+def get_sections(courses, search, attribute):
+    return([section for course in courses for section in course['sections'] if search in section[attribute]])
 
 def get_student_waitlists():
-    return loads(dumps(Database.find("Course", {"sections": {'waitlist': get_student_oid()}})))
+    return get_sections(get_all_courses(),ObjectId(get_student_oid()),'waitlist')
 
 @student_blueprint.route('/addcourse', methods=['GET','POST'])
 def add_course():
@@ -65,10 +64,9 @@ def add_to_cart():
 
 @student_blueprint.route('/get_cart')
 def get_cart():
-    Database.initialize()
-    cart= Database.find("Student",{"username":views.username},{'_id':0,'Carts':1})['Carts']
-    courses= get_courses(cart)
-    return get_sections(courses)
+    carts= Database.find_single("Student",{"username":views.username},{'_id':0,'carts':1})['carts']
+    courses= get_all_courses()
+    return([section for course in courses for section in course['sections'] if section['_id'] in carts])
 
 @student_blueprint.route('/add_all_cart')
 def add_all_cart():

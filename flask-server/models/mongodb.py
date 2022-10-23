@@ -28,8 +28,8 @@ class Database(object):
         return (Database.database[collection].find(query,field))
 
     @staticmethod
-    def find_single(collection, query):
-        return (Database.database[collection].find_one(query))
+    def find_single(collection, query, field=""):
+        return (Database.database[collection].find_one(query,field))
 
     @staticmethod
     def delete(collection, query):
