@@ -1,20 +1,23 @@
 {% extends 'base.html' %} {% block container %}
 <div class="section-page">
-    <a href="{{ url_for('app_blueprint.student_list_view', course_id=course._id, section_id=section._id) }}" class="back-icon-container">
+    <a href="{{ url_for('app_blueprint.student_list_view', course_id=course._id, section_id=section._id) }}"
+        class="back-icon-container">
         <img src="{{ url_for('static', filename='images/arrow-left-circle.svg') }}" alt="left arrow" class="back-icon">
     </a>
     <span class="section-course-code">{{course.courseID}}</span>
     <pagetitle>{{course.name}}</pagetitle>
-    <span class="section-name-light">Section {{section.name}}</span>
+    <span class="section-name-light"> {{section.name}}</span>
     <div>
-        <form method="POST" action="{{ url_for('student.remove_course', student_username=username) }}" class="course-edit">
+        <form method="POST" action="{{ url_for('student.remove_course', student_username=username) }}"
+            class="course-edit">
             <span class="edit-title">Remove Student</span>
-            <input type="text" placeholder="Student NetID" id="username" name="username"/>
+            <input type="text" placeholder="Student NetID" id="username" name="username" />
             <div class="buttons-container-edit">
-                <a href="{{url_for('app_blueprint.student_list_view', course_id=course._id, section_id=section._id)}}" class="closed-btn-large">
+                <a href="{{url_for('app_blueprint.student_list_view', course_id=course._id, section_id=section._id)}}"
+                    class="closed-btn-large">
                     Cancel
                 </a>
-                <input type="submit" value="Remove Student" class="open-btn-large"/>
+                <input type="submit" value="Remove Student" class="open-btn-large" />
             </div>
         </form>
     </div>

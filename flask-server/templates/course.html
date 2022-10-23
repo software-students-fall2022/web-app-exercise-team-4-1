@@ -14,14 +14,14 @@
             {% include '_section.html' %}
             <div class="buttons-container">
                 <form method="POST" action="{{ url_for('student.add_to_cart') }}">
-                    <input type="submit" value="Add to Cart" class="dark-purple-btn"/>
+                    <input type="submit" value="Add to Cart" class="dark-purple-btn" />
                 </form>
                 {% if section.students|length >= section.capacity %}
-                    <div class="closed-btn">
-                        Waitlist ({{section.waitlist|length}})
-                    </div>
-                {% endif %}
+                <div class="closed-btn">
+                    Waitlist ({{section.waitlist|length}})
                 </div>
+                {% endif %}
+            </div>
         </course>
         {% endfor %}
     </div>

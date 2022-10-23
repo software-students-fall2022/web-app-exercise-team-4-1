@@ -6,7 +6,7 @@
         <course>
             {% include '_courseSection.html' %}
             <form method="POST" action="{{ url_for('student.remove_course') }}">
-                <input type="submit" value="Drop Course" class="dark-purple-btn"/>
+                <input type="submit" value="Drop Course" class="dark-purple-btn" />
             </form>
         </course>
         {% endfor %}
@@ -14,7 +14,7 @@
         <course>
             {% include '_courseSection.html' %}
             <form>
-                <input type="button" value="Leave Waitlist ({{section.waitlistPosition}})" class="waitlist-btn"/>
+                <input type="button" value="Leave Waitlist ({{section.waitlistPosition}})" class="waitlist-btn" />
             </form>
         </course>
         {% endfor %}

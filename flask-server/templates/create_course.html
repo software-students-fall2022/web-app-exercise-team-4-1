@@ -5,15 +5,16 @@
     </a>
     <pagetitle>Create Course</pagetitle>
     <div>
-        <form method="POST" action="{{ url_for('admin.add_admin_course', admin_username=username) }}" class="course-edit">
-            <input type="text" placeholder="Course Code" id="courseID" name="courseID"/>
-            <input type="text" placeholder="Course Name" id="name" name="name"/>
+        <form method="POST" action="{{ url_for('admin.add_admin_course', admin_username=username) }}"
+            class="course-edit">
+            <input type="text" placeholder="Course Code" id="courseID" name="courseID" />
+            <input type="text" placeholder="Course Name" id="name" name="name" />
             <textarea type="text" id="description" name="description" placeholder="Course Description"></textarea>
             <div class="buttons-container-edit">
                 <a href="{{url_for('app_blueprint.home_view')}}" class="closed-btn-large">
                     Cancel
                 </a>
-                <input type="submit" value="Create Course" class="open-btn-large"/>
+                <input type="submit" value="Create Course" class="open-btn-large" />
             </div>
         </form>
     </div>

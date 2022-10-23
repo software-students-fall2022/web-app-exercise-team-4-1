@@ -7,11 +7,11 @@
             {% include '_courseSection.html' %}
             {% if section.students|length >= section.capacity %}
             <form method="POST" action="{{ url_for('student.add_course') }}">
-                <input type="submit" value="Enroll in Waitlist ({{section.waitlist|length}})" class="dark-purple-btn"/>
+                <input type="submit" value="Enroll in Waitlist ({{section.waitlist|length}})" class="dark-purple-btn" />
             </form>
             {% else %}
             <form method="POST" action="{{ url_for('student.add_course') }}">
-                <input type="submit" value="Enroll in Section" class="dark-purple-btn"/>
+                <input type="submit" value="Enroll in Section" class="dark-purple-btn" />
             </form>
             {% endif%}
         </course>

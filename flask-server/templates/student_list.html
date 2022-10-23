@@ -5,24 +5,24 @@
     </a>
     <span class="section-course-code">{{course.courseID}}</span>
     <pagetitle>{{course.name}}</pagetitle>
-    <span class="section-name-light">Section {{section.name}}</span>
+    <span class="section-name-light">{{section.name}}</span>
     <div class="student-list-container">
         <div class="student-list">
             <span class="bold-text">Student</span>
-            <span class="bold-text">Net Id</span>
         </div>
         {% for student in docs %}
         <div class="student-list">
             <span class="regular-text">{{student.lastName}}, {{student.firstName}}</span>
-            <span class="regular-text">{{student.netID}}</span>
         </div>
         {% endfor %}
     </div>
     <div class="buttons-container-student-list">
-        <a href="{{url_for('app_blueprint.add_student_view', course_id=course._id, section_id=section._id)}}" class="open-btn-large">
+        <a href="{{url_for('app_blueprint.add_student_view', course_id=course._id, section_id=section._id)}}"
+            class="open-btn-large">
             Add Student
         </a>
-        <a href="{{url_for('app_blueprint.remove_student_view', course_id=course._id, section_id=section._id)}}" class="open-btn-large">
+        <a href="{{url_for('app_blueprint.remove_student_view', course_id=course._id, section_id=section._id)}}"
+            class="open-btn-large">
             Remove Student
         </a>
     </div>

@@ -22,18 +22,18 @@
   <div class="section-page">
     <pagetitle>Sign Up</pagetitle>
     <div class="login-page">
-        <form method="POST" action="{{ url_for('app_blueprint.sign_up_view') }}" class="course-edit">
-            <input type="text" placeholder="Net ID" id="username" name="username"/>
-            <input type="text" placeholder="First Name" id="firstName" name="firstName"/>
-            <input type="text" placeholder="Last Name" id="lastName" name="lastName"/>
-            <input type="text" placeholder="Password" id="password" name="password"/>
-            <div class="buttons-container-edit">
-                <input type="submit" value="Sign Up" class="open-btn-large"/>
-                <a href="{{ url_for('app_blueprint.login_view')}}" class="closed-btn-large">
-                    Back to Log In
-                </a>
-          </div>
-        </form>
+      <form method="POST" action="{{ url_for('app_blueprint.sign_up_view') }}" class="course-edit">
+        <input type="text" placeholder="Net ID" id="username" name="username" />
+        <input type="text" placeholder="First Name" id="firstName" name="firstName" />
+        <input type="text" placeholder="Last Name" id="lastName" name="lastName" />
+        <input type="text" placeholder="Password" id="password" name="password" />
+        <div class="buttons-container-edit">
+          <input type="submit" value="Sign Up" class="open-btn-large" />
+          <a href="{{ url_for('app_blueprint.login_view')}}" class="closed-btn-large">
+            Back to Log In
+          </a>
+        </div>
+      </form>
     </div>
   </div>
 </body>

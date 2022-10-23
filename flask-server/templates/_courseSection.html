@@ -7,11 +7,8 @@
 </h3>
 <div>
     <span>
-        Section {{section.sectionID}} |
+        {{section.name}} |
         {% for i in range(section.days|length)%}{% if i != 0 %}/{%endif%}{{section.days[i]}}{%endfor%}
         , {{section.startTime}} - {{section.endTime}}
     </span>
 </div>
-<p class="course-description">
-    {{section.notes}}
-</p>

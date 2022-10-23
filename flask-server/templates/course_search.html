@@ -5,20 +5,20 @@
         <form>
             <div class="input-box">
                 <input type="text" placeholder="Search courses..." id="searchterm" name="searchterm">
-                <input type="submit" value="Search" class="search-btn"/>
+                <input type="submit" value="Search" class="search-btn" />
             </div>
         </form>
     </div>
     <div class="course-list">
         {% for course in courses %}
-            <course>
-                {% include '_course.html' %}
-                <div class="buttons-container">
-                    <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="open-btn">
-                        View Open Sections
-                    </a>
-                </div>
-            </course>
+        <course>
+            {% include '_course.html' %}
+            <div class="buttons-container">
+                <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="open-btn">
+                    View Open Sections
+                </a>
+            </div>
+        </course>
         {% endfor %}
     </div>
 </div>
