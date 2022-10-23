@@ -37,10 +37,11 @@ def add_course_section(course_id):
         professor= request.form['professor']
         capacity= int(request.form['capacity'])
         notes=request.form['notes']
-        days=request.form.get('days',[])
+        days=request.form.getlist('days')
         startTime=request.form['startTime']
         endTime=request.form['endTime']
         _id=ObjectId()
+        print(days)
         regex = '^(1[0-2]|0?[1-9]):([0-5]?[0-9])(●?[AP]M)?$'
         if(not re.match(regex,startTime) or not re.match(regex, endTime)):
             raise ValueError
@@ -66,7 +67,7 @@ def update_course_section(course_id,section_id):
         professor= request.form['professor']
         capacity= int(request.form['capacity'])
         notes="test" #request.form['notes']
-        days=request.form.get('days',[])
+        days=request.form.getlist('days')
         startTime=request.form['startTime']
         endTime=request.form['endTime']
         regex = '^(1[0-2]|0?[1-9]):([0-5]?[0-9])(●?[AP]M)?$'
