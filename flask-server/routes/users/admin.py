@@ -43,7 +43,6 @@ def add_course_section(course_id):
         startTime=request.form['startTime']
         endTime=request.form['endTime']
         _id=ObjectId()
-        print(days)
         regex = '^(1[0-2]|0?[1-9]):([0-5]?[0-9])(●?[AP]M)?$'
         if(not re.match(regex,startTime) or not re.match(regex, endTime)):
             raise ValueError
@@ -97,11 +96,14 @@ def update_course_section(course_id,section_id):
         return redirect(url_for('app_blueprint.edit_section_view',course_id=course_id,section_id=section_id))
 
 
-@admin_blueprint.route('/removecourse/<course_id>')
-def remove_admin_course(course_id):
-    result= Database.update("Admin", {"username": views.username}, {'$pull': {'course_list': ObjectId(course_id)}})
+@admin_blueprint.route('/removecourse', methods=['POST'])
+def remove_admin_course():
+    course_id= request.form['course_id']
+    Database.update("Admin", {"username": views.username}, {'$pull': {'course_list': ObjectId(course_id)}})
     delete_course(course_id)
-    return "Course Removed!"
+    views.successMsg="Course Removed!"
+    views.render= '/courses'
+    return redirect(url_for('app_blueprint.course_view'))
 
 @admin_blueprint.route('/update',methods=["POST"])
 def update_admin():

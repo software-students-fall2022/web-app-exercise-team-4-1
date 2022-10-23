@@ -13,6 +13,13 @@ def get_all_courses():
     else:
         return[]
 
+def get_all_students():
+    result = Database.find("Student")
+    if(result is not None):
+        return loads(dumps(result))
+    else:
+        return[]
+
 @course_blueprint.route('/getid/<course_id>')
 def get_course(course_id):
     course = Database.find_single("Course", {"_id":ObjectId(course_id)})
@@ -74,15 +81,12 @@ def update_add_waitlist(courseId, studentId):
     Database.update("Course", {"_id": ObjectId(courseId)}, {'$push': {'waitlist.list': ObjectId(studentId)}})
     return "Waitlist Added!"
 
-def delete_course(courseId):
-    remove_all_student_course(courseId, get_course(courseId))
-    Database.delete("Course", {"_id":ObjectId(courseId)})
-
-def remove_all_student_course(course_id, courses):
-    Database.initialize()
-    students= loads(courses)['student']
-    for student in students:
-        Database.update("Student", {"_id": ObjectId(student)}, {'$pull': {'courses': ObjectId(course_id)}})
+def delete_course(course_id):
+    Database.delete("Course", {"_id":ObjectId(course_id)})
+    students=list(get_all_students())
+    student_ids= [ student['_id'] for student in students]
+    for student in student_ids:
+        Database.update("Student", {"_id": ObjectId(student)}, {'$pull': {'course_list': ObjectId(course_id)}})
 
 def add_student(studentId, courseId):
     course= loads(get_course(courseId))
