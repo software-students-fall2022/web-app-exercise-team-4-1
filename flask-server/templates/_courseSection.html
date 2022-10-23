@@ -1,0 +1,17 @@
+<span>{{section.courseID}}</span>
+<h2 class="course-name">
+    {{section.courseName}}
+</h2>
+<h3 class="course-professor">
+    {{section.professor}}
+</h3>
+<div>
+    <span>
+        Section {{section.name}} | 
+        {% for i in range(section.days|length)%}{% if i != 0 %}/{%endif%}{{section.days[i]}}{%endfor%}
+        , {{section.startTime}} - {{section.endTime}}
+    </span>
+</div>
+<p class="course-description">
+    {{section.notes}}
+</p>
