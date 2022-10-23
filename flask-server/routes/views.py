@@ -69,14 +69,8 @@ def edit_section_view(course_id, section_id):
 @app_blueprint.route('/courses/<course_id>/<section_id>/students')
 def student_list_view(course_id, section_id):
     course= get_course(course_id)
-    section=course['sections']
-    
-    docs= get_students(course['sections']['student'])
-
-    course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
-              "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
-    section = {"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
-        '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}
+    section = [section for section in course['sections'] if section['_id'] == ObjectId(section_id) ][0]
+    docs= get_students(section['student'])
     return render_template('student_list.html', docs=docs, course=course, admin=admin, username=username, section=section, errorMsg=errorMsg, successMsg=successMsg)
 
 
