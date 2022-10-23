@@ -12,10 +12,6 @@
             View Open Sections
         </a>
     </div>
-    {% elif course.status == "waitlist" %}
-    <form>
-        <input type="button" value="Join Waitlist ({{course.waitlist_count}})" class="waitlist-btn" />
-    </form>
     {% elif course.status == "closed" %}
     <div class="buttons-container">
         <div class="closed-btn">
