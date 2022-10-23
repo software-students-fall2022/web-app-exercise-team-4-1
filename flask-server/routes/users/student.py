@@ -31,8 +31,8 @@ def sign_up():
         return redirect(url_for('app_blueprint.sign_up_view'))
 
 
-def get_student_oid():
-    return Database.find_single("Student", {"username": views.username})['_id']
+def get_student_oid(username):
+    return Database.find_single("Student", {"username": username})['_id']
 
 def get_students(student_ids):
     courses = Database.find("Student", {"_id":{ "$in": [ObjectId(id) for id in student_ids] }})
@@ -44,16 +44,16 @@ def get_student_courses():
 
 def get_student_sections():
     courses=get_student_courses()
-    return get_sections(courses,ObjectId(get_student_oid()),'student')
+    return get_sections(courses,ObjectId(get_student_oid(views.username)),'student')
 
 def get_sections(courses, search, attribute):
     return([section for course in courses for section in course['sections'] if search in section[attribute]])
 
 def get_student_waitlists():
-    return get_sections(get_all_courses(),ObjectId(get_student_oid()),'waitlist')
+    return get_sections(get_all_courses(),ObjectId(get_student_oid(views.username)),'waitlist')
 
-@student_blueprint.route('/addcourse/<course_id>/<section_id>', methods=['GET','POST'])
-def add_course(course_id,setion_id):
+@student_blueprint.route('/addcourse/<course_id>', methods=['GET','POST'])
+def add_course(course_id):
     if(views.admin):
         username=request.form['username']
         course_count= Database.count("Student",{"username": username, "courses":{"$in":[ObjectId(course_id)]}})
@@ -80,9 +80,9 @@ def add_course(course_id,setion_id):
 @student_blueprint.route('/removecourse', methods=['GET','POST'])
 def remove_course():
     Database.initialize()
-    course_id = request.form["course_id"]
-    student= Database.update("Student", {"username": views.username}, {'$pull': {'courses': ObjectId(course_id)}})
-    remove_student(student.upserted_id, course_id)
+    section_id = request.form["section_id"]
+    student= Database.update("Student", {"username": views.username}, {'$pull': {'courses': ObjectId(section_id)}})
+    remove_student(student.upserted_id, section_id)
     return "Class has been removed"
 
 @student_blueprint.route('/update_student',methods=['POST'])
@@ -94,9 +94,8 @@ def update_student():
 
 @student_blueprint.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
-    print(request.data)
-    course_id = request.form["course_id"]
-    Database.update("Student", {"username": views.username}, {'$push': {'carts': ObjectId(course_id)}} )
+    section_id = request.form["section_id"]
+    Database.update("Student", {"username": views.username}, {'$push': {'carts': ObjectId(section_id)}} )
     return redirect(url_for('app_blueprint.course_search_view'))
 
 @student_blueprint.route('/get_cart')

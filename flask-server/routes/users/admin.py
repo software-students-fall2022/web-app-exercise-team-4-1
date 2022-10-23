@@ -127,7 +127,7 @@ def remove_admin_course():
     delete_course(course_id)
     views.successMsg="Course Removed!"
     views.render= '/courses'
-    return redirect(url_for('app_blueprint.course_view'))
+    return redirect(url_for('app_blueprint.home_view'))
 
 @admin_blueprint.route('/update',methods=["POST"])
 def update_admin():
