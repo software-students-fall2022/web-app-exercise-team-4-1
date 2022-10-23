@@ -5,6 +5,9 @@
     </a>
     <span class="section-course-code">{{course.courseID}}</span>
     <pagetitle>{{course.name}}</pagetitle>
+    <span class="course-description">
+        {{course.description}}
+    </span>
     <div class="course-list">
         {% for section in sections %}
         <course>
