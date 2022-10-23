@@ -20,18 +20,16 @@
   </div>
   {% endif %}
   <div class="section-page">
-    <pagetitle>Log In</pagetitle>
+    <pagetitle>Admin Sign Up</pagetitle>
     <div class="login-page">
-      <form method="POST" action="{{ url_for('authenticate.validate_login') }}" class="course-edit">
-        <input type="text" placeholder="Net ID" id="username" name="username" />
+      <form method="POST" action="{{ url_for('student.sign_up') }}" class="course-edit">
+        <input type="text" placeholder="Username" id="username" name="username" />
+        <input type="text" placeholder="Name" id="name" name="name" />
         <input type="text" placeholder="Password" id="password" name="password" />
         <div class="buttons-container-edit">
-          <input type="submit" value="Log In" class="open-btn-large" />
-          <a href="{{ url_for('app_blueprint.sign_up_view')}}" class="closed-btn-large">
-            Sign up
-          </a>
-          <a href="{{ url_for('app_blueprint.admin_sign_up_view')}}" class="closed-btn-large">
-            Admin Sign up
+          <input type="submit" value="Sign Up" class="open-btn-large" />
+          <a href="{{ url_for('app_blueprint.login_view')}}" class="closed-btn-large">
+            Back to Log In
           </a>
         </div>
       </form>

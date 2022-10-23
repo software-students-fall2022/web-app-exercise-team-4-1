@@ -1,15 +1,17 @@
 from pymongo import MongoClient
 from bson.json_util import dumps, loads
+import certifi
 
 class Database(object):
 
     url = "mongodb+srv://admin:admin123@cluster0.b6toxnx.mongodb.net/?retryWrites=true&w=majority"
     database=None
     client=None
+    ca = certifi.where()
     
     @staticmethod
     def initialize():
-        connection= MongoClient(Database.url)
+        connection= MongoClient(Database.url, tlsCAFile=Database.ca)
         try:
             connection.admin.command('ping')
             Database.client=connection
