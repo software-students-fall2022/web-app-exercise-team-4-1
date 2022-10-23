@@ -17,6 +17,11 @@ def get_student_courses():
     courses= Database.find_single("Student", {"username": views.username})['course_list']
     return get_courses(courses)
 
+def get_student_sections():
+    courses=get_student_courses()
+    sections= [course['sections'] for course in courses]
+    return [section for course in courses for section in course['sections'] if ObjectId(get_student_oid()) in section['student']]   
+
 def get_student_waitlists():
     return loads(dumps(Database.find("Course", {"sections": {'waitlist': get_student_oid()}})))
 

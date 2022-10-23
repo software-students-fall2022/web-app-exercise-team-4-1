@@ -1,7 +1,7 @@
 from distutils.log import error
 from flask import Blueprint, render_template, request, redirect, url_for
 from .users.admin import get_admin_course
-from .users.student import get_cart, get_student_courses, get_students
+from .users.student import get_cart, get_student_courses, get_student_waitlists, get_students, get_student_sections
 from .course import add_student, get_all_courses, get_course, get_course_section, search_course, remove_student
 from bson.json_util import dumps, loads, ObjectId
 from flask import Blueprint, render_template
@@ -31,7 +31,12 @@ def home_view():
         courses= search_course(request.args.get('searchterm', ""))
         return render_template('admin_courses.html', courses=courses, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
     else:
-        enrolled = get_student_courses()
+        enrolled = get_student_sections()
+        enrolled = [
+                {"_id": 32, "name":"001", "professor": "Professor X", "capacity": 1, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "students": [1,2], "courseID": "CSCI-UA.0001", "courseName": 'Intro to Computer Science'},
+                {"_id": 32, "name":"002", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "courseID": "CSCI-UA.0002", "courseName": 'Intro to Birds'}
+            ]
+        #[waitlist['sections'] for waitlist in get_student_waitlists()]
         waitlist = [
                 {"_id": 32, "waitlistPosition": 1, "name":"001", "professor": "Professor X", "capacity": 1, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "students": [1,2], "courseID": "CSCI-UA.0001", "courseName": 'Intro to Computer Science'},
                 {"_id": 32, "waitlistPosition": 2, "name":"002", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "courseID": "CSCI-UA.0002", "courseName": 'Intro to Birds'}
