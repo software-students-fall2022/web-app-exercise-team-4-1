@@ -47,7 +47,7 @@ def add_course_section(course_id):
     except ValueError:
         views.errorMsg='Wrong format!'
         views.render='/add-section'
-        return redirect(url_for('app_blueprint.course_view',course_id=course_id))
+        return redirect(url_for('app_blueprint.create_section_view',course_id=course_id))
 
     course= get_course(course_id)
     if(course_id and professor and capacity and notes and days and startTime and endTime):
