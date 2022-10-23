@@ -80,10 +80,16 @@ def add_course(course_id):
 @student_blueprint.route('/removecourse', methods=['GET','POST'])
 def remove_course():
     Database.initialize()
+    course_id = request.form["course_id"]
     section_id = request.form["section_id"]
-    student= Database.update("Student", {"username": views.username}, {'$pull': {'courses': ObjectId(section_id)}})
-    remove_student(student.upserted_id, section_id)
-    return "Class has been removed"
+
+    student= Database.update("Student", {"username": views.username}, {'$pull': {'course_list': ObjectId(course_id)}})
+    remove_student(student.upserted_id,course_id,section_id)
+    views.displayMsg='Course has been removed'
+    views.isError=False
+    views.render='/home'
+    return redirect(url_for('app_blueprint.home_view'))
+
 
 @student_blueprint.route('/update_student',methods=['POST'])
 def update_student():

@@ -65,7 +65,7 @@ def update_course(course_id):
     
 
 def update_remove_waitlist(courseId):
-    course_waitlist = Database.find_single("Course", {"_id": ObjectId(courseId)})['waitlist.count']
+    course_waitlist = Database.find_single("Course", {"sections.$._id": ObjectId(courseId)})['waitlist.count']
     if(course_waitlist>0):
         Database.update("Course", {"_id": ObjectId(courseId)}, {'$inc': {"waitlist.count":-1}})
         student= Database.find_single("Course",{"_id":ObjectId(courseId)})["waitlist.list"][0]
@@ -99,9 +99,9 @@ def add_student(studentId, courseId):
         Database.update("Course", {"_id": ObjectId(courseId)}, {'$push': {'student': ObjectId(studentId)}})
         return True
 
-def remove_student(studentId, courseId):
-    Database.update("Course", {"_id": ObjectId(courseId)}, {'$pull': {'student': ObjectId(studentId)}})
-    update_remove_waitlist(courseId)
+def remove_student(studentId, courseId, sectionId):
+    Database.update("Course", {"_id": ObjectId(courseId)}, {'$pull': {'sections.$.student': ObjectId(studentId)}})
+    update_remove_waitlist(courseId,sectionId)
 
 def remove_sections(courseId, sectionId):
     Database.update("Course", {"_id": ObjectId(courseId)}, {'$pull': {'sections.$._id': ObjectId(sectionId)}})
