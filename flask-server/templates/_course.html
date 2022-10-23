@@ -5,32 +5,3 @@
 <p class="course-description">
     {{course.description}}
 </p>
-<div class="course-btn-container">
-    {% if course.status == "open" %}
-    <div class="buttons-container">
-        <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="open-btn">
-            View Open Sections
-        </a>
-    </div>
-    {% elif course.status == "closed" %}
-    <div class="buttons-container">
-        <div class="closed-btn">
-            Closed
-        </div>
-    </div>
-    {% elif course.status == "cart" %}
-    <form method="POST"
-        action="{{ url_for('student.add_course', student_username=student_username, course_id=course._id) }}">
-        <input type="submit" value="Enroll in Course" class="dark-purple-btn" />
-    </form>
-    {% elif course.status == "enrolled" %}
-    <form method="POST"
-        action="{{ url_for('student.remove_course', student_username=student_username, course_id=course._id) }}">
-        <input type="submit" value="Drop Course" class="dark-purple-btn" />
-    </form>
-    {% elif course.status == "on-waitlist" %}
-    <form>
-        <input type="button" value="Leave Waitlist ({{course.waitlist_count}})" class="waitlist-btn" />
-    </form>
-    {% endif %}
-</div>

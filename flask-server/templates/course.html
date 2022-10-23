@@ -14,6 +14,7 @@
             {% include '_section.html' %}
             <div class="buttons-container">
                 <form method="POST" action="{{ url_for('student.add_to_cart') }}">
+                    <input type="hidden" id="section_id" name="section_id" value="{{section._id}}" />
                     <input type="submit" value="Add to Cart" class="dark-purple-btn" />
                 </form>
                 {% if section.students|length >= section.capacity %}
