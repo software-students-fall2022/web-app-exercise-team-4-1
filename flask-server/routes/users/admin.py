@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from flask import Blueprint, request,redirect,url_for
 from models.mongodb import Database
 from bson.json_util import dumps, loads, ObjectId
-from ..course import add_course, delete_course, get_courses, get_course
+from ..course import add_course, delete_course, get_courses, get_course, remove_sections
 from routes import views
 import re
 admin_blueprint= Blueprint('admin',__name__,url_prefix='/admin')
@@ -134,3 +134,14 @@ def update_admin():
     new_values= request.form
     result= Database.update("Admin", {"username":views.username}, {"$set": new_values})
     return "Update is complete!"
+
+@admin_blueprint.route('/removesection',methods=["POST"])
+def remove_admin_section():
+    course_id= request.form['course_id']
+    section_id= request.form['section_id']
+    remove_sections(course_id, section_id)
+    views.displayMsg= "Section has been removed!"
+    views.isError=False
+    views.render='/courses'
+    
+    return redirect(url_for('app_blueprint.course_view', course_id=course_id))
