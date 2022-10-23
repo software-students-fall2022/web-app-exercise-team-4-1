@@ -113,6 +113,7 @@ def remove_student_view(course_id, section_id):
 
 @app_blueprint.route('/courses', methods=['GET'])
 def course_search_view():
+    reset_message('/course_search')
     courses= search_course(request.args.get('searchterm', ""))
     return render_template('course_search.html', courses=courses, admin=admin, username=username, displayMsg=displayMsg, isError=isError)
 

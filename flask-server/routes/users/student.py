@@ -74,8 +74,17 @@ def update_student():
 @student_blueprint.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
     section_id = request.form["section_id"]
-    Database.update("Student", {"username": views.username}, {'$push': {'carts': ObjectId(section_id)}} )
-    return redirect(url_for('app_blueprint.course_search_view'))
+    if Database.count("Student",{"username": views.username, "carts":{"$in":[ObjectId(section_id)]}}) ==0:
+        Database.update("Student", {"username": views.username}, {'$push': {'carts': ObjectId(section_id)}} )
+        views.displayMsg="Courses section added to cart!"
+        views.render="/course_search"
+        views.isError=False
+        return redirect(url_for('app_blueprint.course_search_view'))
+    else:
+        views.displayMsg="Course section already in cart!"
+        views.render="/course_search"
+        views.isError=True
+        return redirect(url_for('app_blueprint.course_search_view'))
 
 @student_blueprint.route('/get_cart')
 def get_cart():
