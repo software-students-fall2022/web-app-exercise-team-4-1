@@ -7,6 +7,30 @@ from routes import views
 import re
 admin_blueprint= Blueprint('admin',__name__,url_prefix='/admin')
 
+@admin_blueprint.route('/sign_up', methods=['GET','POST'])
+def sign_up():
+    Database.initialize()
+    username=request.form['username']
+    firstName=request.form['name']
+    password=request.form['password']
+    if (username and firstName and password):
+        if(Database.count("Admin",{"username":username})==0):
+            Database.insert_one("Admin", {'username': username,'firstName': firstName, 'password':password, 'courseList':[]})
+            views.displayMsg="Reigstration Complete!"
+            views.isError= False
+            views.render='/'
+            return redirect(url_for('app_blueprint.login_view'))
+        else:
+            views.displayMsg="Username is taken!"
+            views.isError= True
+            views.render='/sign-up/admin'
+            return redirect(url_for('app_blueprint.admin_sign_up_view'))
+    else:
+        views.displayMsg="Please fill up all fields!"
+        views.isError= True
+        views.render='/sign-up/admin'
+        return redirect(url_for('app_blueprint.admin_sign_up_view'))
+
 def get_admin():
     return Database.find_single("Admin", {"username": views.username})
 
