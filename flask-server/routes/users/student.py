@@ -52,37 +52,10 @@ def get_sections(courses, search, attribute):
 def get_student_waitlists():
     return get_sections(get_all_courses(),ObjectId(get_student_oid(views.username)),'waitlist')
 
-@student_blueprint.route('/addcourse/<course_id>', methods=['GET','POST'])
-def add_course(course_id):
-    if(views.admin):
-        username=request.form['username']
-        course_count= Database.count("Student",{"username": username, "courses":{"$in":[ObjectId(course_id)]}})
-        if(course_count == 0):
-            if(add_student(get_student_oid(username), course_id)):
-                Database.update("Student", {"username": username}, {'$push': {'courses': ObjectId(course_id)}} )
-                return "Course has been added"
-            else:
-                return "Class added to waitlist"
-        else:
-            return "Student is already enrolled!"
-    else:
-        course_count= Database.count("Student",{"username": views.username, "courses":{"$in":[ObjectId(course_id)]}})
-        if(course_count == 0):
-            if(add_student(get_student_oid(views.username), course_id)):
-                Database.update("Student", {"username": views.username}, {'$push': {'courses': ObjectId(course_id)}} )
-                return "Course has been added"
-            else:
-                return "Class added to waitlist"
-        else:
-            return "Course is already enrolled"
-
-
 @student_blueprint.route('/removecourse', methods=['GET','POST'])
 def remove_course():
-    Database.initialize()
-    course_id = request.form["course_id"]
     section_id = request.form["section_id"]
-
+    course_id= Database.find_single('Course', {'sections': {'$elemMatch':{'_id': ObjectId(section_id)}}})['_id']
     student= Database.update("Student", {"username": views.username}, {'$pull': {'course_list': ObjectId(course_id)}})
     remove_student(student.upserted_id,course_id,section_id)
     views.displayMsg='Course has been removed'

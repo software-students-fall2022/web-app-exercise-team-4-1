@@ -93,7 +93,7 @@ def add_student_view(course_id, section_id):
 
     if (request.method == 'POST'):
         studentId = request.form['studentId']
-        add_student(studentId, course_id)
+        add_student(studentId, course_id,section_id)
         return redirect(url_for('app_blueprint.student_list_view'))
     course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
               "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
@@ -128,6 +128,7 @@ def course_search_view():
 
 @app_blueprint.route('/cart')
 def shopping_cart_view():
+    reset_message('/cart')
     sections= get_cart()
     return render_template('shopping_cart.html', sections=sections, admin=admin, username=username, displayMsg=displayMsg, isError=isError)
 

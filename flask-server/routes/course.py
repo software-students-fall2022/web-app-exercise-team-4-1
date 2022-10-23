@@ -38,13 +38,45 @@ def search_course(search):
     result = Database.find("Course", {"name":re.compile(search, re.IGNORECASE)})
     return loads(dumps(result))
 
-def add_course(data):
-    json=loads(data)
-    if(Database.count("Course",{"id":json['courseID']})==0):
-        result=Database.insert_one("Course",data)
-        return result.inserted_id
+@course_blueprint.route('/addcourse', methods=['GET','POST'])
+def add_student_to_section():
+    section_id=request.form['section_id']
+    course_id= Database.find_single('Course', {'sections': {'$elemMatch':{'_id': ObjectId(section_id)}}})['_id']
+    if(views.admin):
+        username=request.form['username']
+        course_count= Database.count("Student",{"username": username, "courses":{"$in":[ObjectId(course_id)]}})
+        if(course_count == 0):
+            student_oid= Database.find_single("Student", {"username": username})['_id']
+            if(add_student(student_oid, course_id,section_id)):
+                Database.update("Student", {"username": username}, {'$push': {'courses': ObjectId(course_id)}} )
+                return "Course has been added"
+            else:
+                return "Class added to waitlist"
+        else:
+            return "Student is already enrolled!"
     else:
-        return False
+        course_count= Database.count("Student",{"username": views.username, "courses":{"$in":[ObjectId(course_id)]}})
+        if(course_count == 0):
+            student_oid= Database.find_single("Student", {"username": views.username})['_id']
+            Database.update("Student", {"username": views.username}, {'$pull': {'carts': ObjectId(course_id)}} )
+            if(add_student(student_oid,course_id,section_id)):
+                Database.update("Student", {"username": views.username}, {'$push': {'courses': ObjectId(course_id)}} )
+                views.displayMsg= "Course has been added"
+                views.isError=False
+                views.render='/cart'
+                return redirect(url_for('app_blueprint.shopping_cart_view'))
+
+            else:
+                views.displayMsg= "Course added to waitlist!"
+                views.isError=False
+                views.render='/cart'
+                return redirect(url_for('app_blueprint.shopping_cart_view'))
+        else:
+            views.displayMsg= "Course is already enrolled!"
+            views.isError=True
+            views.render='/cart'
+            return redirect(url_for('app_blueprint.shopping_cart_view'))
+
 
 @course_blueprint.route('/update/<course_id>',methods=['POST'])
 def update_course(course_id):
@@ -64,12 +96,12 @@ def update_course(course_id):
         return redirect(url_for('app_blueprint.edit_course_view', course_id=course_id)) 
     
 
-def update_remove_waitlist(courseId):
-    course_waitlist = Database.find_single("Course", {"sections.$._id": ObjectId(courseId)})['waitlist.count']
+def update_remove_waitlist(sectionId):
+    course_waitlist = Database.find_single("Course", {"sections.$._id": ObjectId(sectionId)})['waitlist.count']
     if(course_waitlist>0):
-        Database.update("Course", {"_id": ObjectId(courseId)}, {'$inc': {"waitlist.count":-1}})
-        student= Database.find_single("Course",{"_id":ObjectId(courseId)})["waitlist.list"][0]
-        add_waitlisted_course(student,courseId)
+        Database.update("Course", {"_id": ObjectId(sectionId)}, {'$inc': {"waitlist.count":-1}})
+        student= Database.find_single("Course",{"_id":ObjectId(sectionId)})["waitlist.list"][0]
+        add_waitlisted_course(student,sectionId)
 
 def add_waitlisted_course(course_id):
     Database.initialize()
@@ -77,8 +109,7 @@ def add_waitlisted_course(course_id):
     return "Course has been added"
 
 def update_add_waitlist(courseId, studentId):
-    Database.update("Course", {"_id": ObjectId(courseId)}, {'$inc': {"waitlist.count":1}})
-    Database.update("Course", {"_id": ObjectId(courseId)}, {'$push': {'waitlist.list': ObjectId(studentId)}})
+    Database.update("Course", {"sections._id": ObjectId(courseId)}, {'$push': {'waitlist': ObjectId(studentId)}})
     return "Waitlist Added!"
 
 def delete_course(course_id):
@@ -88,20 +119,21 @@ def delete_course(course_id):
     for student in student_ids:
         Database.update("Student", {"_id": ObjectId(student)}, {'$pull': {'course_list': ObjectId(course_id)}})
 
-def add_student(studentId, courseId):
-    course= loads(get_course(courseId))
-    capacity=course['capacity']
-    counts=len(course['student'])
+def add_student(studentId, course_id, section_id):
+    course = get_course(course_id)
+    section= [sections for sections in course['sections'] if sections['_id']==ObjectId(section_id)][0]
+    capacity=section['capacity']
+    counts=len(section['student'])
     if(counts>capacity):
-        update_add_waitlist(courseId, studentId)
+        update_add_waitlist(course_id, studentId)
         return False
     else:
-        Database.update("Course", {"_id": ObjectId(courseId)}, {'$push': {'student': ObjectId(studentId)}})
+        Database.update("Course", {'sections': {'$elemMatch':{'_id': ObjectId(section_id)}}}, {'$push': {'student': ObjectId(studentId)}})
         return True
 
 def remove_student(studentId, courseId, sectionId):
     Database.update("Course", {"_id": ObjectId(courseId)}, {'$pull': {'sections.$.student': ObjectId(studentId)}})
-    update_remove_waitlist(courseId,sectionId)
+    update_remove_waitlist(sectionId)
 
 def remove_sections(courseId, sectionId):
     Database.update("Course", {"_id": ObjectId(courseId)}, {'$pull': {'sections.$._id': ObjectId(sectionId)}})

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from flask import Blueprint, request,redirect,url_for
 from models.mongodb import Database
 from bson.json_util import dumps, loads, ObjectId
-from ..course import add_course, delete_course, get_courses, get_course, remove_sections
+from ..course import add_student_to_section, delete_course, get_courses, get_course, remove_sections
 from routes import views
 import re
 admin_blueprint= Blueprint('admin',__name__,url_prefix='/admin')
