@@ -17,13 +17,7 @@
     <div class="course-list">
         {% for course in courses %}
         <course>
-            <span>{{course.courseID}}</span>
-            <h2 class="course-name">
-                {{course.name}}
-            </h2>
-            <p class="course-description">
-                {{course.description}}
-            </p>
+            {% include '_course.html' %}
             <div class="buttons-container">
                 <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="open-btn">
                     View Sections
