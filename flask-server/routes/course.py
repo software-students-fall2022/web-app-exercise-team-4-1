@@ -44,23 +44,38 @@ def add_student_to_section():
     course_id= Database.find_single('Course', {'sections': {'$elemMatch':{'_id': ObjectId(section_id)}}})['_id']
     if(views.admin):
         username=request.form['username']
+        student_exist= Database.find_single("Student",{"username":username})
+        if(student_exist is None):
+            views.displayMsg= "Student does not exist"
+            views.isError=True
+            views.render='/add_student'
+            return redirect(url_for('app_blueprint.add_student_view',course_id=course_id,section_id=section_id))
         course_count= Database.count("Student",{"username": username, "courses":{"$in":[ObjectId(course_id)]}})
         if(course_count == 0):
             student_oid= Database.find_single("Student", {"username": username})['_id']
             if(add_student(student_oid, course_id,section_id)):
                 Database.update("Student", {"username": username}, {'$push': {'courses': ObjectId(course_id)}} )
-                return "Course has been added"
+                views.displayMsg= "Student has been added!"
+                views.isError=False
+                views.render='/add_student'
+                return redirect(url_for('app_blueprint.add_student_view',course_id=course_id,section_id=section_id))
             else:
-                return "Class added to waitlist"
+                views.displayMsg= 'Student has been added to waitlist!'
+                views.isError=False
+                views.render='/add_student'
+                return redirect(url_for('app_blueprint.add_student_view', course_id=course_id,section_id=section_id))
         else:
-            return "Student is already enrolled!"
+            views.displayMsg= 'Student is already enrolled!'
+            views.isError=True
+            views.render='/add_student'
+            return redirect(url_for('app_blueprint.add_student_view',course_id=course_id,section_id=section_id))
     else:
-        course_count= Database.count("Student",{"username": views.username, "courses":{"$in":[ObjectId(course_id)]}})
+        course_count= Database.count("Student",{"username": views.username, "course_list":{"$in":[ObjectId(course_id)]}})
         if(course_count == 0):
             student_oid= Database.find_single("Student", {"username": views.username})['_id']
-            Database.update("Student", {"username": views.username}, {'$pull': {'carts': ObjectId(course_id)}} )
+            Database.update("Student", {"username": views.username}, {'$pull': {'carts': ObjectId(section_id)}} )
             if(add_student(student_oid,course_id,section_id)):
-                Database.update("Student", {"username": views.username}, {'$push': {'courses': ObjectId(course_id)}} )
+                Database.update("Student", {"username": views.username}, {'$push': {'course_list': ObjectId(course_id)}} )
                 views.displayMsg= "Course has been added"
                 views.isError=False
                 views.render='/cart'
@@ -108,8 +123,8 @@ def add_waitlisted_course(course_id):
     Database.update("Student", {"username": views.username}, {'$push': {'courses': ObjectId(course_id)}} )
     return "Course has been added"
 
-def update_add_waitlist(courseId, studentId):
-    Database.update("Course", {"sections._id": ObjectId(courseId)}, {'$push': {'waitlist': ObjectId(studentId)}})
+def update_add_waitlist(studentId,course_id, section_id):
+    Database.update("Course", {"_id": ObjectId(course_id), "sections._id": ObjectId(section_id)}, {'$push': {'sections.$.waitlist': ObjectId(studentId)}})
     return "Waitlist Added!"
 
 def delete_course(course_id):
@@ -124,11 +139,11 @@ def add_student(studentId, course_id, section_id):
     section= [sections for sections in course['sections'] if sections['_id']==ObjectId(section_id)][0]
     capacity=section['capacity']
     counts=len(section['student'])
-    if(counts>capacity):
-        update_add_waitlist(course_id, studentId)
+    if(counts>=capacity):
+        update_add_waitlist(studentId, course_id, section_id)
         return False
     else:
-        Database.update("Course", {'sections': {'$elemMatch':{'_id': ObjectId(section_id)}}}, {'$push': {'student': ObjectId(studentId)}})
+        Database.update("Course", {'_id':ObjectId(course_id), "sections._id": ObjectId(section_id)}, {'$push': {"sections.$.student": ObjectId(studentId)}})
         return True
 
 def remove_student(studentId, courseId, sectionId):

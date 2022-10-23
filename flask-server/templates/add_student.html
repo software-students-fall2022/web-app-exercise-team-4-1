@@ -8,8 +8,9 @@
     <pagetitle>{{course.name}}</pagetitle>
     <span class="section-name-light">{{section.name}}</span>
     <div>
-        <form method="POST" action="{{ url_for('course.add_student_to_section', course_id=section._id) }}" class="course-edit">
+        <form method="POST" action="{{ url_for('course.add_student_to_section') }}" class="course-edit">
             <span class="edit-title">Add Student</span>
+            <input type="hidden" id="section_id" name="section_id" value="{{section._id}}" />
             <input type="text" placeholder="Student NetID" id="username" name="username" />
             <div class="buttons-container-edit">
                 <a href="{{url_for('app_blueprint.student_list_view', course_id=course._id, section_id=section._id)}}"
