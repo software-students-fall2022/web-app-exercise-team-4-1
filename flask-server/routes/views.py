@@ -33,6 +33,11 @@ def sign_up_view():
     reset_message('/sign-up')
     return render_template('sign_up.html', errorMsg=errorMsg, successMsg=successMsg)
 
+@app_blueprint.route('/sign-up/admin')
+def admin_sign_up_view():
+    reset_message('/sign-up/admin')
+    return render_template('admin_sign_up.html', errorMsg=errorMsg, successMsg=successMsg)
+
 
 @app_blueprint.route('/home')
 def home_view():
