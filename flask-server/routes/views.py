@@ -48,6 +48,7 @@ def home_view():
 
 @app_blueprint.route('/courses/<course_id>')
 def course_view(course_id):
+    reset_message('/courses')
     course = get_course(course_id)
     sections=course['sections']
     if admin:
@@ -58,26 +59,22 @@ def course_view(course_id):
 
 @app_blueprint.route('/courses/<course_id>/add-section')
 def create_section_view(course_id):
-    global admin
-    #docs = get_course_section(course_id)
-    course = {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
-              "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
+    reset_message('/add-section')
+    course = get_course(course_id)
     return render_template('create_section.html', course=course, admin=admin, errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/courses/<course_id>/<section_id>/edit-section')
 def edit_section_view(course_id, section_id):
-    global admin
-    section = {"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
-        '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}
-    #docs = get_course_section(course_id)
-    course = {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
-              "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
+    reset_message('/edit-section')
+    course = get_course(course_id)
+    section= [sections for sections in course['sections'] if sections['_id']==ObjectId(section_id)][0]
     return render_template('edit_section.html', course=course, admin=admin, section=section, errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/courses/<course_id>/<section_id>/students')
 def student_list_view(course_id, section_id):
+    reset_message('courses/students')
     course= get_course(course_id)
     section = [section for section in course['sections'] if section['_id'] == ObjectId(section_id) ][0]
     docs= get_students(section['student'])
@@ -134,15 +131,12 @@ def shopping_cart_view():
 
 @app_blueprint.route('/create-course')
 def create_course_view():
+    reset_message('/create-course')
     return render_template('create_course.html', admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
 
 
 @app_blueprint.route('/edit-course/<course_id>')
 def edit_course_view(course_id):
-    # course=get_course(course_id)
-    sections = [{"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
-        '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}]
-    course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001", "description":
-              "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin",
-              "sections": sections}
+    reset_message('/edit-course')
+    course=get_course(course_id)
     return render_template('edit_course.html', admin=admin, course=course, errorMsg=errorMsg, successMsg=successMsg)

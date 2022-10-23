@@ -6,7 +6,7 @@
     <span class="section-course-code">{{course.courseID}}</span>
     <pagetitle>{{course.name}}</pagetitle>
     <div>
-        <form method="POST" action="{{ url_for('section.update_section') }}" class="course-edit">
+        <form method="POST" action="{{ url_for('admin.update_course_section', course_id=course._id,section_id=section._id ) }}" class="course-edit">
             <span class="edit-title">Create Section</span>
             <div class="edit-days">
                 <span class="day-title">Professor:</span>

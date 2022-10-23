@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, redirect,url_for
 from models.mongodb import Database
 from bson.json_util import dumps, loads,ObjectId
 from routes import views
@@ -41,9 +41,19 @@ def add_course(data):
 
 @course_blueprint.route('/update/<course_id>',methods=['POST'])
 def update_course(course_id):
-    request_data=request.json
-    result= Database.update("Course", {"id":course_id}, {"$set": request_data})
-    return result.acknowledged
+    courseID= request.form['courseID']
+    name= request.form['name']
+    description= request.form['description']
+    if(courseID and name and description):
+        result= Database.update("Course", {"_id":ObjectId(course_id)}, {"$set": {'courseID': courseID, 'description':description,'name':name}})
+        views.successMsg= "Course has been updated!"
+        views.render='/home'
+        return redirect(url_for('app_blueprint.home_view'))
+    else:
+        views.errorMsg= "All fields must be filled!"
+        views.render='/edit-course'
+        return redirect(url_for('app_blueprint.edit_course_view', course_id=course_id)) 
+    
 
 def update_remove_waitlist(courseId):
     course_waitlist = Database.find_single("Course", {"_id": ObjectId(courseId)})['waitlist.count']

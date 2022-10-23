@@ -5,7 +5,7 @@
     </a>
     <pagetitle>Create Course</pagetitle>
     <div>
-        <form method="POST" action="{{ url_for('admin.add_admin_course', admin_username=username) }}"
+        <form method="POST" action="{{ url_for('admin.add_admin_course') }}"
             class="course-edit">
             <input type="text" placeholder="Course Code" id="courseID" name="courseID" />
             <input type="text" placeholder="Course Name" id="name" name="name" />

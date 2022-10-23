@@ -1,8 +1,8 @@
 from dataclasses import dataclass
-from flask import Blueprint, request
+from flask import Blueprint, request,redirect,url_for
 from models.mongodb import Database
 from bson.json_util import dumps, loads, ObjectId
-from ..course import add_course, delete_course, get_courses
+from ..course import add_course, delete_course, get_courses, get_course
 from routes import views
 admin_blueprint= Blueprint('admin',__name__,url_prefix='/admin')
 
@@ -15,26 +15,62 @@ def get_admin_course():
 
 @admin_blueprint.route('/addcourse', methods = ['GET','POST'])
 def add_admin_course():
-    new_values=request.form
-    valid_id= add_course(dumps(new_values))
-    if(valid_id):
-        Database.insert("Admin", {"username": views.username}, {'$push': {'courseList': ObjectId(valid_id)}})
-        return "Course Added!"
+    name=request.form['name']
+    description=request.form['description']
+    courseID=request.form['courseID']
+    if(name and description and courseID):  
+        result = Database.insert_one("Course", {'name':name,'description':description,'courseID':courseID,'sections':[]})
+        Database.update("Admin", {"username": views.username}, {'$push': {'courseList': ObjectId(result.inserted_id)}})
+        views.successMsg='Course has been added!'
+        views.render='/home'
+        return redirect(url_for('app_blueprint.home_view'))
     else:
-        return "Course ID already exists!"
+        views.errorMsg='Please complete all fields!'
+        views.render='/create-course'
+        return redirect(url_for('app_blueprint.create_course_view'))
 
-@admin_blueprint.route('/addsection', methods = ['GET','POST'])
-def add_course_section():
-    course_id=request.form['course_id']
+
+@admin_blueprint.route('/addsection/<course_id>', methods = ['GET','POST'])
+def add_course_section(course_id):
     professor= request.form['professor']
     capacity= request.form['capacity']
     notes=request.form['notes']
-    days=request.form['days']
+    print(request.data)
+    days=request.form.get('days',[])
     startTime=request.form['startTime']
     endTime=request.form['endTime']
+    _id=ObjectId()
 
-    Database.insert("Course", {"_id": course_id}, {'$push': {'sections': {'professor': professor, 'notes':notes, 'capacity':capacity, 'student':[],'waitlist':[],'date':{'startTime':startTime,'endTime':endTime,'days':days}}}})
-    return "Section Added!"
+    course= get_course(course_id)
+    if(course_id and professor and capacity and notes and days and startTime and endTime):
+        Database.update("Course", {"_id": ObjectId(course_id)}, {'$push': {'sections': {'_id': _id,'courseName':course['name'], 'courseID':course['courseID'], 'professor': professor, 'name':notes, 'capacity':capacity, 'student':[],'waitlist':[],'date':{'startTime':startTime,'endTime':endTime,'days':days}}}})
+        views.successMsg='Section Added!'
+        views.render='/courses'
+        return redirect(url_for('app_blueprint.course_view',course_id=course_id))
+    else:
+        views.errorMsg='Please complete all fields!'
+        views.render='/add-section'      
+        return redirect(url_for('app_blueprint.create_section_view',course_id=course_id))
+
+@admin_blueprint.route('/update/<course_id>/<section_id>',methods=['POST'])
+def update_course_section(course_id,section_id):
+    professor= request.form['professor']
+    capacity= request.form['capacity']
+    notes="test" #request.form['notes']
+    days=request.form.get('days',[])
+
+    startTime=request.form['startTime']
+    endTime=request.form['endTime']
+    if(professor and capacity and notes and days and startTime and endTime):
+        views.successMsg='Section updated!'
+        views.render='/courses'
+        Database.update("Course", {"_id": ObjectId(course_id), 'sections._id': ObjectId(section_id)}, {'$set': {'sections.$.professor': professor, 'sections.$.name':notes, 'sections.$.capacity':capacity,'sections.$.date':{'startTime':startTime,'endTime':endTime,'days':days}}})
+        return redirect(url_for('app_blueprint.course_view',course_id=course_id))
+    else:
+        views.errorMsg='Please complete all fields!'
+        views.render='/edit-section'
+        return redirect(url_for('app_blueprint.edit_section_view',course_id=course_id,section_id=section_id))
+
 
 @admin_blueprint.route('/removecourse/<course_id>')
 def remove_admin_course(course_id):

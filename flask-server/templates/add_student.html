@@ -8,7 +8,7 @@
     <pagetitle>{{course.name}}</pagetitle>
     <span class="section-name-light">{{section.name}}</span>
     <div>
-        <form method="POST" action="{{ url_for('student.add_course', student_username=username) }}" class="course-edit">
+        <form method="POST" action="{{ url_for('student.add_course', course_id= course._id,section_id=section._id) }}" class="course-edit">
             <span class="edit-title">Add Student</span>
             <input type="text" placeholder="Student NetID" id="username" name="username" />
             <div class="buttons-container-edit">

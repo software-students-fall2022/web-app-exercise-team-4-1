@@ -49,20 +49,29 @@ def get_sections(courses, search, attribute):
 def get_student_waitlists():
     return get_sections(get_all_courses(),ObjectId(get_student_oid()),'waitlist')
 
-@student_blueprint.route('/addcourse', methods=['GET','POST'])
-def add_course():
-    print(request.json)
-    course_id = request.form["course_id"]
-
-    course_count= Database.count("Student",{"username": views.username, "courses":{"$in":[ObjectId(course_id)]}})
-    if(course_count == 0):
-        if(add_student(get_student_oid(views.username), course_id)):
-            Database.update("Student", {"username": views.username}, {'$push': {'courses': ObjectId(course_id)}} )
-            return "Course has been added"
+@student_blueprint.route('/addcourse/<course_id>/<section_id>', methods=['GET','POST'])
+def add_course(course_id,setion_id):
+    if(views.admin):
+        username=request.form['username']
+        course_count= Database.count("Student",{"username": username, "courses":{"$in":[ObjectId(course_id)]}})
+        if(course_count == 0):
+            if(add_student(get_student_oid(username), course_id)):
+                Database.update("Student", {"username": username}, {'$push': {'courses': ObjectId(course_id)}} )
+                return "Course has been added"
+            else:
+                return "Class added to waitlist"
         else:
-            return "Class added to waitlist"
+            return "Student is already enrolled!"
     else:
-        return "Class is already enrolled"
+        course_count= Database.count("Student",{"username": views.username, "courses":{"$in":[ObjectId(course_id)]}})
+        if(course_count == 0):
+            if(add_student(get_student_oid(views.username), course_id)):
+                Database.update("Student", {"username": views.username}, {'$push': {'courses': ObjectId(course_id)}} )
+                return "Course has been added"
+            else:
+                return "Class added to waitlist"
+        else:
+            return "Course is already enrolled"
 
 
 @student_blueprint.route('/removecourse', methods=['GET','POST'])
