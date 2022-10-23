@@ -7,7 +7,7 @@
 </h3>
 <div>
     <span>
-        Section {{section.name}} | 
+        Section {{section.sectionID}} |
         {% for i in range(section.days|length)%}{% if i != 0 %}/{%endif%}{{section.days[i]}}{%endfor%}
         , {{section.startTime}} - {{section.endTime}}
     </span>
