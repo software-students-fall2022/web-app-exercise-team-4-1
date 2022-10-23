@@ -17,6 +17,9 @@ def get_student_courses():
     courses= Database.find_single("Student", {"username": views.username})['course_list']
     return get_courses(courses)
 
+def get_student_waitlists():
+    return loads(dumps(Database.find("Course", {"sections": {'waitlist': get_student_oid()}})))
+
 @student_blueprint.route('/addcourse', methods=['GET','POST'])
 def add_course():
     Database.initialize()

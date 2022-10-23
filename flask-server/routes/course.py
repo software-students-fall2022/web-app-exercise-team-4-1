@@ -31,7 +31,7 @@ def get_courses(courses_id):
 def search_course(search):
     Database.initialize()
     result = Database.find("Course", {"name":re.compile(search, re.IGNORECASE)})
-    return dumps(result)
+    return loads(dumps(result))
 
 def add_course(data):
     json=loads(data)

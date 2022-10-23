@@ -28,23 +28,14 @@ def sign_up_view():
 @app_blueprint.route('/home')
 def home_view():
     if admin:
-        courses = [
-            {"_id": 32, "courseID": "CSCI-UA.0001", "name": 'Intro to Computer Science', 'professor': 'Professor X',
-                'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in finibus dolor. Ut ut sollicitudin ante. Praesent fringilla augue ante, vitae feugiat nisl consequat ut.'},
-            {"_id": 32, "courseID": "CSCI-UA.0002", "name": 'Software Engineering', 'professor': 'Professor X',
-                'description': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.'},
-            {"_id": 32, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
-                "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"},
-        ]
-        #docs= search_course(request.args.get('searchterm', ""))
+        courses= search_course(request.args.get('searchterm', ""))
         return render_template('admin_courses.html', courses=courses, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
     else:
-        # query all course codes in the students.json file under enrolled and cross-match with course data
-        enrolled = [{"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
-            '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}]
-        waitlist = [{"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
-            '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}]
-        #docs= get_student_courses(username)
+        enrolled = get_student_courses()
+        waitlist = [
+                {"_id": 32, "waitlistPosition": 1, "name":"001", "professor": "Professor X", "capacity": 1, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "students": [1,2], "courseID": "CSCI-UA.0001", "courseName": 'Intro to Computer Science'},
+                {"_id": 32, "waitlistPosition": 2, "name":"002", "professor": "Professor X", "capacity": 30, "notes": "This is a section", "days": ["Mo", "We"], "startTime": "9:30AM", "endTime": "10:45AM", "courseID": "CSCI-UA.0002", "courseName": 'Intro to Birds'}
+            ]
         return render_template('student_courses.html', waitlist=waitlist, enrolled=enrolled, admin=admin, username=username, errorMsg=errorMsg, successMsg=successMsg)
 
 
