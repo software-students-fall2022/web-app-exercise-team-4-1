@@ -2,54 +2,39 @@
 <h2 class="course-name">
     {{course.name}}
 </h2>
-<<<<<<< HEAD <h3 class="course-professor">
-    Professor {{course.professor}}
-    </h3>
-    <div>
-        <span>
-            Section {{course.section}} |
-            {% for i in range(course.date.days|length)%}{% if i != 0 %}/{%endif%}{{course.date.days[i]}}{%endfor%}
-            , {{course.date.start_time}} - {{course.date.end_time}}
-        </span>
+<p class="course-description">
+    {{course.description}}
+</p>
+<div class="course-btn-container">
+    {% if course.status == "open" %}
+    <div class="buttons-container">
+        <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="open-btn">
+            View Open Sections
+        </a>
     </div>
-    <p class="course-description">
-        {{section.notes}}
-    </p>
-    <div class="course-btn-container">
-        {% if course.status == "open" %}
-        <div class="buttons-container">
-            <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="open-btn">
-                View Open Sections
-            </a>
+    {% elif course.status == "waitlist" %}
+    <form>
+        <input type="button" value="Join Waitlist ({{course.waitlist_count}})" class="waitlist-btn" />
+    </form>
+    {% elif course.status == "closed" %}
+    <div class="buttons-container">
+        <div class="closed-btn">
+            Closed
         </div>
-        {% elif course.status == "waitlist" %}
-        <form>
-            <input type="button" value="Join Waitlist ({{course.waitlist_count}})" class="waitlist-btn" />
-        </form>
-        {% elif course.status == "closed" %}
-        <div class="buttons-container">
-            <div class="closed-btn">
-                Closed
-            </div>
-        </div>
-        {% elif course.status == "cart" %}
-        <form method="POST"
-            action="{{ url_for('student.add_course', student_username=student_username, course_id=course._id) }}">
-            <input type="submit" value="Enroll in Course" class="dark-purple-btn" />
-        </form>
-        {% elif course.status == "enrolled" %}
-        <form method="POST"
-            action="{{ url_for('student.remove_course', student_username=student_username, course_id=course._id) }}">
-            <input type="submit" value="Drop Course" class="dark-purple-btn" />
-        </form>
-        {% elif course.status == "on-waitlist" %}
-        <form>
-            <input type="button" value="Leave Waitlist ({{course.waitlist_count}})" class="waitlist-btn" />
-        </form>
-        {% endif %}
     </div>
-    =======
-    <p class="course-description">
-        {{course.description}}
-    </p>
-    >>>>>>> 41e1137d18d45beb55ff04c6d0886d96a048bfbd
+    {% elif course.status == "cart" %}
+    <form method="POST"
+        action="{{ url_for('student.add_course', student_username=student_username, course_id=course._id) }}">
+        <input type="submit" value="Enroll in Course" class="dark-purple-btn" />
+    </form>
+    {% elif course.status == "enrolled" %}
+    <form method="POST"
+        action="{{ url_for('student.remove_course', student_username=student_username, course_id=course._id) }}">
+        <input type="submit" value="Drop Course" class="dark-purple-btn" />
+    </form>
+    {% elif course.status == "on-waitlist" %}
+    <form>
+        <input type="button" value="Leave Waitlist ({{course.waitlist_count}})" class="waitlist-btn" />
+    </form>
+    {% endif %}
+</div>
