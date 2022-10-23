@@ -22,11 +22,13 @@ def add_admin_course():
     if(name and description and courseID):  
         result = Database.insert_one("Course", {'name':name,'description':description,'courseID':courseID,'sections':[]})
         Database.update("Admin", {"username": views.username}, {'$push': {'courseList': ObjectId(result.inserted_id)}})
-        views.successMsg='Course has been added!'
+        views.displayMsg='Course has been added!'
+        views.isError= False
         views.render='/home'
         return redirect(url_for('app_blueprint.home_view'))
     else:
-        views.errorMsg='Please complete all fields!'
+        views.displayMsg='Please complete all fields!'
+        views.isError = True
         views.render='/create-course'
         return redirect(url_for('app_blueprint.create_course_view'))
 
@@ -45,18 +47,21 @@ def add_course_section(course_id):
         if(not re.match(regex,startTime) or not re.match(regex, endTime)):
             raise ValueError
     except ValueError:
-        views.errorMsg='Wrong format!'
+        views.displayMsg='Wrong format!'
+        views.isError = True
         views.render='/add-section'
         return redirect(url_for('app_blueprint.create_section_view',course_id=course_id))
 
     course= get_course(course_id)
     if(course_id and professor and capacity and notes and days and startTime and endTime):
         Database.update("Course", {"_id": ObjectId(course_id)}, {'$push': {'sections': {'_id': _id,'courseName':course['name'], 'courseID':course['courseID'], 'professor': professor, 'name':notes, 'capacity':capacity, 'student':[],'waitlist':[],'date':{'startTime':startTime,'endTime':endTime,'days':days}}}})
-        views.successMsg='Section Added!'
+        views.displayMsg='Section Added!'
+        views.isError= False
         views.render='/courses'
         return redirect(url_for('app_blueprint.course_view',course_id=course_id))
     else:
-        views.errorMsg='Please complete all fields!'
+        views.displayMsg='Please complete all fields!'
+        views.isError = True
         views.render='/add-section'      
         return redirect(url_for('app_blueprint.create_section_view',course_id=course_id))
 
@@ -73,17 +78,20 @@ def update_course_section(course_id,section_id):
         if(not re.search(regex,startTime) or not re.search(regex, endTime)):
             raise ValueError
     except ValueError:
-        views.errorMsg='Wrong format!'
+        views.displayMsg='Wrong format!'
+        views.isError = True
         views.render='/edit-section'
         return redirect(url_for('app_blueprint.edit_section_view',course_id=course_id,section_id=section_id))
 
     if(professor and capacity and notes and days and startTime and endTime):
-        views.successMsg='Section updated!'
+        views.displayMsg='Section updated!'
+        views.isError= False
         views.render='/courses'
         Database.update("Course", {"_id": ObjectId(course_id), 'sections._id': ObjectId(section_id)}, {'$set': {'sections.$.professor': professor, 'sections.$.name':notes, 'sections.$.capacity':capacity,'sections.$.date':{'startTime':startTime,'endTime':endTime,'days':days}}})
         return redirect(url_for('app_blueprint.course_view',course_id=course_id))
     else:
-        views.errorMsg='Please complete all fields!'
+        views.displayMsg='Please complete all fields!'
+        views.isError = True
         views.render='/edit-section'
         return redirect(url_for('app_blueprint.edit_section_view',course_id=course_id,section_id=section_id))
 

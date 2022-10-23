@@ -9,15 +9,16 @@
 </head>
 
 <body>
-  {% if errorMsg %}
+  {% if displayMsg != None %}}
+  {% if isError %}
   <div class="error-msg">
-    {{errorMsg}}
+    {{displayMsg}}
+  </div>
+  {% else %}
+  <div class="success-msg">
+    {{displayMsg}}
   </div>
   {% endif %}
-  {% if successMsg %}
-  <div class="success-msg">
-    {{successMsg}}
-  </div>
   {% endif %}
   <div class="section-page">
     <pagetitle>Sign Up</pagetitle>

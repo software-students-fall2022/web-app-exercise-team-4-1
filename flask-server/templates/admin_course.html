@@ -26,7 +26,8 @@
                     class="open-btn">
                     View Roster
                 </a>
-                <form method="POST" action="{{ url_for('section.remove_section', section_id=section._id) }}">
+                <form method="POST" action="{{ url_for('section.remove_section') }}">
+                    <input type="hidden" id="id" name="id" value="{{section._id}}" />
                     <input type="submit" value="Delete Section" class="delete-btn" />
                 </form>
             </div>
