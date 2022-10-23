@@ -7,8 +7,8 @@
     </h3>
     <div>
         <span>
-            {% for i in range(section.days|length)%}{% if i != 0 %}/{%endif%}{{section.days[i]}}{%endfor%}
-            , {{section.startTime}} - {{section.endTime}}
+            {% for i in range(section.date.days|length)%}{% if i != 0 %}/{%endif%}{{section.date.days[i]}}{%endfor%}
+            , {{section..date.startTime}} - {{section.date.endTime}}
         </span>
     </div>
 </course>
