@@ -4,6 +4,7 @@ from models.mongodb import Database
 from bson.json_util import dumps, loads, ObjectId
 from ..course import add_course, delete_course, get_courses, get_course
 from routes import views
+import re
 admin_blueprint= Blueprint('admin',__name__,url_prefix='/admin')
 
 def get_admin():
@@ -32,14 +33,21 @@ def add_admin_course():
 
 @admin_blueprint.route('/addsection/<course_id>', methods = ['GET','POST'])
 def add_course_section(course_id):
-    professor= request.form['professor']
-    capacity= request.form['capacity']
-    notes=request.form['notes']
-    print(request.data)
-    days=request.form.get('days',[])
-    startTime=request.form['startTime']
-    endTime=request.form['endTime']
-    _id=ObjectId()
+    try:
+        professor= request.form['professor']
+        capacity= int(request.form['capacity'])
+        notes=request.form['notes']
+        days=request.form.get('days',[])
+        startTime=request.form['startTime']
+        endTime=request.form['endTime']
+        _id=ObjectId()
+        regex = '^(1[0-2]|0?[1-9]):([0-5]?[0-9])(●?[AP]M)?$'
+        if(not re.match(regex,startTime) or not re.match(regex, endTime)):
+            raise ValueError
+    except ValueError:
+        views.errorMsg='Wrong format!'
+        views.render='/add-section'
+        return redirect(url_for('app_blueprint.course_view',course_id=course_id))
 
     course= get_course(course_id)
     if(course_id and professor and capacity and notes and days and startTime and endTime):
@@ -54,13 +62,21 @@ def add_course_section(course_id):
 
 @admin_blueprint.route('/update/<course_id>/<section_id>',methods=['POST'])
 def update_course_section(course_id,section_id):
-    professor= request.form['professor']
-    capacity= request.form['capacity']
-    notes="test" #request.form['notes']
-    days=request.form.get('days',[])
+    try:
+        professor= request.form['professor']
+        capacity= int(request.form['capacity'])
+        notes="test" #request.form['notes']
+        days=request.form.get('days',[])
+        startTime=request.form['startTime']
+        endTime=request.form['endTime']
+        regex = '^(1[0-2]|0?[1-9]):([0-5]?[0-9])(●?[AP]M)?$'
+        if(not re.search(regex,startTime) or not re.search(regex, endTime)):
+            raise ValueError
+    except ValueError:
+        views.errorMsg='Wrong format!'
+        views.render='/edit-section'
+        return redirect(url_for('app_blueprint.edit_section_view',course_id=course_id,section_id=section_id))
 
-    startTime=request.form['startTime']
-    endTime=request.form['endTime']
     if(professor and capacity and notes and days and startTime and endTime):
         views.successMsg='Section updated!'
         views.render='/courses'
