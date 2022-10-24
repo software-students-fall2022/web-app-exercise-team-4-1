@@ -5,7 +5,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-A way for students to register for their college courses on-the-go.
+We want to create a user friendly way for students to register for their college courses on-the-go and for course admins to comfortably maintain and manages the created courses.
 
 ## User stories
 
