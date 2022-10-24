@@ -124,6 +124,7 @@ def add_waitlisted_course(student_id, course_id, section_id):
         Database.update("Student", {"username": ObjectId(student_id)}, {'$push': {'course_list': ObjectId(course_id)}} )
         return True
     else:
+        Database.update("Course", {"_id": ObjectId(course_id), "sections._id": ObjectId(section_id)}, {'$pull': {'sections.$.waitlist': ObjectId(student_id)}})
         return False
 
 def update_add_waitlist(studentId,course_id, section_id):
