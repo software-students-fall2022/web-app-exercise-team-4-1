@@ -13,6 +13,7 @@
             <span class="edit-title">Remove Student</span>
             <input type="text" placeholder="Student NetID" id="username" name="username" />
             <input type="hidden" id="section_id" name="section_id" value="{{section._id}}" />
+            <input type="hidden" id="course_id" name="course_id" value="{{course._id}}" />
             <div class="buttons-container-edit">
                 <a href="{{url_for('app_blueprint.student_list_view', course_id=course._id, section_id=section._id)}}"
                     class="closed-btn-large">

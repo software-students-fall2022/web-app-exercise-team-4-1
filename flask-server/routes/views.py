@@ -95,19 +95,9 @@ def add_student_view(course_id, section_id):
 
 @app_blueprint.route('/courses/<course_id>/<section_id>/students/remove', methods=['GET', 'POST'])
 def remove_student_view(course_id, section_id):
-    # course= get_course(course_id)
-    # course_name=course['software engineering']
-    # course_code=course['CS-474']
-    # section_name=course['sections']['notes']
-    if (request.method == 'POST'):
-        studentId = request.form['studentId']
-        remove_student(studentId, course_id)
-        return redirect(url_for('app_blueprint.student_list_view'))
-
-    course = {"_id": 1, "name": "Introduction to Computer Science", "courseID": "CSCI-UA.0001",
-              "description": "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.", "admin": "admin"}
-    section = {"_id": 12, 'professor': 'Amos Bloomberg', 'date': {'days': ['M', 'W'], 'startTime': '2:00PM', 'endTime': '3:15PM'}, 'capacity': 1, 'student': [ObjectId('635303beec3a435021103e89'), ObjectId(
-        '635081d3c79712ba0de837cf')], 'waitlist': [ObjectId('6353040eec3a435021103e8a')], 'courseName': 'Software Engineering', 'courseID': 'CSCI-UA.474', '_id': ObjectId('635499bce6ec35919761b208'), 'name': 'Section 1'}
+    reset_message('/remove_student')
+    course=get_course(course_id)
+    section = [section for section in course['sections'] if section['_id'] == ObjectId(section_id) ][0]
     return render_template('remove_student.html', course=course, admin=admin, username=username, section=section, displayMsg=displayMsg, isError=isError)
 
 

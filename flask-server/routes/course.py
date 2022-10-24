@@ -110,16 +110,16 @@ def update_course(course_id):
         return redirect(url_for('app_blueprint.edit_course_view', course_id=course_id)) 
     
 
-def update_remove_waitlist(sectionId):
-    course_waitlist = Database.find_single("Course", {"sections.$._id": ObjectId(sectionId)})['waitlist.count']
-    if(course_waitlist>0):
-        Database.update("Course", {"_id": ObjectId(sectionId)}, {'$inc': {"waitlist.count":-1}})
-        student= Database.find_single("Course",{"_id":ObjectId(sectionId)})["waitlist.list"][0]
-        add_waitlisted_course(student,sectionId)
+def update_remove_waitlist(courseId, sectionId):
+    course = get_course(courseId)
+    section= [sections for sections in course['sections'] if sections['_id']==ObjectId(sectionId)][0]
+    counts=len(section['waitlist'])    
+    if(counts>0):
+        student_id= section['waitlist'][0]
+        add_waitlisted_course(student_id,sectionId)
 
-def add_waitlisted_course(course_id):
-    Database.initialize()
-    Database.update("Student", {"username": views.username}, {'$push': {'courses': ObjectId(course_id)}} )
+def add_waitlisted_course(student_id, course_id):
+    Database.update("Student", {"username": ObjectId(student_id)}, {'$push': {'courses': ObjectId(course_id)}} )
     return "Course has been added"
 
 def update_add_waitlist(studentId,course_id, section_id):
@@ -149,8 +149,8 @@ def add_student(studentId, course_id, section_id):
         return True
 
 def remove_student(studentId, courseId, sectionId):
-    Database.update("Course", {"_id": ObjectId(courseId)}, {'$pull': {'sections.$.student': ObjectId(studentId)}})
-    update_remove_waitlist(sectionId)
+    Database.update("Course", {'_id':ObjectId(courseId), "sections._id": ObjectId(sectionId)}, {'$pull': {"sections.$.student": ObjectId(studentId)}})
+    update_remove_waitlist(courseId, sectionId)
 
 def remove_sections(courseId, sectionId):
     Database.update("Course", {"_id": ObjectId(courseId)}, {'$pull': {'sections.$._id': ObjectId(sectionId)}})

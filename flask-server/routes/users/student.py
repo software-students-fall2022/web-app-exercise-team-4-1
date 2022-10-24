@@ -56,8 +56,8 @@ def get_student_waitlists():
 def remove_course():
     section_id = request.form["section_id"]
     course_id= Database.find_single('Course', {'sections': {'$elemMatch':{'_id': ObjectId(section_id)}}})['_id']
-    student= Database.update("Student", {"username": views.username}, {'$pull': {'course_list': ObjectId(course_id)}})
-    remove_student(student.upserted_id,course_id,section_id)
+    Database.update("Student", {"username": views.username}, {'$pull': {'course_list': ObjectId(course_id)}})
+    remove_student(get_student_oid(views.username),course_id,section_id)
     views.displayMsg='Course has been removed'
     views.isError=False
     views.render='/home'

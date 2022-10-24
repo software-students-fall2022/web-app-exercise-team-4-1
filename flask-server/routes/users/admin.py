@@ -3,6 +3,7 @@ from flask import Blueprint, request,redirect,url_for
 from models.mongodb import Database
 from bson.json_util import dumps, loads, ObjectId
 from ..course import add_student_to_section, delete_course, get_courses, get_course, remove_sections
+from ..users import student
 from routes import views
 import re
 admin_blueprint= Blueprint('admin',__name__,url_prefix='/admin')
@@ -143,5 +144,24 @@ def remove_admin_section():
     views.displayMsg= "Section has been removed!"
     views.isError=False
     views.render='/courses'
-    
     return redirect(url_for('app_blueprint.course_view', course_id=course_id))
+
+@admin_blueprint.route('/remove-student',methods=["POST"])
+def remove_student():
+    username= request.form['username']
+    section_id= request.form['section_id']
+    course_id= request.form['course_id']
+    student_exist= Database.find_single("Student",{"username":username})
+    if(student_exist is None):
+        views.displayMsg= "Student does not exist"
+        views.isError=True
+        views.render='/remove_student'
+        return redirect(url_for('app_blueprint.remove_student_view',course_id=course_id,section_id=section_id))
+
+    course_id= Database.find_single('Course', {'sections': {'$elemMatch':{'_id': ObjectId(section_id)}}})['_id']
+    Database.update("Student", {"username": username}, {'$pull': {'course_list': ObjectId(course_id)}})
+    student.remove_student(student.get_student_oid(username),course_id,section_id)
+    views.displayMsg='Course has been removed'
+    views.isError=False
+    views.render='/home'
+    return redirect(url_for('app_blueprint.home_view'))
