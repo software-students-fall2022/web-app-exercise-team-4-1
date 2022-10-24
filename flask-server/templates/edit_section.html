@@ -6,7 +6,9 @@
     <span class="section-course-code">{{course.courseID}}</span>
     <pagetitle>{{course.name}}</pagetitle>
     <div>
-        <form method="POST" action="{{ url_for('admin.update_course_section', course_id=course._id,section_id=section._id ) }}" class="course-edit">
+        <form method="POST"
+            action="{{ url_for('admin.update_course_section', course_id=course._id,section_id=section._id ) }}"
+            class="course-edit">
             <span class="edit-title">Create Section</span>
             <div class="edit-days">
                 <span class="day-title">Professor:</span>
@@ -60,6 +62,7 @@
                     Cancel
                 </a>
                 <input type="submit" value="Edit Section" class="open-btn-large" />
+                <input type="submit" value="Delete Section" class="delete-btn" />
             </div>
         </form>
     </div>

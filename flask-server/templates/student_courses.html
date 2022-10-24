@@ -5,18 +5,23 @@
         {% for section in enrolled %}
         <course>
             {% include '_courseSection.html' %}
-            <form method="POST" action="{{ url_for('student.remove_course') }}">
-                <input type="hidden" id="section_id" name="section_id" value="{{section._id}}" />
-                <input type="submit" value="Drop Course" class="dark-purple-btn" />
-            </form>
+            <div class="buttons-container">
+                <form method="POST" action="{{ url_for('student.remove_course') }}">
+                    <input type="hidden" id="section_id" name="section_id" value="{{section._id}}" />
+                    <input type="submit" value="Drop Course" class="dark-purple-btn" />
+                </form>
+            </div>
         </course>
         {% endfor %}
         {% for section in waitlist %}
         <course>
             {% include '_courseSection.html' %}
-            <form method="POST" action="{{ url_for('app_blueprint.remove_student_view', course_id=section._id, section_id=section._id)}}" >
-                <input type="button" value="Leave Waitlist ({{section.waitlistPosition}})" class="waitlist-btn" />
-            </form>
+            <div class="buttons-container">
+                <form method="POST"
+                    action="{{ url_for('app_blueprint.remove_student_view', course_id=section._id, section_id=section._id)}}">
+                    <input type="button" value="Leave Waitlist ({{section.waitlistPosition}})" class="waitlist-btn" />
+                </form>
+            </div>
         </course>
         {% endfor %}
     </div>
