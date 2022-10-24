@@ -20,7 +20,6 @@
                 <form method="POST"
                     action="{{ url_for('student.remove_waitlist')}}">
                     <input type="hidden" id="section_id" name="section_id" value="{{section._id}}" />
-                    <input type="hidden" id="course_id" name="course_id" value="{{course._id}}" />
                     <input type="button" value="Leave Waitlist ({{section.waitlistPosition}})" class="waitlist-btn" />
                 </form>
             </div>
