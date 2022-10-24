@@ -10,8 +10,12 @@
             <input type="text" placeholder="Course Name" id="name" name="name" value="{{course.name}}" />
             <textarea type="text" id="description" name="description"
                 placeholder="Course Description">{{course.description}}</textarea>
-            <input type="submit" value="Update Course" class="dark-purple-btn" />
-            <input type="submit" value="Delete Course" class="delete-btn" />
+            <div class="buttons-container-edit">
+                <a href="{{url_for('app_blueprint.home_view', course_id=course._id)}}" class="closed-btn-large">
+                    Cancel
+                </a>
+                <input type="submit" value="Update Course" class="open-btn-large" />
+            </div>
         </form>
     </div>
 </div>
