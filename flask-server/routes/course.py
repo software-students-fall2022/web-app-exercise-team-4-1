@@ -60,8 +60,7 @@ def add_student_to_section():
                 views.render='/add_student'
                 return redirect(url_for('app_blueprint.add_student_view',course_id=course_id,section_id=section_id))
             else:
-                views.displayMsg= 'Student has been added to waitlist!'
-                views.isError=False
+                views.displayMsg= 'Student in waitlist!'
                 views.render='/add_student'
                 return redirect(url_for('app_blueprint.add_student_view', course_id=course_id,section_id=section_id))
         else:
@@ -82,7 +81,7 @@ def add_student_to_section():
                 return redirect(url_for('app_blueprint.shopping_cart_view'))
 
             else:
-                views.displayMsg= "Course added to waitlist!"
+                views.displayMsg= "Course in waitlist!"
                 views.isError=False
                 views.render='/cart'
                 return redirect(url_for('app_blueprint.shopping_cart_view'))
@@ -124,8 +123,11 @@ def add_waitlisted_course(course_id):
     return "Course has been added"
 
 def update_add_waitlist(studentId,course_id, section_id):
-    Database.update("Course", {"_id": ObjectId(course_id), "sections._id": ObjectId(section_id)}, {'$push': {'sections.$.waitlist': ObjectId(studentId)}})
-    return "Waitlist Added!"
+    if Database.count("Course",{'sections': {'$elemMatch': {'_id': ObjectId(section_id), 'waitlist':ObjectId(studentId)}}})==0:
+        Database.update("Course", {"_id": ObjectId(course_id), "sections._id": ObjectId(section_id)}, {'$push': {'sections.$.waitlist': ObjectId(studentId)}})
+        return True
+    else:
+        return False
 
 def delete_course(course_id):
     Database.delete("Course", {"_id":ObjectId(course_id)})
