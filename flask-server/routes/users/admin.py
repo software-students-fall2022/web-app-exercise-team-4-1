@@ -19,17 +19,17 @@ def sign_up():
         if (Database.count("Admin", {"username": username}) == 0):
             Database.insert_one("Admin", {
                                 'username': username, 'firstName': firstName, 'password': password, 'courseList': []})
-            views.displayMsg = "Registration Complete!"
+            views.displayMsg = "Registration complete"
             views.isError = False
             views.render = '/'
             return redirect(url_for('app_blueprint.login_view'))
         else:
-            views.displayMsg = "Username is taken!"
+            views.displayMsg = "Username is taken"
             views.isError = True
             views.render = '/sign-up/admin'
             return redirect(url_for('app_blueprint.admin_sign_up_view'))
     else:
-        views.displayMsg = "Please fill up all fields!"
+        views.displayMsg = "Please fill out all fields"
         views.isError = True
         views.render = '/sign-up/admin'
         return redirect(url_for('app_blueprint.admin_sign_up_view'))
@@ -54,12 +54,12 @@ def add_admin_course():
                                      'name': name, 'description': description, 'courseID': courseID, 'sections': []})
         Database.update("Admin", {"username": views.username}, {
                         '$push': {'courseList': ObjectId(result.inserted_id)}})
-        views.displayMsg = 'Course has been added!'
+        views.displayMsg = 'Course has been added'
         views.isError = False
         views.render = '/home'
         return redirect(url_for('app_blueprint.home_view'))
     else:
-        views.displayMsg = 'Please complete all fields!'
+        views.displayMsg = 'Please fill out all fields'
         views.isError = True
         views.render = '/create-course'
         return redirect(url_for('app_blueprint.create_course_view'))
@@ -79,7 +79,7 @@ def add_course_section(course_id):
         if (not re.match(regex, startTime) or not re.match(regex, endTime)):
             raise ValueError
     except ValueError:
-        views.displayMsg = 'Wrong format!'
+        views.displayMsg = 'Format time as XX:XX A/PM'
         views.isError = True
         views.render = '/add-section'
         return redirect(url_for('app_blueprint.create_section_view', course_id=course_id))
@@ -88,12 +88,12 @@ def add_course_section(course_id):
     if (course_id and professor and capacity and notes and days and startTime and endTime):
         Database.update("Course", {"_id": ObjectId(course_id)}, {'$push': {'sections': {'_id': _id, 'courseName': course['name'], 'courseID': course[
                         'courseID'], 'professor': professor, 'name': notes, 'capacity': capacity, 'student': [], 'waitlist': [], 'date': {'startTime': startTime, 'endTime': endTime, 'days': days}}}})
-        views.displayMsg = 'Section Added!'
+        views.displayMsg = 'Section added'
         views.isError = False
         views.render = '/courses'
         return redirect(url_for('app_blueprint.course_view', course_id=course_id))
     else:
-        views.displayMsg = 'Please complete all fields!'
+        views.displayMsg = 'Please fill out all fields'
         views.isError = True
         views.render = '/add-section'
         return redirect(url_for('app_blueprint.create_section_view', course_id=course_id))
@@ -112,20 +112,20 @@ def update_course_section(course_id, section_id):
         if (not re.search(regex, startTime) or not re.search(regex, endTime)):
             raise ValueError
     except ValueError:
-        views.displayMsg = 'Wrong format!'
+        views.displayMsg = 'Format time as XX:XX A/PM'
         views.isError = True
         views.render = '/edit-section'
         return redirect(url_for('app_blueprint.edit_section_view', course_id=course_id, section_id=section_id))
 
     if (professor and capacity and notes and days and startTime and endTime):
-        views.displayMsg = 'Section updated!'
+        views.displayMsg = 'Section updated'
         views.isError = False
         views.render = '/courses'
         Database.update("Course", {"_id": ObjectId(course_id), 'sections._id': ObjectId(section_id)}, {'$set': {'sections.$.professor': professor,
                         'sections.$.name': notes, 'sections.$.capacity': capacity, 'sections.$.date': {'startTime': startTime, 'endTime': endTime, 'days': days}}})
         return redirect(url_for('app_blueprint.course_view', course_id=course_id))
     else:
-        views.displayMsg = 'Please complete all fields!'
+        views.displayMsg = 'Please fill out all fields'
         views.isError = True
         views.render = '/edit-section'
         return redirect(url_for('app_blueprint.edit_section_view', course_id=course_id, section_id=section_id))
@@ -137,7 +137,7 @@ def remove_admin_course():
     Database.update("Admin", {"username": views.username}, {
                     '$pull': {'course_list': ObjectId(course_id)}})
     delete_course(course_id)
-    views.successMsg = "Course Removed!"
+    views.successMsg = "Course removed"
     views.render = '/courses'
     return redirect(url_for('app_blueprint.home_view'))
 
@@ -147,7 +147,7 @@ def update_admin():
     new_values = request.form
     result = Database.update(
         "Admin", {"username": views.username}, {"$set": new_values})
-    return "Update is complete!"
+    return "Update is complete"
 
 
 @admin_blueprint.route('/removesection', methods=["POST"])
@@ -155,7 +155,7 @@ def remove_admin_section():
     course_id = request.form['course_id']
     section_id = request.form['section_id']
     remove_sections(course_id, section_id)
-    views.displayMsg = "Section has been removed!"
+    views.displayMsg = "Section has been removed"
     views.isError = False
     views.render = '/courses'
     return redirect(url_for('app_blueprint.course_view', course_id=course_id))
@@ -168,7 +168,7 @@ def remove_student():
     course_id = request.form['course_id']
     student_exist = Database.find_single("Student", {"username": username})
     if (student_exist is None):
-        views.displayMsg = "Student does not exist"
+        views.displayMsg = "Student is not enrolled"
         views.isError = True
         views.render = '/remove_student'
         return redirect(url_for('app_blueprint.remove_student_view', course_id=course_id, section_id=section_id))

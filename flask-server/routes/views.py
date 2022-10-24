@@ -16,10 +16,12 @@ isError = False
 displayMsg = None
 render = None
 
+
 def reset_message(render_page):
-    if(render != render_page):
+    if (render != render_page):
         global displayMsg
         displayMsg = None
+
 
 @app_blueprint.route('/')
 def login_view():
@@ -32,6 +34,7 @@ def sign_up_view():
     reset_message('/sign-up')
     return render_template('sign_up.html', displayMsg=displayMsg, isError=isError)
 
+
 @app_blueprint.route('/sign-up/admin')
 def admin_sign_up_view():
     reset_message('/sign-up/admin')
@@ -42,11 +45,11 @@ def admin_sign_up_view():
 def home_view():
     reset_message('/home')
     if admin:
-        courses= search_course(request.args.get('searchterm', ""))
+        courses = search_course(request.args.get('searchterm', ""))
         return render_template('admin_courses.html', courses=courses, admin=admin, username=username, displayMsg=displayMsg, isError=isError)
     else:
         enrolled = get_student_sections()
-        waitlist= get_student_waitlists()
+        waitlist = get_student_waitlists()
         return render_template('student_courses.html', waitlist=waitlist, enrolled=enrolled, admin=admin, username=username, displayMsg=displayMsg, isError=isError)
 
 
@@ -54,7 +57,7 @@ def home_view():
 def course_view(course_id):
     reset_message('/courses')
     course = get_course(course_id)
-    sections=course['sections']
+    sections = course['sections']
     if admin:
         return render_template('admin_course.html', sections=sections, course=course, admin=admin, username=username, displayMsg=displayMsg, isError=isError)
     else:
@@ -72,46 +75,50 @@ def create_section_view(course_id):
 def edit_section_view(course_id, section_id):
     reset_message('/edit-section')
     course = get_course(course_id)
-    section= [sections for sections in course['sections'] if sections['_id']==ObjectId(section_id)][0]
+    section = [sections for sections in course['sections']
+               if sections['_id'] == ObjectId(section_id)][0]
     return render_template('edit_section.html', course=course, admin=admin, section=section, displayMsg=displayMsg, isError=isError)
 
 
 @app_blueprint.route('/courses/<course_id>/<section_id>/students')
 def student_list_view(course_id, section_id):
     reset_message('courses/students')
-    course= get_course(course_id)
-    section = [section for section in course['sections'] if section['_id'] == ObjectId(section_id) ][0]
-    docs= get_students(section['student'])
+    course = get_course(course_id)
+    section = [section for section in course['sections']
+               if section['_id'] == ObjectId(section_id)][0]
+    docs = get_students(section['student'])
     return render_template('student_list.html', docs=docs, course=course, admin=admin, username=username, section=section, displayMsg=displayMsg, isError=isError)
 
 
 @app_blueprint.route('/courses/<course_id>/<section_id>/students/add', methods=['GET', 'POST'])
 def add_student_view(course_id, section_id):
     reset_message('/add_student')
-    course= get_course(course_id)
-    section = [section for section in course['sections'] if section['_id'] == ObjectId(section_id) ][0]
+    course = get_course(course_id)
+    section = [section for section in course['sections']
+               if section['_id'] == ObjectId(section_id)][0]
     return render_template('add_student.html', course=course, admin=admin, username=username, section=section, displayMsg=displayMsg, isError=isError)
 
 
 @app_blueprint.route('/courses/<course_id>/<section_id>/students/remove', methods=['GET', 'POST'])
 def remove_student_view(course_id, section_id):
     reset_message('/remove_student')
-    course=get_course(course_id)
-    section = [section for section in course['sections'] if section['_id'] == ObjectId(section_id) ][0]
+    course = get_course(course_id)
+    section = [section for section in course['sections']
+               if section['_id'] == ObjectId(section_id)][0]
     return render_template('remove_student.html', course=course, admin=admin, username=username, section=section, displayMsg=displayMsg, isError=isError)
 
 
 @app_blueprint.route('/courses', methods=['GET'])
 def course_search_view():
     reset_message('/course_search')
-    courses= search_course(request.args.get('searchterm', ""))
+    courses = search_course(request.args.get('searchterm', ""))
     return render_template('course_search.html', courses=courses, admin=admin, username=username, displayMsg=displayMsg, isError=isError)
 
 
 @app_blueprint.route('/cart')
 def shopping_cart_view():
     reset_message('/cart')
-    sections= get_cart()
+    sections = get_cart()
     return render_template('shopping_cart.html', sections=sections, admin=admin, username=username, displayMsg=displayMsg, isError=isError)
 
 
@@ -124,5 +131,5 @@ def create_course_view():
 @app_blueprint.route('/edit-course/<course_id>')
 def edit_course_view(course_id):
     reset_message('/edit-course')
-    course=get_course(course_id)
+    course = get_course(course_id)
     return render_template('edit_course.html', admin=admin, course=course, displayMsg=displayMsg, isError=isError)
