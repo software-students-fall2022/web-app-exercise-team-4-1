@@ -153,9 +153,10 @@ def remove_student(studentId, courseId, sectionId):
     update_remove_waitlist(courseId, sectionId)
 
 def remove_sections(courseId, sectionId):
-    Database.update("Course", {"_id": ObjectId(courseId)}, {'$pull': {'sections.$._id': ObjectId(sectionId)}})
+    Database.update("Course", {"_id": ObjectId(courseId)}, {'$pull': {'sections' : {'_id': ObjectId(sectionId)}}})
 
     students=list(get_all_students())
     student_ids= [ student['_id'] for student in students]
     for student in student_ids:
-        Database.update("Student", {"_id": ObjectId(student)}, {'$pull': {'carts': ObjectId(sectionId)}, 'course_list': ObjectId(courseId)})
+        Database.update("Student", {"_id": ObjectId(student)}, {'$pull': {'carts': ObjectId(sectionId)}})
+        Database.update("Student", {"_id": ObjectId(student)}, {'$pull': {'course_list': ObjectId(courseId)}})

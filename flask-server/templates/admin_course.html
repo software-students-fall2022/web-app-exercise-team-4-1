@@ -27,7 +27,8 @@
                     View Roster
                 </a>
                 <form method="POST" action="{{ url_for('admin.remove_admin_section') }}">
-                    <input type="hidden" id="id" name="id" value="{{section._id}}" />
+                    <input type="hidden" id="section_id" name="section_id" value="{{section._id}}" />
+                    <input type="hidden" id="course_id" name="course_id" value="{{course._id}}" />
                     <input type="submit" value="Delete Section" class="delete-btn" />
                 </form>
             </div>
