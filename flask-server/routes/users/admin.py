@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from flask import Blueprint, request, redirect, url_for
 from models.mongodb import Database
 from bson.json_util import dumps, loads, ObjectId
-from ..course import add_student_to_section, delete_course, get_courses, get_course, remove_sections
+from ..course import add_student_to_section, delete_course, get_courses, get_course, remove_sections, update_remove_waitlist
 from ..users import student
 from routes import views
 import re
@@ -70,7 +70,7 @@ def add_course_section(course_id):
     try:
         professor = request.form['professor']
         capacity = int(request.form['capacity'])
-        notes = request.form['notes']
+        notes = request.form['name']
         days = request.form.getlist('days')
         startTime = request.form['startTime']
         endTime = request.form['endTime']
@@ -104,7 +104,7 @@ def update_course_section(course_id, section_id):
     try:
         professor = request.form['professor']
         capacity = int(request.form['capacity'])
-        notes = "test"  # request.form['notes']
+        notes = request.form['notes']
         days = request.form.getlist('days')
         startTime = request.form['startTime']
         endTime = request.form['endTime']
@@ -116,7 +116,17 @@ def update_course_section(course_id, section_id):
         views.isError = True
         views.render = '/edit-section'
         return redirect(url_for('app_blueprint.edit_section_view', course_id=course_id, section_id=section_id))
-
+    course = get_course(course_id)
+    section= [sections for sections in course['sections'] if sections['_id']==ObjectId(section_id)][0]
+    current_capacity=section['capacity']
+    if capacity <current_capacity :
+        views.displayMsg = 'Capacity cannot be decreased!'
+        views.isError = True
+        views.render = '/edit-section'
+        return redirect(url_for('app_blueprint.edit_section_view', course_id=course_id, section_id=section_id))
+    elif capacity>current_capacity:
+        for i in range(capacity-current_capacity):
+            update_remove_waitlist(course_id,section_id)
     if (professor and capacity and notes and days and startTime and endTime):
         views.displayMsg = 'Section updated'
         views.isError = False
@@ -179,7 +189,7 @@ def remove_student():
                     '$pull': {'course_list': ObjectId(course_id)}})
     student.remove_student(student.get_student_oid(
         username), course_id, section_id)
-    views.displayMsg = 'Course has been removed'
+    views.displayMsg = 'Student has been removed'
     views.isError = False
-    views.render = '/home'
-    return redirect(url_for('app_blueprint.home_view'))
+    views.render = url_for('app_blueprint.student_list_view', section_id=section_id, course_id=course_id)
+    return redirect(url_for('app_blueprint.student_list_view', section_id=section_id, course_id=course_id))

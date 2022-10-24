@@ -448,6 +448,22 @@ input[type=text] {
     padding-left: 20px;
 }
 
+input[type=password] {
+    border: 2px solid #A48ABF;
+    border-radius: 30px;
+    height: 60px;
+    width: auto;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+
+    color: #A48ABF;
+
+    padding-left: 20px;
+}
+
 input[type=checkbox] {
     height: 30px;
     width: 30px;

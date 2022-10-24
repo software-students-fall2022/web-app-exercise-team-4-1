@@ -130,18 +130,20 @@ def update_course(course_id):
 
 def update_remove_waitlist(courseId, sectionId):
     course = get_course(courseId)
-    section = [sections for sections in course['sections']
-               if sections['_id'] == ObjectId(sectionId)][0]
-    counts = len(section['waitlist'])
-    if (counts > 0):
-        student_id = section['waitlist'][0]
-        add_waitlisted_course(student_id, sectionId)
+    section= [sections for sections in course['sections'] if sections['_id']==ObjectId(sectionId)][0]
+    counts=len(section['waitlist'])    
+    if(counts>0):
+        student_id= section['waitlist'][0]
+        add_waitlisted_course(student_id,courseId, sectionId)
 
-
-def add_waitlisted_course(student_id, course_id):
-    Database.update("Student", {"username": ObjectId(student_id)}, {
-                    '$push': {'courses': ObjectId(course_id)}})
-    return "Course has been added"
+def add_waitlisted_course(student_id, course_id, section_id):
+    if Database.count("Student",{"_id": ObjectId(student_id), "course_list":{"$in":[ObjectId(course_id)]}}) ==0:
+        Database.update("Course", {"_id": ObjectId(course_id), "sections._id": ObjectId(section_id)}, {'$pull': {'sections.$.waitlist': ObjectId(student_id)}})
+        Database.update("Student", {"username": ObjectId(student_id)}, {'$push': {'course_list': ObjectId(course_id)}} )
+        return True
+    else:
+        Database.update("Course", {"_id": ObjectId(course_id), "sections._id": ObjectId(section_id)}, {'$pull': {'sections.$.waitlist': ObjectId(student_id)}})
+        return False
 
 
 def update_add_waitlist(studentId, course_id, section_id):

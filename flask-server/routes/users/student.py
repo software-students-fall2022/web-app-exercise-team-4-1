@@ -119,3 +119,12 @@ def remove_from_cart():
     views.render = '/cart'
     views.isError = False
     return redirect(url_for('app_blueprint.shopping_cart_view'))
+
+@student_blueprint.route('/remove_waitlist', methods=['POST'])
+def remove_waitlist():
+    section_id=request.form['section_id']
+    Database.update("Course", { "sections._id": ObjectId(section_id)}, {'$pull': {'sections.$.waitlist': ObjectId(get_student_oid(views.username))}})
+    views.displayMsg='Course section removed from waitlist!'
+    views.render='/home'
+    views.isError=False
+    return redirect(url_for('app_blueprint.home_view'))

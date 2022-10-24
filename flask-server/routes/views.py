@@ -2,7 +2,7 @@ from cgitb import reset
 from distutils.log import error
 from flask import Blueprint, render_template, request, redirect, url_for
 from .users.admin import get_admin_course
-from .users.student import get_cart, get_student_courses, get_students, get_student_sections, get_student_waitlists
+from .users.student import get_cart, get_student_courses, get_student_oid, get_students, get_student_sections, get_student_waitlists
 from .course import add_student, get_all_courses, get_course, get_course_section, search_course, remove_student
 from bson.json_util import dumps, loads, ObjectId
 from flask import Blueprint, render_template
@@ -50,6 +50,11 @@ def home_view():
     else:
         enrolled = get_student_sections()
         waitlist = get_student_waitlists()
+        for section in waitlist:
+            for index,id in enumerate(section['waitlist']):
+                if(id==get_student_oid(username)):
+                    section['waitlistPosition']=index
+        
         return render_template('student_courses.html', waitlist=waitlist, enrolled=enrolled, admin=admin, username=username, displayMsg=displayMsg, isError=isError)
 
 
