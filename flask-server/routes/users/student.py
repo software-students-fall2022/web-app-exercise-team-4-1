@@ -91,3 +91,12 @@ def get_cart():
     carts= Database.find_single("Student",{"username":views.username},{'_id':0,'carts':1})['carts']
     courses= get_all_courses()
     return([section for course in courses for section in course['sections'] if section['_id'] in carts])
+
+@student_blueprint.route('/remove_from_cart', methods=['POST'])
+def remove_from_cart():
+    section_id=request.form['section_id']
+    Database.update("Student", {"username": views.username}, {'$pull': {'carts': ObjectId(section_id)}} )
+    views.displayMsg='Course section removed from cart!'
+    views.render='/cart'
+    views.isError=False
+    return redirect(url_for('app_blueprint.shopping_cart_view'))
