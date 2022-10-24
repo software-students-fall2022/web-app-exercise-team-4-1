@@ -179,7 +179,7 @@ def remove_student():
                     '$pull': {'course_list': ObjectId(course_id)}})
     student.remove_student(student.get_student_oid(
         username), course_id, section_id)
-    views.displayMsg = 'Course has been removed'
+    views.displayMsg = 'Student has been removed'
     views.isError = False
-    views.render = '/home'
-    return redirect(url_for('app_blueprint.home_view'))
+    views.render = url_for('app_blueprint.student_list_view', section_id=section_id, course_id=course_id)
+    return redirect(url_for('app_blueprint.student_list_view', section_id=section_id, course_id=course_id))
