@@ -57,6 +57,7 @@
                         value="{{section.date.endTime}}" />
                 </div>
             </div>
+            <textarea type="text" id="notes" name="notes" placeholder="Section Notes" >{{section.name}}</textarea>
             <div class="buttons-container-edit">
                 <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="closed-btn-large">
                     Cancel
