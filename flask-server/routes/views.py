@@ -53,7 +53,7 @@ def home_view():
         for section in waitlist:
             for index,id in enumerate(section['waitlist']):
                 if(id==get_student_oid(username)):
-                    section['waitlistPosition']=index
+                    section['waitlistPosition']=index+1
         
         return render_template('student_courses.html', waitlist=waitlist, enrolled=enrolled, admin=admin, username=username, displayMsg=displayMsg, isError=isError)
 
