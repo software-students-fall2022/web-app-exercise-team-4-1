@@ -8,7 +8,7 @@
     <pagetitle>{{course.name}}</pagetitle>
     <span class="section-name-light"> {{section.name}}</span>
     <div>
-        <form method="POST" action="{{ url_for('student.remove_course') }}"
+        <form method="POST" action="{{ url_for('admin.remove_student') }}"
             class="course-edit">
             <span class="edit-title">Remove Student</span>
             <input type="text" placeholder="Student NetID" id="username" name="username" />
