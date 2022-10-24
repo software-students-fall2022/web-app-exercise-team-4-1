@@ -70,7 +70,7 @@ def add_course_section(course_id):
     try:
         professor = request.form['professor']
         capacity = int(request.form['capacity'])
-        notes = request.form['notes']
+        notes = request.form['name']
         days = request.form.getlist('days')
         startTime = request.form['startTime']
         endTime = request.form['endTime']
