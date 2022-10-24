@@ -61,7 +61,7 @@ def add_student_to_section():
             views.render = '/add_student'
             return redirect(url_for('app_blueprint.add_student_view', course_id=course_id, section_id=section_id))
         course_count = Database.count(
-            "Student", {"username": username, "courses": {"$in": [ObjectId(course_id)]}})
+            "Student", {"username": username, "course_list": {"$in": [ObjectId(course_id)]}})
         if (course_count == 0):
             student_oid = Database.find_single(
                 "Student", {"username": username})['_id']
