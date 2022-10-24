@@ -67,7 +67,7 @@ def add_student_to_section():
                 "Student", {"username": username})['_id']
             if (add_student(student_oid, course_id, section_id)):
                 Database.update("Student", {"username": username}, {
-                                '$push': {'courses': ObjectId(course_id)}})
+                                '$push': {'course_list': ObjectId(course_id)}})
                 views.displayMsg = "Student has been added"
                 views.isError = False
                 views.render = '/add_student'

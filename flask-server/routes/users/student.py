@@ -16,7 +16,7 @@ def sign_up():
     if (username and firstName and lastName and password):
         if (Database.count("Student", {"username": username}) == 0):
             Database.insert_one("Student", {'username': username, 'firstName': firstName,
-                                'lastName': lastName, 'password': password, 'course_list': [], 'carts': [], 'waitlist': []})
+                                'lastName': lastName, 'password': password, 'course_list': [], 'carts': []})
             views.displayMsg = "Registration complete"
             views.isError = False
             views.render = '/'
