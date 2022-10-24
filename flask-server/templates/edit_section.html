@@ -16,6 +16,11 @@
                     value="{{section.professor}}" />
             </div>
             <div class="edit-days">
+                <span class="day-title">Section #:</span>
+                <input type="text" placeholder="Section #" id="name" name="name"
+                    value="{{section.name}}" />
+            </div>
+            <div class="edit-days">
                 <span class="day-title">Capacity:</span>
                 <input type="text" placeholder="Student Capacity" id="capacity" name="capacity"
                     value="{{section.capacity}}" />
@@ -57,7 +62,6 @@
                         value="{{section.date.endTime}}" />
                 </div>
             </div>
-            <textarea type="text" id="notes" name="notes" placeholder="Section Notes" >{{section.name}}</textarea>
             <div class="buttons-container-edit">
                 <a href="{{url_for('app_blueprint.course_view', course_id=course._id)}}" class="closed-btn-large">
                     Cancel
