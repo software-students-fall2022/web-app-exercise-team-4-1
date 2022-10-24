@@ -103,9 +103,8 @@ def remove_from_cart():
 
 @student_blueprint.route('/remove_waitlist', methods=['POST'])
 def remove_waitlist():
-    course_id= request.form['course_id']
     section_id=request.form['section_id']
-    Database.update("Course", {"_id": ObjectId(course_id), "sections._id": ObjectId(section_id)}, {'$pull': {'sections.$.waitlist': ObjectId(get_student_oid(views.username))}})
+    Database.update("Course", { "sections._id": ObjectId(section_id)}, {'$pull': {'sections.$.waitlist': ObjectId(get_student_oid(views.username))}})
     views.displayMsg='Course section removed from waitlist!'
     views.render='/home'
     views.isError=False
