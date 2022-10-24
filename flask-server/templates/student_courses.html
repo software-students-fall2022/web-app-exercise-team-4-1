@@ -18,7 +18,9 @@
             {% include '_courseSection.html' %}
             <div class="buttons-container">
                 <form method="POST"
-                    action="{{ url_for('app_blueprint.remove_student_view', course_id=section._id, section_id=section._id)}}">
+                    action="{{ url_for('student.remove_waitlist')}}">
+                    <input type="hidden" id="section_id" name="section_id" value="{{section._id}}" />
+                    <input type="hidden" id="course_id" name="course_id" value="{{course._id}}" />
                     <input type="button" value="Leave Waitlist ({{section.waitlistPosition}})" class="waitlist-btn" />
                 </form>
             </div>
