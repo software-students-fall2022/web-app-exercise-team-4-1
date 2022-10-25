@@ -2,7 +2,11 @@
 # Web Application Exercise
 
 A little exercise to build a web application following an agile development process. See the [instructions](instructions.md) for more detail.
-
+#Team Members
+- Kim Seok Tae
+- Baggio Pedro
+- Zhang Grace
+- Xu Guanyi
 ## Product vision statement
 
 We want to create a user friendly way for students to register for their college courses on-the-go and for course admins to comfortably maintain and manages the created courses.
